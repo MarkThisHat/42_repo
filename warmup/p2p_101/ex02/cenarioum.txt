@@ -1,0 +1,3 @@
+Se o avaliador aparece e não efetuou nenhum tipo de comunicação, é razoável aguardar um prazo para que o mesmo se manifeste, tentando os canais em comum (tipo discord/slack) ou telefone (quando disponível).
+Após esse tempo, procurar os grupos em comum por pessoas que a conheçam para que possamos descobrir algum motivo mais urgente que possa ter gerado incomunicabilidade.
+Apenas após essas tentativas marcar a pessoa avaliadora como ausente.
