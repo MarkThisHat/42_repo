@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_is_negative.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: coder <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 19:46:09 by coder             #+#    #+#             */
-/*   Updated: 2022/08/27 19:46:11 by coder            ###   ########.fr       */
+/*   Updated: 2022/09/03 20:19:13 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_is_negative(int n)
 	if (n < 0)
 		ft_putchar('N');
 	else
-		ft_putchar('S');
+		ft_putchar('P');
 }
