@@ -10,20 +10,31 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 char	*ft_strrchr(const char *str, int c)
 {
 	int	i;
 	int	r;
+	int	found;
 
+	if (!c)
+		return ((char *)&str[ft_strlen(str)]);
 	i = 0;
 	r = 0;
+	found = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == c)
+		if (str[i] == (char)c)
+		{
 			r = i;
+			found = 1;
+		}
 		i++;
 	}
-	if (r != 0)
+	if (r)
 		return ((char *)&str[r]);
-	return (0);
+	if (!r && found)
+		return ((char *)&str[r]);
+	return (NULL);
 }

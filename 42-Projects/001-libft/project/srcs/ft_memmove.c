@@ -17,23 +17,12 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	unsigned char		*d;
 	const unsigned char	*s;
 
-	d = dest;
-	s = src;
-	if (src + n >= dest)
-	{
-		src += n;
-		dest += n;
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	if (s > d)
+		ft_memcpy(d, s, n);
+	else
 		while (n--)
-			*d-- = *s--;
-		return (dest);
-	}
-	return (ft_memcpy(dest, src, n));
-}
-
-	/*
-	VLA?
-	unsigned char	temp[n];
-	ft_memcpy(temp, src, n);
-	ft_memcpy(dest, temp, n);
+			d[n] = s[n];
 	return (dest);
-	*/
+}

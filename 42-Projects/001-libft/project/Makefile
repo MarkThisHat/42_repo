@@ -28,9 +28,11 @@ ${NAME}: ${OBJ}
 		@ar -rc ${NAME} ${OBJ}
 
 clean:
+		@echo cleaning objects
 		@rm -f ${OBJ}
 
 fclean: clean
+		@echo cleaning archive
 		@rm -f ${NAME}
 
 re: fclean all
