@@ -36,7 +36,7 @@ static void	ft_populate(char *itoa, int len, int n)
 {
 	int	i;
 	int	digits;
-	int	output;
+	int	singled;
 
 	i = 0;
 	digits = ft_powdigits(len);
@@ -49,9 +49,9 @@ static void	ft_populate(char *itoa, int len, int n)
 	}
 	while (i < len)
 	{
-		output = n / digits;
-		itoa[i] = output + '0';
-		n -= digits * output;
+		singled = n / digits;
+		itoa[i] = singled + '0';
+		n -= digits * singled;
 		digits = digits / 10;
 		i++;
 	}
