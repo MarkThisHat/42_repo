@@ -52,7 +52,7 @@ static void	ft_populate(char *itoa, int len, int n)
 		singled = n / digits;
 		itoa[i] = singled + '0';
 		n -= digits * singled;
-		digits = digits / 10;
+		digits /= 10;
 		i++;
 	}
 }

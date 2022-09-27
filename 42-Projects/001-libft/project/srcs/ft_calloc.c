@@ -20,6 +20,6 @@ void	*ft_calloc(size_t nmb, size_t size)
 		return (0);
 	ptr = malloc(nmb * size);
 	if (ptr != 0)
-		bzero(ptr, size);
+		ft_bzero(ptr, size);
 	return (ptr);
 }

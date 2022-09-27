@@ -33,7 +33,7 @@ void	ft_putnbr_fd(int n, int fd)
 		singled = un / digits;
 		ft_putchar_fd(singled + '0', fd);
 		un -= digits * singled;
-		digits = digits / 10;
+		digits /= 10;
 	}
 	ft_putchar_fd(un + '0', fd);
 }
