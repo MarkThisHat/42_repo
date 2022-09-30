@@ -11,15 +11,16 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdint.h>
 
 void	*ft_calloc(size_t nmb, size_t size)
 {
 	void	*ptr;
 
-	if (nmb * size == 0)
-		return (0);
+	if (nmb * size == 0 || (nmb == SIZE_MAX && size == SIZE_MAX))
+		return (NULL);
 	ptr = malloc(nmb * size);
 	if (ptr != 0)
-		ft_bzero(ptr, size);
+		ft_bzero(ptr, nmb * size);
 	return (ptr);
 }

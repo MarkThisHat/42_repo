@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 16:28:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/09/17 16:13:06 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/09/29 16:23:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_atoi(const char *nptr)
 	while (*nptr == ' ' || *nptr == '\f' || *nptr == '\n' \
 	|| *nptr == '\r' || *nptr == '\t' || *nptr == '\v')
 		nptr++;
-	while (*nptr == '-' || *nptr == '+')
+	if (*nptr == '-' || *nptr == '+')
 	{
 		if (*nptr == '-')
 			sign *= -1;
