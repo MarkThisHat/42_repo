@@ -28,7 +28,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (ft_strdup("\0"));
 	while (ft_seekchar(s1[end], set))
 		end--;
-	cpy = malloc(sizeof(char) * (end - start + 2));
+	cpy = (char *)malloc(sizeof(char) * (end - start + 2));
 	if (!cpy)
 		return (NULL);
 	ft_strlcpy(cpy, &s1[start], end - start + 2);

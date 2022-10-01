@@ -31,7 +31,7 @@ char	**ft_split(char const *s, char c)
 	pointers = ft_countp(&s[start], c);
 	if (!pointers)
 		return (ft_bareparam(&s[start]));
-	pptr = malloc(sizeof(pptr) * (pointers + 1));
+	pptr = (char **)malloc(sizeof(pptr) * (pointers + 1));
 	if (!pptr)
 		return (NULL);
 	pptr[0] = (char *)&s[start];
@@ -68,7 +68,7 @@ static int	ft_section(const char *s, char **pptr, int len)
 	char	*ptr;
 
 	i = 0;
-	ptr = malloc(sizeof(char) * len + 1);
+	ptr = (char *)malloc(sizeof(char) * len + 1);
 	if (!ptr)
 		return (0);
 	while (len)
@@ -113,14 +113,14 @@ static char	**ft_bareparam(const char *s)
 
 	if (!s || !*s)
 	{
-		pptr = malloc(sizeof (pptr));
+		pptr = (char **)malloc(sizeof (pptr));
 		pptr[0] = NULL;
 	}
 	else
 	{
-		len = ft_strlen(s) + 1;
-		pptr = malloc(sizeof(pptr) * 2);
-		pptr[0] = malloc(sizeof(char) * len);
+		len = (int)ft_strlen(s) + 1;
+		pptr = (char **)malloc(sizeof(pptr) * 2);
+		pptr[0] = (char *)malloc(sizeof(char) * len);
 		ft_strlcpy(pptr[0], s, len);
 		pptr[1] = NULL;
 	}

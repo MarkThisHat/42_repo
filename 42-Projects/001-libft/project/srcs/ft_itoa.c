@@ -12,62 +12,66 @@
 
 #include "libft.h"
 
-static int	ft_cdigits(int n);
-static int	ft_powdigits(int len);
-static void	ft_populate(char *itoa, int len, int n);
+static unsigned int	ft_cdigits(int n);
+static int			ft_powdigits(int len, int n);
+static void			ft_populate(char *itoa, unsigned int len, int n);
 
 char	*ft_itoa(int n)
 {
-	char	*itoa;
-	int		len;
+	char				*itoa;
+	unsigned int		len;
 
 	len = ft_cdigits(n);
 	if (n < 0)
 		len++;
-	itoa = malloc(len + 1);
+	itoa = (char *)malloc(sizeof(char) * (len + 1));
 	if (!itoa)
-		return (0);
+		return (NULL);
 	ft_populate(itoa, len, n);
 	itoa[len] = '\0';
 	return (itoa);
 }
 
-static void	ft_populate(char *itoa, int len, int n)
+static void	ft_populate(char *itoa, unsigned int len, int n)
 {
-	int	i;
-	int	digits;
-	int	singled;
+	unsigned int	i;
+	unsigned int	un;
+	unsigned int	digits;
+	unsigned int	singled;
 
 	i = 0;
-	digits = ft_powdigits(len);
+	digits = ft_powdigits(len, n);
 	if (n < 0)
 	{
 		itoa[i] = '-';
-		digits /= 10;
-		n *= -1;
+		un = n * (-1);
 		i++;
 	}
+	else
+		un = n;
 	while (i < len)
 	{
-		singled = n / digits;
+		singled = un / digits;
 		itoa[i] = singled + '0';
-		n -= digits * singled;
+		un -= digits * singled;
 		digits /= 10;
 		i++;
 	}
 }
 
-static int	ft_cdigits(int n)
+static unsigned int	ft_cdigits(int n)
 {
 	if (n / 10 == 0)
 		return (1);
 	return (1 + ft_cdigits(n / 10));
 }
 
-static int	ft_powdigits(int len)
+static int	ft_powdigits(int len, int n)
 {
 	int	digits;
 
+	if (n < 0)
+		len--;
 	digits = 1;
 	while (len > 1)
 	{
