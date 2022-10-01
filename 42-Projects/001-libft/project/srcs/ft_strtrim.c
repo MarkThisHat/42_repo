@@ -17,19 +17,21 @@ static int	ft_seekchar(char subs1, char const *set);
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*cpy;
-	size_t	start;
-	size_t	end;
+	int		start;
+	int		end;
 
 	start = 0;
 	while (ft_seekchar(s1[start], set))
 		start++;
-	end = ft_strlen(s1) - 1;
+	end = (int)ft_strlen(s1) - 1;
+	if (!(start < end))
+		return (ft_strdup("\0"));
 	while (ft_seekchar(s1[end], set))
 		end--;
-	cpy = malloc(end - start + 1);
+	cpy = malloc(sizeof(char) * (end - start + 2));
 	if (!cpy)
-		return (0);
-	ft_strlcpy(cpy, s1, end - start + 1);
+		return (NULL);
+	ft_strlcpy(cpy, &s1[start], end - start + 2);
 	return (cpy);
 }
 

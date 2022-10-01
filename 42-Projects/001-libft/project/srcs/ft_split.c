@@ -12,51 +12,117 @@
 
 #include "libft.h"
 
-static void	ft_populaterer(const char *s, char c, char *ptr, char **pptr);
+static int	ft_countp(char const *s, char c);
+static int	ft_populate(const char *s, char c, char **pptr, int pointers);
+static int	ft_section(const char *s, char **pptr, int len);
+static char	**ft_bareparam(const char *s);
 
 char	**ft_split(char const *s, char c)
 {
-	char	*starter;
-	char	**pointerer;
-	size_t	len;
-	size_t	splitr;
+	int		start;
+	int		pointers;
+	char	**pptr;
 
-	len = 0;
-	splitr = 0;
-	while (s[len] != '\0')
-	{
-		if (s[len] == c)
-			splitr++;
-		len++;
-	}
-	starter = malloc(len);
-	pointerer = malloc(sizeof(starter) * splitr);
-	if (!starter || !pointerer || len == 0)
-		return (0);
-	pointerer = &starter;
-	ft_populaterer(s, c, starter, pointerer);
-	pointerer[splitr] = 0;
-	return (pointerer);
+	if (!s || !c)
+		return (ft_bareparam(s));
+	start = 0;
+	while (s[start] == c)
+		start++;
+	pointers = ft_countp(&s[start], c);
+	if (!pointers)
+		return (ft_bareparam(&s[start]));
+	pptr = malloc(sizeof(pptr) * (pointers + 1));
+	if (!pptr)
+		return (NULL);
+	pptr[0] = (char *)&s[start];
+	if (!ft_populate(&s[start], c, pptr, pointers))
+		return (NULL);
+	pptr[pointers] = NULL;
+	return (pptr);
 }
 
-static void	ft_populaterer(const char *s, char c, char *ptr, char **pptr)
+static int	ft_countp(char const *s, char c)
 {
-	while (*s != '\0')
+	int	i;
+
+	i = 0;
+	while (*s)
 	{
-		if (*s == c)
+		if (*s != c)
+			s++;
+		else
 		{
-			*ptr = '\0';
+			i++;
+			while (*s == c)
+				s++;
+		}
+	}
+	if (i > 0 && *--s != c)
+		i++;
+	return (i);
+}
+
+static int	ft_section(const char *s, char **pptr, int len)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	ptr = malloc(sizeof(char) * len + 1);
+	if (!ptr)
+		return (0);
+	while (len)
+	{
+		ptr[i] = s[i];
+		len--;
+		i++;
+	}
+	ptr[i] = '\0';
+	*pptr = &ptr[0];
+	return (1);
+}
+
+static int	ft_populate(const char *s, char c, char **pptr, int pointers)
+{
+	int	i;
+
+	i = 0;
+	while (pointers)
+	{
+		if (s[i] == c || !s[i])
+		{
+			if (!ft_section(s, pptr, i))
+				return (0);
+			pointers--;
+			s += i;
 			pptr++;
-			*pptr = ptr++;
+			i = 0;
+			while (*s == c && *s)
+				s++;
 		}
 		else
-			*ptr = *s;
-		s++;
-		ptr++;
+			i++;
 	}
+	return (1);
 }
 
-/*
-aaaZ    bbbZ    ccc'\0'
-aaa'\0' bbb'\0' ccc'\0'
-*/
+static char	**ft_bareparam(const char *s)
+{
+	char	**pptr;
+	char	len;
+
+	if (!s || !*s)
+	{
+		pptr = malloc(sizeof (pptr));
+		pptr[0] = NULL;
+	}
+	else
+	{
+		len = ft_strlen(s) + 1;
+		pptr = malloc(sizeof(pptr) * 2);
+		pptr[0] = malloc(sizeof(char) * len);
+		ft_strlcpy(pptr[0], s, len);
+		pptr[1] = NULL;
+	}
+	return (pptr);
+}

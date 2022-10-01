@@ -15,27 +15,17 @@
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*ptr;
-	size_t	i;
-	size_t	len1;
-	size_t	len2;
+	int		len1;
+	int		len2;
 
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	ptr = malloc(len1 + len2 + 1);
-	if (ptr == 0)
-		return (0);
-	i = 0;
-	while (i < len1)
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < len2)
-	{
-		ptr[i + len1] = s1[i];
-		i++;
-	}
-	ptr[len1 + len2 + 1] = '\0';
+	if (!s1)
+		return ((char *)ft_calloc(1, sizeof(char)));
+	len1 = (int)ft_strlen(s1);
+	len2 = (int)ft_strlen(s2);
+	ptr = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!ptr)
+		return (NULL);
+	ft_strlcpy(ptr, s1, len1 + 1);
+	ft_strlcpy(&ptr[len1], s2, len2 + 1);
 	return (ptr);
 }
