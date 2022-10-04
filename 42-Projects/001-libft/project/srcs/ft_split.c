@@ -114,6 +114,8 @@ static char	**ft_bareparam(const char *s)
 	if (!s || !*s)
 	{
 		pptr = (char **)malloc(sizeof (pptr));
+		if (!pptr)
+			return (NULL);
 		pptr[0] = NULL;
 	}
 	else
@@ -121,6 +123,8 @@ static char	**ft_bareparam(const char *s)
 		len = (int)ft_strlen(s) + 1;
 		pptr = (char **)malloc(sizeof(pptr) * 2);
 		pptr[0] = (char *)malloc(sizeof(char) * len);
+		if (!pptr || !pptr[0])
+			return (NULL);
 		ft_strlcpy(pptr[0], s, len);
 		pptr[1] = NULL;
 	}

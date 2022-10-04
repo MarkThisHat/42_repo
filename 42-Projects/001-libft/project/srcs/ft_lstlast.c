@@ -11,24 +11,17 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-/*
+
 t_list	*ft_lstlast(t_list *lst)
 {
-	while (lst)
-		lst = lst->next;
-	return (lst);
-}
-*/
-t_list	*ft_lstlast(t_list *lst)
-{
-	t_list	*cur;
+	t_list	*node;
 
 	if (!lst)
 		return (NULL);
-	cur = lst;
-	while (cur->next != NULL)
+	node = lst;
+	while (node->next != NULL)
 	{
-		cur = cur->next;
+		node = node->next;
 	}
-	return (cur);
+	return (node);
 }

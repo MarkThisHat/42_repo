@@ -23,7 +23,7 @@ char	*ft_strrchr(const char *str, int c)
 	i = 0;
 	r = 0;
 	found = 0;
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		if (str[i] == (char)c)
 		{

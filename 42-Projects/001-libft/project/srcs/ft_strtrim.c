@@ -40,7 +40,7 @@ static int	ft_seekchar(char subs1, char const *set)
 	int	i;
 
 	i = 0;
-	while (set[i] != '\0')
+	while (set[i])
 	{
 		if (set[i] == subs1)
 			return (1);
