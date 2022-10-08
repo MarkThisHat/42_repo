@@ -109,7 +109,7 @@ static int	ft_populate(const char *s, char c, char **pptr, int pointers)
 static char	**ft_bareparam(const char *s)
 {
 	char	**pptr;
-	char	len;
+	int		len;
 
 	if (!s || !*s)
 	{
