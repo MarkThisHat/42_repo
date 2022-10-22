@@ -15,20 +15,19 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    int i;
-    int fd;
+	int	i;
+	int	fd;
 
-    (void)argv;
-    fd = open("test.txt", O_RDONLY);
-    
-    i = 1;
-    while (i < argc)
-    {
-        printf("%i\n%s\n\n", i, get_next_line(fd));
-        i++;
-    }
-    close(fd);
-    return (0);
+	(void)argv;
+	fd = open("test.txt", O_RDONLY);
+	i = 1;
+	while (i < argc)
+	{
+		printf("%i\n%s\n\n", i, get_next_line(fd));
+		i++;
+	}
+	close(fd);
+	return (0);
 }
