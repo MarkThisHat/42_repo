@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/10/22 18:18:16 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/10/23 21:19:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ int	ft_tilnextln(char *buff)
 	while (buff[i] != '\n')
 		i++;
 	return (i++);
+}
+
+int	ft_smalloc(char **c, int i)
+{
+	*c = (char *)malloc((sizeof(char) * (i + 1)));
+	if (!*c)
+		return (0);
+	*c[0] = 'p';
+	*c[i + 1] = '\0';
+	return (1);
 }
