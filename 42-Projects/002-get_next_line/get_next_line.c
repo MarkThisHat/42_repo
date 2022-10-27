@@ -6,34 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/10/25 21:47:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:22:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-
-char	*modget_next_line(int fd)
-{
-	static char	*left;
-	char		*buff;
-	char		*line;
-	//char		**ptr;
-	int			linesize;
-	
-	buff = malloc(BUFFER_SIZE + 1);
-	buff[BUFFER_SIZE + 1] = '\0';
-	/*ptr = &buff;
-	if (!ft_smalloc(ptr, BUFFER_SIZE))
-		return (NULL);*/
-	left = malloc(BUFFER_SIZE + 1);
-	left[BUFFER_SIZE + 1] = '\0';
-	read(fd, buff, BUFFER_SIZE);
-	linesize = ft_tilnextln(buff);
-	line = malloc(linesize + 1);
-	ft_copy(left, buff, line);
-	return (line);
-}
 
 char	*get_next_line(int fd)
 {
@@ -44,22 +22,74 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	buff = (char)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
 	if (!keep.saved && !keep.nlcount)
 		size = (int)read(fd, buff, BUFFER_SIZE);
-	ft_tcharans(tptr, buff, size);
-
+	if (!size)
+		return (NULL);
+	ft_find_count(tptr, buff, size);
+	free(buff);
+	return (tptr->line);
 }
 
-void	ft_tcharans(t_keep *tptr, char *buff, int size)
+void	ft_find_count(t_keep *tptr, char *buff, int size)
+{
+	int	i;
+	int	firstnl;
+
+	i = 0;
+	firstnl = 0;
+	while (i < size)
+	{
+		if (buff[i] == '\n')
+		{
+			if (!firstnl)
+				firstnl = i;
+			tptr->nlcount++;
+		}
+		i++;
+	}
+	if (firstnl)
+	{
+		ft_copy(tptr, buff, firstnl);
+		ft_save(tptr, &buff[firstnl], size - firstnl); //check math
+	}
+}
+
+void	ft_copy(t_keep *tptr, char *buff, int firstnl)
 {
 	int	i;
 
 	i = 0;
+	tptr->nlcount--;
+	if (tptr->line)
+		free(tptr->line);
+	tptr->line = (char *)malloc(sizeof(char) * (firstnl + 1)); //check math
+	if (!tptr->line)
+		return ;
+	while (i < firstnl)
+	{
+		tptr->line[i] = buff[i];
+		i++;
+	}
+	tptr->line[i] = '\0';
+}
+
+void	ft_save(t_keep *tptr, char *buff, int size)
+{
+	int	i;
+
+	if (tptr->saved)
+		free(tptr->saved);
+	i = 0;
+	tptr->saved = (char *)malloc(sizeof(char) * size);
+	if (!tptr->saved)
+		return ;
 	while (i < size)
 	{
-		//do stuff
+		tptr->saved[i] = buff[i];
+		i++;
 	}
 }
