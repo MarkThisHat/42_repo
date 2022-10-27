@@ -21,9 +21,10 @@ int	main(int argc, char **argv)
 	int	fd;
 
 	(void)argv;
+	(void)argc;
 	fd = open("test.txt", O_RDONLY);
 	i = 1;
-	while (i < argc)
+	while (i < 2)
 	{
 		printf("%i\n%s\n\n", i, get_next_line(fd));
 		i++;
