@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/10/26 21:15:24 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/01 03:09:39 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,22 @@
 # define GET_NEXT_LINE_H
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h> //REMOVE
 
-typedef struct s_tracker
+typedef struct s_node
 {
-	char	*saved;
-	char	*line;
-	int		nlcount;
-	int		booleon;
-}	t_keep;
+	char			*line;
+	char			*scanned;
+	unsigned int	amountnl;
+	unsigned int	firstnl;
+	unsigned int	length;
+	struct s_node	*next;
+}	t_node;
 
 char	*get_next_line(int fd);
-int		ft_tilnextln(char *buff);
-int		ft_smalloc(char **c, int i);
-int		ft_oldcopy(char *left, char *buff, char *line);
+char	*ft_freeptrs(char *c, t_node *ptr);
+char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n);
+int		ft_findnl(t_node *ptr, char *buffer);
+void	ft_recycle(t_node *ptr, char *buffer);
 
 #endif

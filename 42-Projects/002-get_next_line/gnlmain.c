@@ -20,13 +20,11 @@ int	main(int argc, char **argv)
 	int	i;
 	int	fd;
 
-	(void)argv;
-	(void)argc;
-	fd = open("test.txt", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	i = 1;
-	while (i < 2)
+	while (i < argc)
 	{
-		printf("%i\n%s\n\n", i, get_next_line(fd));
+		printf("Gnl return %i: %s<-This should be at start line->\n", i, get_next_line(fd));
 		i++;
 	}
 	close(fd);
