@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/01 03:06:08 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/02 23:20:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_findnl(t_node *ptr, char *buffer)
 
 	i = 0;
 	found = 0;
+	ptr->firstnl = 0;
 	while (i < ptr->length)
 	{
 		if (buffer[i] == '\n')
@@ -27,9 +28,14 @@ int	ft_findnl(t_node *ptr, char *buffer)
 			{
 				found = 1;
 				ptr->firstnl = i;
+				ptr->amountnl++;
 				printf("Found my first nl at index %i\n", i);
 			}
-			ptr->amountnl++;
+			else
+			{
+				ptr->amountnl++;
+				return (found);
+			}
 		}
 		i++;
 	}
