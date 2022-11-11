@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/02 23:21:24 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:03:30 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_node
 {
 	char			*line;
 	char			*scanned;
-	unsigned int	amountnl;
+	unsigned int	hasnl;
 	unsigned int	firstnl;
 	unsigned int	liveindex;
 	unsigned int	length;

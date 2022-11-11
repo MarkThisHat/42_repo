@@ -19,10 +19,11 @@ int	main(int argc, char **argv)
 {
 	int	i;
 	int	fd;
-
-	fd = open(argv[1], O_RDONLY);
+	(void)argc;
+	(void)argv;
+	fd = open("test.txt", O_RDONLY);
 	i = 1;
-	while (i < argc)
+	while (i < 6)
 	{
 		printf("Gnl return %i: %s<-This should be at start line->\n", i, get_next_line(fd));
 		i++;
