@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/10 20:15:08 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/11 23:37:34 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct	s_node
 	unsigned int	firstnl;
 	unsigned int	liveindex;
 	unsigned int	length;
-	unsigned int	totalength;
+	unsigned int	totalength; talvez seje desnecessário
 	struct s_node	*next;
 }	t_node;*/
 
@@ -33,45 +33,28 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	tptr = &node;
-	buffer = NULL;//?
 	if (node.line)
 	{
 		free(node.line);
 		node.line = NULL;
 	}
-	if (node.hasnl) //commented node.hasnl to try and fix the mistake
-	{
-		node.hasnl--;
-		if (ft_findnl(tptr, &node.scanned[node.liveindex]))
-		{
-			node.line = ft_nodestrncpy(tptr, &node.scanned[node.liveindex], node.firstnl + 1);
-			node.liveindex = node.firstnl + 1;
-			node.length -= node.firstnl;
-			node.hasnl--;
-			return (node.line);
-		}
-		else
-			return (ft_chain(tptr, buffer, fd, &node));
-	}
-	//experimental else:
+	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
+	if (!buffer)
+		return (ft_freeptrs(tptr->scanned, tptr));
+	if (node.scanned)
+		return (ft_chain(tptr, buffer, fd, &node));
+	node.length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
+	if (!node.length)
+		return (NULL); //reached eof
+	ft_findnl(tptr, buffer);
+	if (node.hasnl && node.firstnl == node.length - 1) //node [0] [1] [2] [3] length = 4 node.firstnl = 3
+		return (ft_nodestrncpy(tptr, buffer, node.firstnl + 1));
+	ft_recycle(tptr, buffer);
+	if (!node.firstnl)
+		ft_chain(tptr, buffer, fd, &node);
 	else
-	{
-		buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-		if (!buffer)
-			return (ft_freeptrs(tptr->scanned, tptr));
-		node.length = (unsigned int)read(fd, buffer, BUFFER_SIZE);//make sure node.length is zero b4 doing read
-		if (!node.length)
-			return (NULL); //reached eof
-		ft_findnl(tptr, buffer);
-		if (node.firstnl < node.length)//problem if no nl found, likely add an if on line 68
-			ft_recycle(tptr, buffer);
-		if (!node.firstnl)
-			return (ft_chain(tptr, buffer, fd, &node));
 		node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
-		return (node.line);
-	}
-	return ("Hehehe");
-	//end experiment
+	return (node.line);
 }
 
 char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
@@ -82,10 +65,8 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	if (!newnode)
 		return (ft_freeptrs(buffer, ptr));
 	newnode->next = NULL;
+	newnode->line = NULL;
 	ptr->next = newnode;
-	if (!headptr->totalength)
-		headptr->totalength = headptr->length;
-	newnode->hasnl = 1;//?
 	if (!buffer)
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	if (!buffer)
@@ -93,39 +74,29 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!newnode->length)
 		return (NULL); //reached eof
-	if (!ptr->firstnl)
+	headptr->length += newnode->length;
+	if (!ft_findnl(newnode, buffer))
 	{
-		if (!ft_findnl(ptr, buffer))
-		{
-			newnode->line = ft_nodestrncpy(newnode, buffer, newnode->length);
-			headptr->totalength += newnode->length;
-			return (ft_chain(headptr, buffer, fd, headptr));
-		}
+		newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->length);
+		return (ft_chain(newnode, buffer, fd, headptr));
 	}
-	newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->firstnl + 1);
-	headptr->totalength += newnode->length;
-	headptr->hasnl = 1;//?????
-	headptr->line = (char *)malloc(sizeof(char) * (headptr->totalength + 1));
+	newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->firstnl + 1);//could start copying and move this to later
+	headptr->line = (char *)malloc(sizeof(char) * (headptr->length + 1));
 	if (!headptr->line)
 		return (ft_freeptrs(buffer, headptr));
-	headptr->line[headptr->totalength] = '\0';
-	ft_bigcopy(headptr, headptr->line, &headptr->totalength);
-	/*if (newnode->hasnl > 1)
-	{
-		headptr->hasnl = newnode->hasnl;
-		ft_recycle(headptr, buffer);
-	}*/
-	return (newnode->line);
+	headptr->line[headptr->length] = '\0';
+	ft_bigcopy(headptr, headptr->line, &headptr->length);
+	return (headptr->line);
 }
 
 void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
 {
 	while (ptr->next != NULL && !ptr->hasnl)
 	{	
-		ptr->hasnl = 0;//might have to changedis
+		ptr->hasnl = 1;//might have to changedis
 		ft_bigcopy(ptr->next, line, len);
 	}
-	while (ptr->length)
+	while (ptr->length && !ptr->line)
 	{
 		*len -= 1;
 		ptr->length--;
@@ -141,21 +112,20 @@ void	ft_recycle(t_node *ptr, char *buffer)
 	unsigned int	size;
 	
 	i = 0;
-	size = (ptr->length - ptr->firstnl - ptr->hasnl);
-	//ptr->hasnl--; making messes here firstnl = 0  length = 5 [0] [1] [2] [3] [4] (5 + 0 + 1 + 1)
-	ptr->scanned = (char *)malloc(sizeof(char) * (size + 1));//has to be at least 2 here
+	size = (ptr->length - ptr->firstnl - ptr->hasnl);//??  [0] [1] [n] [3] len 4 firstnl 2 1
+	ptr->scanned = (char *)malloc(sizeof(char) * (size + 1));
 	while (i < size)
 	{
 		ptr->scanned[i] = buffer[i + ptr->firstnl + ptr->hasnl];
 		i++;
 	}
 	ptr->scanned[i] = '\0';
-	if (ptr->length == i)
+/*	if (ptr->length == i)
 	{
-		free(buffer);
-		buffer = NULL;
+		free(*pbuffer);
+		*pbuffer = NULL;
 	}
-	ptr->length = i;
+*/	ptr->length = i;
 }
 
 char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
@@ -173,7 +143,7 @@ char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
 		i++;
 	}
 	line[i] = '\0';
-	free(buffer);
-	buffer = NULL;//não adianta dar free na cópia do ponteiro
+	/*free(*pbuffer);
+	*pbuffer = NULL;*/
 	return (line);
 }
