@@ -6,23 +6,11 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/11 23:37:34 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/13 03:03:31 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/*
-typedef struct	s_node
-{
-	char			*scanned;
-	unsigned int	hasnl;
-	unsigned int	firstnl;
-	unsigned int	liveindex;
-	unsigned int	length;
-	unsigned int	totalength; talvez seje desnecessário
-	struct s_node	*next;
-}	t_node;*/
 
 char	*get_next_line(int fd)
 {
@@ -41,7 +29,7 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	if (!buffer)
 		return (ft_freeptrs(tptr->scanned, tptr));
-	if (node.scanned)
+	if (node.scanned)//use findnl with node.scanned instead of buffer
 		return (ft_chain(tptr, buffer, fd, &node));
 	node.length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!node.length)
@@ -65,7 +53,7 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	if (!newnode)
 		return (ft_freeptrs(buffer, ptr));
 	newnode->next = NULL;
-	newnode->line = NULL;
+	newnode->chainsize = 0;
 	ptr->next = newnode;
 	if (!buffer)
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
@@ -74,18 +62,35 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!newnode->length)
 		return (NULL); //reached eof
-	headptr->length += newnode->length;
+	headptr->chainsize += newnode->length;
 	if (!ft_findnl(newnode, buffer))
 	{
 		newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->length);
 		return (ft_chain(newnode, buffer, fd, headptr));
 	}
-	newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->firstnl + 1);//could start copying and move this to later
-	headptr->line = (char *)malloc(sizeof(char) * (headptr->length + 1));
+	newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->firstnl + 1);//good job marcos do passado!| copia o resto pro headptr->scanned mas como saber o tamanho?
+	headptr->line = (char *)malloc(sizeof(char) * (headptr->chainsize + 1));
 	if (!headptr->line)
 		return (ft_freeptrs(buffer, headptr));
-	headptr->line[headptr->length] = '\0';
-	ft_bigcopy(headptr, headptr->line, &headptr->length);
+	while (headptr->length)
+	{
+		headptr->length--;
+		headptr->line[headptr->length] = headptr->scanned[headptr->length];
+	}
+	free(headptr->scanned);
+	headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl);
+	if (!headptr->scanned)
+		return (ft_freeptrs(buffer, headptr));
+	unsigned int i = 0;
+	while (i < newnode->length - newnode->firstnl + 1)
+	{
+		headptr->scanned[i] = buffer[i + newnode->firstnl + newnode->hasnl];
+		i++;
+	}
+	headptr->scanned[i] = '\0';
+	headptr->line[headptr->chainsize] = '\0';
+	ft_bigcopy(headptr, headptr->line, &headptr->chainsize);//gotta free some stuff here and zero sum statics
+	printf("Without the newline: %s<-there will be a new line here\n", headptr->line);
 	return (headptr->line);
 }
 
@@ -93,7 +98,7 @@ void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
 {
 	while (ptr->next != NULL && !ptr->hasnl)
 	{	
-		ptr->hasnl = 1;//might have to changedis
+		ptr->hasnl = 1;//might have to changedis, or not
 		ft_bigcopy(ptr->next, line, len);
 	}
 	while (ptr->length && !ptr->line)
@@ -126,24 +131,4 @@ void	ft_recycle(t_node *ptr, char *buffer)
 		*pbuffer = NULL;
 	}
 */	ptr->length = i;
-}
-
-char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
-{
-	char	*line;
-	int		i;
-
-	line = (char *)malloc(sizeof(char) * (n + 1));
-	if (!line)
-		return (ft_freeptrs(buffer, ptr));
-	i = 0;
-	while (i < n)
-	{
-		line[i] = buffer[i];
-		i++;
-	}
-	line[i] = '\0';
-	/*free(*pbuffer);
-	*pbuffer = NULL;*/
-	return (line);
 }
