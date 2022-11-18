@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/17 21:13:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:17:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*get_next_line(int fd)
 	if (node.scanned)
 	{
 		buffer = node.scanned;
-		if(!ft_findnl(tptr, node.scanned))//use findnl with node.scanned instead of buffer
+		if(!ft_findnl(tptr, node.scanned))//em algum momento tá entrando um \0 no length!!!
 		{
 			buffer = malloc(sizeof(char) * (node.length));
 			unsigned int i = 0;
@@ -106,20 +106,25 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 		headptr->line[headptr->length] = headptr->scanned[headptr->length];
 	}
 	free(headptr->scanned);
-	headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl);//might need an if here
-	if (!headptr->scanned)
-		return (ft_freeptrs(buffer, headptr));
-	unsigned int i = 0;
-	while (i < newnode->length - newnode->firstnl + 1)
+	headptr->scanned = NULL;
+	if (newnode->hasnl && newnode->firstnl < newnode->length - 1)
 	{
-		headptr->scanned[i] = buffer[i + newnode->firstnl + newnode->hasnl];
-		i++;
+		headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl + 1);//might need an if here
+		if (!headptr->scanned)
+			return (ft_freeptrs(buffer, headptr));
+		unsigned int i = 0;
+		while (i < newnode->length - newnode->firstnl + 1)
+		{
+			headptr->scanned[i] = buffer[i + newnode->firstnl + newnode->hasnl];
+			i++;
+		}
+		headptr->scanned[i] = '\0';
+		headptr->length = i - 1;
 	}
-	headptr->scanned[i] = '\0';
-	headptr->length = i - 1;
 	headptr->line[headptr->chainsize] = '\0';
 	ft_bigcopy(headptr, headptr->line, &headptr->chainsize);//gotta free some stuff here and zero sum statics
 	//printf("Without the newline: %s<-there will be a new line here\n", headptr->line);
+	headptr->chainsize = 0;
 	return (headptr->line);
 }
 
