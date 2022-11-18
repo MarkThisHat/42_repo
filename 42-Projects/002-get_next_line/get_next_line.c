@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/13 03:03:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/17 21:13:15 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,43 @@ char	*get_next_line(int fd)
 		free(node.line);
 		node.line = NULL;
 	}
+	if (node.scanned)
+	{
+		buffer = node.scanned;
+		if(!ft_findnl(tptr, node.scanned))//use findnl with node.scanned instead of buffer
+		{
+			buffer = malloc(sizeof(char) * (node.length));
+			unsigned int i = 0;
+			while (i < node.length)
+			{
+				buffer[i] = node.scanned[i];
+				i++;
+			}
+			return (ft_chain(tptr, buffer, fd, &node));
+		}
+		if (buffer[node.length - 1] == '\n' && (&buffer[node.length - 1] == &buffer[node.firstnl])) //node [0] [1] [2] [3] length = 4 node.firstnl = 3
+			return (ft_nodestrncpy(tptr, buffer, node.firstnl + 1));
+		ft_recycle(tptr, buffer);
+		if (!node.firstnl)
+			ft_chain(tptr, buffer, fd, &node);
+		else
+			node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
+		return (node.line);
+	}
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
 	if (!buffer)
 		return (ft_freeptrs(tptr->scanned, tptr));
-	if (node.scanned)//use findnl with node.scanned instead of buffer
-		return (ft_chain(tptr, buffer, fd, &node));
 	node.length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!node.length)
 		return (NULL); //reached eof
 	ft_findnl(tptr, buffer);
 	if (node.hasnl && node.firstnl == node.length - 1) //node [0] [1] [2] [3] length = 4 node.firstnl = 3
-		return (ft_nodestrncpy(tptr, buffer, node.firstnl + 1));
+	{
+		node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
+		free(node.scanned);
+		node.scanned = NULL;
+		return (node.line);
+	}
 	ft_recycle(tptr, buffer);
 	if (!node.firstnl)
 		ft_chain(tptr, buffer, fd, &node);
@@ -62,6 +88,8 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!newnode->length)
 		return (NULL); //reached eof
+	if (!headptr->chainsize)
+		headptr->chainsize += headptr->length;
 	headptr->chainsize += newnode->length;
 	if (!ft_findnl(newnode, buffer))
 	{
@@ -78,7 +106,7 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 		headptr->line[headptr->length] = headptr->scanned[headptr->length];
 	}
 	free(headptr->scanned);
-	headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl);
+	headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl);//might need an if here
 	if (!headptr->scanned)
 		return (ft_freeptrs(buffer, headptr));
 	unsigned int i = 0;
@@ -88,9 +116,10 @@ char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
 		i++;
 	}
 	headptr->scanned[i] = '\0';
+	headptr->length = i - 1;
 	headptr->line[headptr->chainsize] = '\0';
 	ft_bigcopy(headptr, headptr->line, &headptr->chainsize);//gotta free some stuff here and zero sum statics
-	printf("Without the newline: %s<-there will be a new line here\n", headptr->line);
+	//printf("Without the newline: %s<-there will be a new line here\n", headptr->line);
 	return (headptr->line);
 }
 
@@ -106,9 +135,9 @@ void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
 		*len -= 1;
 		ptr->length--;
 		line[*len] = ptr->scanned[ptr->length];
-		printf("line[%i] = %c\n", *len, line[*len]);
+		//printf("line[%i] = %c\n", *len, line[*len]);
 	}
-	printf("%s\n", &line[*len]);
+	//printf("%s\n", &line[*len]);
 }
 
 void	ft_recycle(t_node *ptr, char *buffer)
@@ -125,10 +154,5 @@ void	ft_recycle(t_node *ptr, char *buffer)
 		i++;
 	}
 	ptr->scanned[i] = '\0';
-/*	if (ptr->length == i)
-	{
-		free(*pbuffer);
-		*pbuffer = NULL;
-	}
-*/	ptr->length = i;
+	ptr->length = i;
 }
