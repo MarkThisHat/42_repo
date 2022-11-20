@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/18 17:17:55 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/20 14:58:22 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,144 +20,82 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	tptr = &node;
 	if (node.line)
-	{
 		free(node.line);
-		node.line = NULL;
-	}
-	if (node.scanned)
-	{
-		buffer = node.scanned;
-		if(!ft_findnl(tptr, node.scanned))//em algum momento tá entrando um \0 no length!!!
-		{
-			buffer = malloc(sizeof(char) * (node.length));
-			unsigned int i = 0;
-			while (i < node.length)
-			{
-				buffer[i] = node.scanned[i];
-				i++;
-			}
-			return (ft_chain(tptr, buffer, fd, &node));
-		}
-		if (buffer[node.length - 1] == '\n' && (&buffer[node.length - 1] == &buffer[node.firstnl])) //node [0] [1] [2] [3] length = 4 node.firstnl = 3
-			return (ft_nodestrncpy(tptr, buffer, node.firstnl + 1));
-		ft_recycle(tptr, buffer);
-		if (!node.firstnl)
-			ft_chain(tptr, buffer, fd, &node);
-		else
-			node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
-		return (node.line);
-	}
-	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE);
-	if (!buffer)
-		return (ft_freeptrs(tptr->scanned, tptr));
-	node.length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
-	if (!node.length)
-		return (NULL); //reached eof
-	ft_findnl(tptr, buffer);
-	if (node.hasnl && node.firstnl == node.length - 1) //node [0] [1] [2] [3] length = 4 node.firstnl = 3
-	{
-		node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
-		free(node.scanned);
-		node.scanned = NULL;
-		return (node.line);
-	}
-	ft_recycle(tptr, buffer);
-	if (!node.firstnl)
-		ft_chain(tptr, buffer, fd, &node);
-	else
-		node.line = ft_nodestrncpy(tptr, buffer, node.firstnl + 1);
-	return (node.line);
-}
-
-char	*ft_chain(t_node *ptr, char *buffer, int fd, t_node *headptr)
-{
-	t_node *newnode;
-
-	newnode = malloc(sizeof(t_node));
-	if (!newnode)
-		return (ft_freeptrs(buffer, ptr));
-	newnode->next = NULL;
-	newnode->chainsize = 0;
-	ptr->next = newnode;
-	if (!buffer)
+	tptr = &node;
+	if (!tptr->scanned)
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	else
+		buffer = tptr->scanned;
 	if (!buffer)
-		return (ft_freeptrs(ptr->scanned, ptr));
-	newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
-	if (!newnode->length)
-		return (NULL); //reached eof
-	if (!headptr->chainsize)
-		headptr->chainsize += headptr->length;
-	headptr->chainsize += newnode->length;
-	if (!ft_findnl(newnode, buffer))
-	{
-		newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->length);
-		return (ft_chain(newnode, buffer, fd, headptr));
-	}
-	newnode->scanned = ft_nodestrncpy(newnode, buffer, newnode->firstnl + 1);//good job marcos do passado!| copia o resto pro headptr->scanned mas como saber o tamanho?
-	headptr->line = (char *)malloc(sizeof(char) * (headptr->chainsize + 1));
-	if (!headptr->line)
-		return (ft_freeptrs(buffer, headptr));
-	while (headptr->length)
-	{
-		headptr->length--;
-		headptr->line[headptr->length] = headptr->scanned[headptr->length];
-	}
-	free(headptr->scanned);
-	headptr->scanned = NULL;
-	if (newnode->hasnl && newnode->firstnl < newnode->length - 1)
-	{
-		headptr->scanned = malloc(sizeof(char) * newnode->length - newnode->firstnl + 1);//might need an if here
-		if (!headptr->scanned)
-			return (ft_freeptrs(buffer, headptr));
-		unsigned int i = 0;
-		while (i < newnode->length - newnode->firstnl + 1)
-		{
-			headptr->scanned[i] = buffer[i + newnode->firstnl + newnode->hasnl];
-			i++;
-		}
-		headptr->scanned[i] = '\0';
-		headptr->length = i - 1;
-	}
-	headptr->line[headptr->chainsize] = '\0';
-	ft_bigcopy(headptr, headptr->line, &headptr->chainsize);//gotta free some stuff here and zero sum statics
-	//printf("Without the newline: %s<-there will be a new line here\n", headptr->line);
-	headptr->chainsize = 0;
-	return (headptr->line);
+		return (ft_freeptrs(&node));
+	if (!tptr->length)
+		tptr->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
+	if (!tptr->length)
+		return (ft_eof());
+	if (!ft_findnl_and_recycle(tptr, buffer))
+		return (ft_get_next_node(tptr, fd));
+	return (ft_nodestrncpy(tptr, buffer, tptr->firstnl + 1));
 }
 
-void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
-{
-	while (ptr->next != NULL && !ptr->hasnl)
-	{	
-		ptr->hasnl = 1;//might have to changedis, or not
-		ft_bigcopy(ptr->next, line, len);
-	}
-	while (ptr->length && !ptr->line)
-	{
-		*len -= 1;
-		ptr->length--;
-		line[*len] = ptr->scanned[ptr->length];
-		//printf("line[%i] = %c\n", *len, line[*len]);
-	}
-	//printf("%s\n", &line[*len]);
-}
-
-void	ft_recycle(t_node *ptr, char *buffer)
+unsigned int ft_findnl_and_recycle(t_node *ptr, char *buffer)
 {
 	unsigned int	i;
-	unsigned int	size;
-	
+
 	i = 0;
-	size = (ptr->length - ptr->firstnl - ptr->hasnl);//??  [0] [1] [n] [3] len 4 firstnl 2 1
-	ptr->scanned = (char *)malloc(sizeof(char) * (size + 1));
-	while (i < size)
+	ptr->hasnl = 0;
+	ptr->firstnl = 0;
+	while (i < ptr->length)
 	{
-		ptr->scanned[i] = buffer[i + ptr->firstnl + ptr->hasnl];
+		if (buffer[i] == '\n')
+		{
+			ptr->firstnl = i;
+			ptr->hasnl = 1;
+			if (ptr->length != (i + 1))
+				ft_recycle(ptr, buffer);
+			return (ptr->hasnl);
+		}
 		i++;
 	}
-	ptr->scanned[i] = '\0';
-	ptr->length = i;
+	return (ptr->hasnl);
 }
+
+void	ft_recycle(t_node *tptr, char *buffer)
+{
+	unsigned int	index;
+
+	index = tptr->firstnl + tptr->hasnl;
+	tptr->length -= index;
+	if (buffer == tptr->scanned)
+	{
+		tptr->i = tptr->firstnl + 1;
+		return ;
+	}
+	tptr->scanned = (char *)malloc(sizeof(char) * tptr->length);
+	if (!tptr->scanned)
+	{
+		tptr->hasnl = 2;
+		return ;
+	}
+	ft_strncpy(tptr->scanned, &buffer[index] , tptr->length);
+}
+	/*
+	*	if !fnl 
+	*		recicla (len - fnl - hasnl)
+	*	
+		chain
+	*/
+	/*
+	*	if fnl + hasnl == len
+	*		copia linha, limpa tudo, retorna linha
+	*
+	*/
+	/*
+	*	else
+	*		recicla (len - fnl - hasnl)
+	*		copia linha
+	*		limpa tudo
+	*		retorna linha
+	*
+	*/
+/* if (tptr->firstnl + tptr->hasnl == tptr->length) */

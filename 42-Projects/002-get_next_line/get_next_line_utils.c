@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/13 03:04:00 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/20 15:02:15 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,39 @@ int	ft_findnl(t_node *ptr, char *buffer)
 	return (ptr->hasnl);
 }
 
-char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
+char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)
 {
 	char	*line;
-	int		i;
 
 	line = (char *)malloc(sizeof(char) * (n + 1));
 	if (!line)
 		return (ft_freeptrs(buffer, ptr));
-	i = 0;
-	while (i < n)
-	{
-		line[i] = buffer[i];
-		i++;
-	}
-	line[i] = '\0';
-	/*free(*pbuffer);
-	*pbuffer = NULL;*/
+	ft_strncpy(line, buffer, n);
+	line[n] = '\0';
 	return (line);
 }
 
-char	*ft_freeptrs(char *c, t_node *ptr)
+char	*ft_strncpy(char *d, char *s, unsigned int len)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		d[i] = s[i];
+		i++;
+	}
+	return (d);
+}
+
+char	*ft_freeptrs(t_node *ptr)
 {
 	while (ptr->next != NULL)
-		(ft_freeptrs(ptr->scanned, ptr->next));
-	if (c != NULL)
-		free(c);
+		(ft_freeptrs(ptr->next));
+	if (ptr->scanned != NULL)
+		free(ptr->scanned);
+	if (ptr->line != NULL)
+		free(ptr->line);
 	if (ptr->next != NULL)
 		free(ptr->next);
 	return (NULL);
