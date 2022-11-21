@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 02:59:18 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/20 14:58:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:04:53 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,56 @@ char	*get_next_line(int fd)
 	else
 		buffer = tptr->scanned;
 	if (!buffer)
-		return (ft_freeptrs(&node));
+		return (ft_freenodes(&node));
 	if (!tptr->length)
 		tptr->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!tptr->length)
 		return (ft_eof());
 	if (!ft_findnl_and_recycle(tptr, buffer))
-		return (ft_get_next_node(tptr, fd));
+		return (ft_get_next_node(tptr, fd, &node));
 	return (ft_nodestrncpy(tptr, buffer, tptr->firstnl + 1));
+}
+
+char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
+{
+	t_node *newnode;
+
+	newnode = malloc(sizeof(t_node));
+	buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	if (!newnode || !buffer)
+		return (ft_freeptrs(ptr));
+	ptr->next = newnode;
+	newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
+	if (!newnode->length)
+		return (ft_eof());
+		headptr->chainsize += newnode->length;
+	if (!ft_findnl_and_recycle(ptr, buffer))
+		return (ft_get_next_node(ptr, fd, headptr));
+	headptr->line = (char *)malloc(sizeof(char) * (headptr->chainsize + 1));
+	if (!headptr->line)
+		return (ft_freeptrs(buffer, headptr));
+	ft_strncpy(headptr->line, headptr->scanned, headptr->length);
+	free(headptr->scanned);
+	headptr->scanned = NULL;//have to copy what's left after \n to here
+	headptr->line[headptr->chainsize] = '\0';
+	ft_bigcopy(headptr, headptr->line, &headptr->chainsize);
+	headptr->chainsize = 0;
+	return (headptr->line);
+}
+
+void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
+{
+	while (ptr->next != NULL && !ptr->hasnl)
+	{	
+		ptr->hasnl = 1;//might have to changedis, or not
+		ft_bigcopy(ptr->next, line, len);
+	}
+	while (ptr->length && !ptr->line)
+	{
+		*len -= 1;
+		ptr->length--;
+		line[*len] = ptr->scanned[ptr->length];
+	}
 }
 
 unsigned int ft_findnl_and_recycle(t_node *ptr, char *buffer)

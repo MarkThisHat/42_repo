@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/20 14:59:54 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/21 18:05:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct s_node
 
 char		*get_next_line(int fd);
 char		*ft_freenodes(t_node *ptr);
-char		*ft_get_next_node(t_node *ptr, int fd);
-unsigned int ft_findnl_and_recycle(t_node *ptr, char *buffer)
+char		*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr);
+unsigned int ft_findnl_and_recycle(t_node *ptr, char *buffer);
+void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len);
 
 #endif
