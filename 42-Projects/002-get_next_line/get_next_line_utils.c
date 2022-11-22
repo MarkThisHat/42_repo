@@ -6,13 +6,13 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/20 15:02:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_findnl(t_node *ptr, char *buffer)
+unsigned int	ft_findnl_and_recycle(t_node *ptr, char *buffer)
 {
 	unsigned int	i;
 
@@ -25,11 +25,33 @@ int	ft_findnl(t_node *ptr, char *buffer)
 		{
 			ptr->firstnl = i;
 			ptr->hasnl = 1;
+			if (ptr->length != (i + 1))
+				ft_recycle(ptr, buffer);
 			return (ptr->hasnl);
 		}
 		i++;
 	}
 	return (ptr->hasnl);
+}
+
+void	ft_recycle(t_node *tptr, char *buffer)
+{
+	unsigned int	index;
+
+	index = tptr->firstnl + tptr->hasnl;
+	tptr->length -= index;
+	if (buffer == tptr->scanned)
+	{
+		tptr->i = tptr->firstnl + 1;
+		return ;
+	}
+	tptr->scanned = (char *)malloc(sizeof(char) * tptr->length);
+	if (!tptr->scanned)
+	{
+		tptr->hasnl = 2;
+		return ;
+	}
+	ft_strncpy(tptr->scanned, &buffer[index], tptr->length);
 }
 
 char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)
@@ -38,7 +60,7 @@ char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)
 
 	line = (char *)malloc(sizeof(char) * (n + 1));
 	if (!line)
-		return (ft_freeptrs(buffer, ptr));
+		return (ft_freenodes(ptr));
 	ft_strncpy(line, buffer, n);
 	line[n] = '\0';
 	return (line);
@@ -57,10 +79,10 @@ char	*ft_strncpy(char *d, char *s, unsigned int len)
 	return (d);
 }
 
-char	*ft_freeptrs(t_node *ptr)
+char	*ft_freenodes(t_node *ptr)
 {
 	while (ptr->next != NULL)
-		(ft_freeptrs(ptr->next));
+		(ft_freenodes(ptr->next));
 	if (ptr->scanned != NULL)
 		free(ptr->scanned);
 	if (ptr->line != NULL)
