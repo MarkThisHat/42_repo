@@ -66,6 +66,7 @@ char	*ft_endcopy(t_node *ptr, char *buffer)
 		return (ft_freenodes(ptr));
 	ft_strncpy(ptr->line, ptr->scanned, ptr->length);
 	free(ptr->scanned);
+	ptr->scanned = NULL;
 	if (buffer)
 		ft_recycle(ptr, buffer);
 	ptr->line[ptr->chainsize] = '\0';
@@ -88,8 +89,10 @@ void	ft_bigcopy(t_node *ptr, char *line, unsigned int *len)
 		ptr->length--;
 		line[*len] = ptr->scanned[ptr->length];
 	}
-	free(ptr->scanned);
-	free(ptr->next);
+	if (ptr->scanned)
+		free(ptr->scanned);
+	if (ptr->next)
+		free(ptr->next);
 	ptr->next = NULL;
 }
 
