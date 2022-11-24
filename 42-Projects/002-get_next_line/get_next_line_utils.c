@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/22 18:43:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:26:07 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ unsigned int	ft_findnl_and_recycle(t_node *ptr, char *buffer)
 		}
 		i++;
 	}
+	ft_recycle(ptr, buffer);
 	return (ptr->hasnl);
 }
 
@@ -39,7 +40,6 @@ void	ft_recycle(t_node *tptr, char *buffer)
 	unsigned int	index;
 
 	index = tptr->firstnl + tptr->hasnl;
-	tptr->length -= index;
 	if (buffer == tptr->scanned)
 	{
 		tptr->i = tptr->firstnl + 1;
@@ -52,6 +52,7 @@ void	ft_recycle(t_node *tptr, char *buffer)
 		return ;
 	}
 	ft_strncpy(tptr->scanned, &buffer[index], tptr->length);
+	tptr->length -= index;
 }
 
 char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)

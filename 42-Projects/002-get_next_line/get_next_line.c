@@ -26,7 +26,10 @@ char	*get_next_line(int fd)
 	if (!tptr->scanned)
 		buffer = malloc(sizeof(char) * BUFFER_SIZE);
 	else
-		buffer = tptr->scanned;
+	{
+		buffer = &tptr->scanned[tptr->i];
+		tptr->length -= tptr->i;
+	}
 	if (!buffer)
 		return (ft_freenodes(&node));
 	if (!tptr->length)
@@ -35,7 +38,8 @@ char	*get_next_line(int fd)
 		return (ft_eof(&node));
 	if (!ft_findnl_and_recycle(tptr, buffer))
 		return (ft_get_next_node(tptr, buffer, fd, &node));
-	return (ft_nodestrncpy(tptr, buffer, tptr->firstnl + 1));
+	node.line = ft_nodestrncpy(tptr, buffer, tptr->firstnl + 1);
+	return (node.line);
 }
 
 char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
@@ -47,15 +51,20 @@ char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
 	if (!newnode || !buffer)
 		return (ft_freenodes(ptr));
 	ptr->next = newnode;
-	if (!ptr->i)
+	newnode->next = NULL;
+	newnode->line = NULL;
+	newnode->scanned = NULL;
+	if (!headptr->i)
 		newnode->length = (unsigned int)read(fd, buffer, BUFFER_SIZE);
 	if (!headptr->chainsize)
 		headptr->chainsize = headptr->length;
 	headptr->chainsize += newnode->length;
 	if (!newnode->length)
 		return (ft_eof(headptr));
-	if (!ft_findnl_and_recycle(ptr, buffer))
-		return (ft_get_next_node(ptr, buffer, fd, headptr));
+	if (!ft_findnl_and_recycle(newnode, buffer))
+		return (ft_get_next_node(newnode, buffer, fd, headptr));
+	if (newnode->length == newnode->hasnl + newnode->firstnl)
+		ft_recycle(newnode, buffer);
 	return (ft_endcopy(headptr, newnode->scanned));
 }
 
@@ -66,6 +75,7 @@ char	*ft_endcopy(t_node *ptr, char *buffer)
 		return (ft_freenodes(ptr));
 	ft_strncpy(ptr->line, ptr->scanned, ptr->length);
 	free(ptr->scanned);
+	ptr->i = 0;
 	ptr->scanned = NULL;
 	if (buffer)
 		ft_recycle(ptr, buffer);
