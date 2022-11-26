@@ -6,56 +6,42 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/23 19:26:07 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/26 13:23:38 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-unsigned int	ft_findnl_and_recycle(t_node *ptr, char *buffer)
+void	ft_bigcopy(t_node *ptr, char *line, int *len)
 {
-	unsigned int	i;
-
-	i = 0;
-	ptr->hasnl = 0;
-	ptr->firstnl = 0;
-	while (i < ptr->length)
+	while (ptr->next != NULL && !ptr->hasnl)
 	{
-		if (buffer[i] == '\n')
-		{
-			ptr->firstnl = i;
-			ptr->hasnl = 1;
-			if (ptr->length != (i + 1))
-				ft_recycle(ptr, buffer);
-			return (ptr->hasnl);
-		}
-		i++;
+		ptr->hasnl = 1;
+		ft_bigcopy(ptr->next, line, len);
 	}
-	ft_recycle(ptr, buffer);
-	return (ptr->hasnl);
+	while (ptr->length && !ptr->line)
+	{
+		*len -= 1;
+		ptr->length--;
+		line[*len] = ptr->scanned[ptr->length];
+	}
+	if (ptr->scanned)
+		free(ptr->scanned);
+	if (ptr->next)
+		free(ptr->next);
+	ptr->next = NULL;
 }
 
-void	ft_recycle(t_node *tptr, char *buffer)
+char	*ft_eof(t_node *ptr)
 {
-	unsigned int	index;
-
-	index = tptr->firstnl + tptr->hasnl;
-	if (buffer == tptr->scanned)
-	{
-		tptr->i = tptr->firstnl + 1;
-		return ;
-	}
-	tptr->scanned = (char *)malloc(sizeof(char) * tptr->length);
-	if (!tptr->scanned)
-	{
-		tptr->hasnl = 2;
-		return ;
-	}
-	ft_strncpy(tptr->scanned, &buffer[index], tptr->length);
-	tptr->length -= index;
+	if (!ptr->scanned && !ptr->line)
+		return (ft_freenodes(ptr));
+	if (ft_findnl(ptr, &ptr->scanned[ptr->i]))
+		return (ft_nodestrncpy(ptr, ptr->scanned, ptr->firstnl + 1));
+	return (ft_endcopy(ptr, NULL));
 }
 
-char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)
+char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
 {
 	char	*line;
 
@@ -67,9 +53,9 @@ char	*ft_nodestrncpy(t_node *ptr, char *buffer, unsigned int n)
 	return (line);
 }
 
-char	*ft_strncpy(char *d, char *s, unsigned int len)
+char	*ft_strncpy(char *d, char *s, int len)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	while (i < len)

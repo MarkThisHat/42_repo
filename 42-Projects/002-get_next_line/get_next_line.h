@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/25 17:36:06 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/26 13:18:50 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ char	*ft_endcopy(t_node *ptr, t_node *lastnode);
 char	*ft_eof(t_node *ptr);
 char	*ft_strncpy(char *d, char *s, int len);
 char	*ft_freenodes(t_node *ptr);
-int		ft_findnl_and_recycle(t_node *ptr, char *buffer);
-void	ft_recycle(t_node *ptr, char *buffer);
+int		ft_findnl(t_node *ptr, char *buffer);
+int		ft_recycle(t_node *ptr, char *buffer, char *recycled);
 void	ft_bigcopy(t_node *ptr, char *line, int *len);
 
 #endif
