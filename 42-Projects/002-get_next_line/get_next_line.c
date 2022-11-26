@@ -41,17 +41,17 @@ char	*get_next_line(int fd)
 	return (node.line);
 }
 
-int	ft_recycle(t_node *ptr, char *buffer, char *recycled)
+int	ft_recycle(t_node *ptr, char *buffer, char **recycled)
 {
 	int	len;
 
 	len = ptr->length - ptr->firstnl - ptr->hasnl;
 	if (len < 1)
 		return (1);
-	recycled = (char *)malloc(sizeof(char) * len);
-	if (recycled)
+	*recycled = (char *)malloc(sizeof(char) * len);
+	if (!*recycled)
 		return (0);
-	if (ft_strncpy(recycled, buffer, len))
+	if (ft_strncpy(*recycled, buffer, len))
 		return (len);
 	return (0);
 }
@@ -82,7 +82,7 @@ char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
 {
 	t_node	*newnode;
 
-	if (!ft_recycle(ptr, buffer, ptr->scanned))
+	if (!ft_recycle(ptr, buffer, &ptr->scanned))
 		return (ft_freenodes(headptr));
 	newnode = malloc(sizeof(t_node));
 	buffer = malloc(sizeof(char) * BUFFER_SIZE);
@@ -100,10 +100,10 @@ char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
 		return (ft_eof(headptr));
 	if (!ft_findnl(newnode, buffer))
 		return (ft_get_next_node(newnode, buffer, fd, headptr));
-	return (ft_endcopy(headptr, newnode));
+	return (ft_endcopy(headptr, buffer, newnode));
 }
 
-char	*ft_endcopy(t_node *ptr, t_node *lastnode)
+char	*ft_endcopy(t_node *ptr, char *buffer, t_node *lastnode)
 {
 	ptr->line = (char *)malloc(sizeof(char) * (ptr->chainsize + 1));
 	if (!ptr->line)
@@ -115,10 +115,14 @@ char	*ft_endcopy(t_node *ptr, t_node *lastnode)
 	ptr->i = 0;
 	if (ptr != lastnode && lastnode->scanned)
 	{
-		if (!ft_recycle(lastnode, lastnode->scanned, ptr->scanned))
+		if (!ft_recycle(lastnode, lastnode->scanned, &ptr->scanned))
 			return (ft_freenodes(ptr));
 		ptr->length = lastnode->length;
 	}
+	else
+		lastnode->scanned = buffer;
+	if (!ptr->scanned)
+		ptr->length = 0;
 	if (ptr->next)
 		ft_bigcopy(ptr, ptr->line, &ptr->chainsize);
 	ptr->chainsize = 0;

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/26 13:18:50 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/26 14:58:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ typedef struct s_node
 char	*get_next_line(int fd);
 char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr);
 char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n);
-char	*ft_endcopy(t_node *ptr, t_node *lastnode);
+char	*ft_endcopy(t_node *ptr, char *buffer, t_node *lastnode);
 char	*ft_eof(t_node *ptr);
 char	*ft_strncpy(char *d, char *s, int len);
 char	*ft_freenodes(t_node *ptr);
 int		ft_findnl(t_node *ptr, char *buffer);
-int		ft_recycle(t_node *ptr, char *buffer, char *recycled);
+int	ft_recycle(t_node *ptr, char *buffer, char **recycled);
 void	ft_bigcopy(t_node *ptr, char *line, int *len);
 
 #endif

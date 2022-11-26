@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/26 13:23:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/26 15:05:18 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_bigcopy(t_node *ptr, char *line, int *len)
 		ptr->length--;
 		line[*len] = ptr->scanned[ptr->length];
 	}
-	if (ptr->scanned)
+	if (ptr->scanned && !ptr->line)
 		free(ptr->scanned);
 	if (ptr->next)
 		free(ptr->next);
@@ -38,7 +38,7 @@ char	*ft_eof(t_node *ptr)
 		return (ft_freenodes(ptr));
 	if (ft_findnl(ptr, &ptr->scanned[ptr->i]))
 		return (ft_nodestrncpy(ptr, ptr->scanned, ptr->firstnl + 1));
-	return (ft_endcopy(ptr, NULL));
+	return (ft_endcopy(ptr, NULL, ptr));
 }
 
 char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
