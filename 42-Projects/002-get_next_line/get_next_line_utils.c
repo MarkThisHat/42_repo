@@ -6,75 +6,84 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/26 15:05:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/27 11:58:44 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_bigcopy(t_node *ptr, char *line, int *len)
+size_t	ft_strlen(const char *str)
 {
-	while (ptr->next != NULL && !ptr->hasnl)
-	{
-		ptr->hasnl = 1;
-		ft_bigcopy(ptr->next, line, len);
-	}
-	while (ptr->length && !ptr->line)
-	{
-		*len -= 1;
-		ptr->length--;
-		line[*len] = ptr->scanned[ptr->length];
-	}
-	if (ptr->scanned && !ptr->line)
-		free(ptr->scanned);
-	if (ptr->next)
-		free(ptr->next);
-	ptr->next = NULL;
+	size_t	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-char	*ft_eof(t_node *ptr)
-{
-	if (!ptr->scanned && !ptr->line)
-		return (ft_freenodes(ptr));
-	if (ft_findnl(ptr, &ptr->scanned[ptr->i]))
-		return (ft_nodestrncpy(ptr, ptr->scanned, ptr->firstnl + 1));
-	return (ft_endcopy(ptr, NULL, ptr));
-}
-
-char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n)
-{
-	char	*line;
-
-	line = (char *)malloc(sizeof(char) * (n + 1));
-	if (!line)
-		return (ft_freenodes(ptr));
-	ft_strncpy(line, buffer, n);
-	line[n] = '\0';
-	return (line);
-}
-
-char	*ft_strncpy(char *d, char *s, int len)
+char	*ft_strchr(const char *str, int c)
 {
 	int	i;
 
+	if (!str)
+		return (NULL);
+	if (!c)
+		return ((char *)&str[(int)ft_strlen(str)]);
 	i = 0;
-	while (i < len)
+	while (str[i])
 	{
-		d[i] = s[i];
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
 		i++;
 	}
-	return (d);
+	return (NULL);
 }
 
-char	*ft_freenodes(t_node *ptr)
+
+char	*ft_strjoin(char *s1, char *s2)
 {
-	while (ptr->next != NULL)
-		(ft_freenodes(ptr->next));
-	if (ptr->scanned != NULL)
-		free(ptr->scanned);
-	if (ptr->line != NULL)
-		free(ptr->line);
-	if (ptr->next != NULL)
-		free(ptr->next);
-	return (NULL);
+	char	*ptr;
+	size_t	len1;
+	size_t	len2;
+
+	len1 = 0;
+	len2 = 0;
+	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!ptr)
+		return (NULL);
+	if (s1)
+	{
+		while (s1[len1])
+		{
+			ptr[len1] = s1[len1];
+			len1++;
+		}
+	}
+	while (s2[len2])
+	{
+		ptr[len1 + len2] = s2[len2];
+		len2++;
+	}
+	ptr[len1 + len2] = '\0';
+	free(s1);
+	return (ptr);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+
+	if (!size)
+		return (ft_strlen(src));
+	i = 0;
+	while (src[i] && i < size - 1)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }

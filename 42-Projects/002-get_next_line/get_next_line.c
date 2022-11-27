@@ -14,144 +14,89 @@
 
 char	*get_next_line(int fd)
 {
-	static t_node	node;
-	char			*buffer;
+	static char	*buffer;
+	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0))
 		return (NULL);
-	if (node.line)
-		free(node.line);
-	node.line = NULL;
-	if (!node.scanned)
-		buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	else
-		buffer = &node.scanned[node.i];
+	buffer = create_buffer(fd, buffer);
 	if (!buffer)
-		return (ft_freenodes(&node));
-	if (!node.length)
-		node.length = (int)read(fd, buffer, BUFFER_SIZE);
-	if (!node.length)
-		return (ft_eof(&node));
-	if (!ft_findnl(&node, buffer))
-		return (ft_get_next_node(&node, buffer, fd, &node));
-	if (ft_recycle(&node, buffer, &node.scanned))
-		node.line = ft_nodestrncpy(&node, buffer, node.firstnl + 1);
-	node.length -= (node.firstnl + node.hasnl);
-	return (node.line);
+		return (NULL);
+	line = create_line(buffer);
+	buffer = refresh_buffer(buffer);
+	return (line);
 }
 
-int	ft_recycle(t_node *ptr, char *buffer, char **recycled)
+char	*create_buffer(int fd, char *buffer)
 {
-	int	len;
+	char	*temp;
+	int		parsed;
 
-	len = ptr->length - ptr->firstnl - ptr->hasnl;
-	if (len < 1 || *recycled)
-		return (1);
-	*recycled = (char *)malloc(sizeof(char) * len);
-	if (!*recycled)
-		return (0);
-	if (ft_strncpy(*recycled, buffer, len))
-		return (len);
-	return (0);
-}
-
-int	ft_findnl(t_node *ptr, char *buffer)
-{
-	int	i;
-
-	i = 0;
-	ptr->hasnl = 0;
-	ptr->firstnl = 0;
-	while (i < ptr->length)
+	temp = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!temp)
+		return (NULL);
+	parsed = 1;
+	while (!ft_strchr(buffer, '\n'))
 	{
-		if (buffer[i] == '\n')
+		parsed = read(fd, temp, BUFFER_SIZE);
+		if (parsed < 1)
+			break ;
+		temp[parsed] = '\0';
+		buffer = ft_strjoin(buffer, temp);
+		if (!buffer)
 		{
-			ptr->firstnl = i;
-			ptr->hasnl = 1;
-			if (ptr->length > (i + 1))
-				ptr->i += i + 1;
-			return (ptr->hasnl);
+			free(temp);
+			return (NULL);
 		}
-		i++;
 	}
-	return (ptr->hasnl);
+	free(temp);
+	return (buffer);
 }
 
-char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr)
+char	*create_line(char *buffer)
 {
-	t_node	*newnode;
+	char	*line;
+	int		len;
 
-	if (!ft_recycle(ptr, buffer, &ptr->scanned))
-		return (ft_freenodes(headptr));
-	newnode = malloc(sizeof(t_node));
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
-	if (!newnode || !buffer)
-		return (ft_freenodes(headptr));
-	ptr->next = newnode;
-	newnode->next = NULL;
-	newnode->line = NULL;
-	newnode->scanned = NULL;
-	newnode->length = (int)read(fd, buffer, BUFFER_SIZE);
-	if (!headptr->chainsize)
-		headptr->chainsize = headptr->length;
-	headptr->chainsize += newnode->length;
-	if (!newnode->length)
-		return (ft_eof(headptr));
-	if (!ft_findnl(newnode, buffer))
-		return (ft_get_next_node(newnode, buffer, fd, headptr));
-	return (ft_endcopy(headptr, buffer, newnode));
-}
-
-char	*ft_endcopy(t_node *ptr, char *buffer, t_node *lastnode)
-{
-	ptr->line = (char *)malloc(sizeof(char) * (ptr->chainsize + 1));
-	if (!ptr->line)
-		return (ft_freenodes(ptr));
-	ft_strncpy(ptr->line, ptr->scanned, ptr->length);
-	ptr->line[ptr->chainsize] = '\0';
-	free(ptr->scanned);
-	ptr->scanned = NULL;
-	ptr->i = 0;
-	if (ptr != lastnode && lastnode->scanned)
+	len = 0;
+	if (!buffer[len])
+		return (NULL);
+	while (buffer[len] && buffer[len] != '\n')
+		len++;
+	if (buffer[len] == '\n')
+		len++;
+	line = malloc(sizeof(char) * (len + 1));
+	if (!line)
+		return (NULL);
+	len = 0;
+	while (buffer[len] && buffer[len] != '\n')
 	{
-		if (!ft_recycle(lastnode, lastnode->scanned, &ptr->scanned))
-			return (ft_freenodes(ptr));
-		ptr->length = lastnode->length;
+		line[len] = buffer[len];
+		len++;
 	}
-	else
-		lastnode->scanned = buffer;
-	if (!ptr->scanned)
-		ptr->length = 0;
-	if (ptr->next)
-		ft_bigcopy(ptr, ptr->line, &ptr->chainsize);
-	ptr->chainsize = 0;
-	return (ptr->line);
+	if (buffer[len] == '\n')
+		line[len++] = '\n';
+	line[len] = '\0';
+	return (line);
 }
 
+char	*refresh_buffer(char *buffer)
+{
+	char	*new;
+	int		len;
 
-	/*		len = 3
-	*	if !fnl [a] [b] [c]
-	*		recicla (len - fnl - hasnl)
-	*
-		chain
-	*/
-	/*		len = 3 fnl 2 hasnl 1	recicla nada (pode botar um if !scanned, ptr->scanned = buff)
-			[a] [b] [n]
-	*	if fnl + hasnl == len
-	*		copia linha, limpa tudo, retorna linha
-	*
-	*/
-	/*
-	*	else
-			len 6
-			fnl 3
-			hnl 1
-			[a] [b] [c] [n] [d] [e]
-			(char *)malloc(sizeof(char) * ptr->length - ptr->firstnl - ptr->hasnl);
-	*		recicla (len - fnl - hasnl) 6 - 3 - 1
-	*		copia linha
-	*		limpa tudo
-	*		retorna linha
-	*
-	*/
-/* if (tptr->firstnl + tptr->hasnl == tptr->length) */
+	len = 0;
+	while (buffer[len] && buffer[len] != '\n')
+		len++;
+	if (!buffer[len])
+	{
+		free(buffer);
+		return (NULL);
+	}
+	new = malloc(sizeof(char) * (ft_strlen(buffer) - len + 1));
+	if (!new)
+		return (NULL);
+	ft_strlcpy(new, &buffer[len + 1], (ft_strlen(&buffer[len + 1]) + 1));
+	free(buffer);
+	return (new);
+}

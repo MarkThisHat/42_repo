@@ -6,41 +6,28 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:01:42 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/26 14:58:28 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/27 11:57:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# include <unistd.h>
+
 # include <stdlib.h>
-# include <stdio.h> //REMOVE
+# include <unistd.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-typedef struct s_node
-{
-	char			*line;
-	char			*scanned;
-	int				i;
-	int				hasnl;
-	int				firstnl;
-	int				length;
-	int				chainsize;
-	struct s_node	*next;
-}	t_node;
+size_t	ft_strlen(const char *str);
+char	*ft_strchr(const char *str, int c);
+char	*ft_strjoin(char *s1, char *s2);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
+char	*create_buffer(int fd, char *buffer);
+char	*create_line(char *buffer);
+char	*refresh_buffer(char *buffer);
 char	*get_next_line(int fd);
-char	*ft_get_next_node(t_node *ptr, char *buffer, int fd, t_node *headptr);
-char	*ft_nodestrncpy(t_node *ptr, char *buffer, int n);
-char	*ft_endcopy(t_node *ptr, char *buffer, t_node *lastnode);
-char	*ft_eof(t_node *ptr);
-char	*ft_strncpy(char *d, char *s, int len);
-char	*ft_freenodes(t_node *ptr);
-int		ft_findnl(t_node *ptr, char *buffer);
-int	ft_recycle(t_node *ptr, char *buffer, char **recycled);
-void	ft_bigcopy(t_node *ptr, char *line, int *len);
 
 #endif
