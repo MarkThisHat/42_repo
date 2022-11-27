@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/27 13:40:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/27 14:44:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@ t_node	*create_node(t_node *node, int fd)
 {
 	t_node	*new;
 
-	new = malloc(sizeof(node));
+	new = malloc(sizeof(t_node));
 	if (!new)
 		return (NULL);
 	node->next = new;
+	new->buffer = NULL;
 	new->next = NULL;
 	new->fd = fd;
 	return (new);
