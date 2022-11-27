@@ -10,21 +10,35 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*line;
+	static t_node	node;
+	char			*line;
+	char			*buffer;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0))
 		return (NULL);
+	buffer = find_node(&node, fd);
 	buffer = create_buffer(fd, buffer);
 	if (!buffer)
 		return (NULL);
 	line = create_line(buffer);
 	buffer = refresh_buffer(buffer);
 	return (line);
+}
+
+char	*find_node(t_node *node, int fd)
+{
+	while (node->fd != fd && node->next)
+		return (find_node(node->next, fd));
+	if (fd == node->fd)
+		return (node->buffer);
+	node->next = create_node(node, fd);
+	if (!node->next)
+		return (NULL);
+	return (find_node(node->next, fd));
 }
 
 char	*create_buffer(int fd, char *buffer)

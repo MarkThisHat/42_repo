@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 03:05:52 by maalexan          #+#    #+#             */
-/*   Updated: 2022/11/27 13:40:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/11/27 13:40:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
+
+t_node	*create_node(t_node *node, int fd)
+{
+	t_node	*new;
+
+	new = malloc(sizeof(node));
+	if (!new)
+		return (NULL);
+	node->next = new;
+	new->next = NULL;
+	new->fd = fd;
+	return (new);
+}
 
 size_t	ft_strlen(const char *str)
 {
