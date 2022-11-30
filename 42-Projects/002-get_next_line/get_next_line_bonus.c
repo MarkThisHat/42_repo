@@ -16,16 +16,16 @@ char	*get_next_line(int fd)
 {
 	static t_node	node;
 	char			*line;
-	char			*buffer;
+	char			*buffer[1];
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0))
 		return (NULL);
-	buffer = find_node(&node, fd);
-	buffer = create_buffer(fd, buffer);
-	if (!buffer)
+	*buffer = find_node(&node, fd);
+	*buffer = create_buffer(fd, *buffer);
+	if (!*buffer)
 		return (NULL);
-	line = create_line(buffer);
-	buffer = refresh_buffer(buffer);
+	line = create_line(*buffer);
+	*buffer = refresh_buffer(*buffer);
 	return (line);
 }
 
