@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:45:27 by maalexan          #+#    #+#             */
-/*   Updated: 2022/12/06 18:31:00 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/12/07 15:40:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	print_input(const char *str, va_list args, int count)
 		count++;
 		str++;
 	}
-	if (!str)
+	if (!*str)
 	{
 		va_end(args);
 		return (count);
@@ -46,7 +46,7 @@ int	print_input(const char *str, va_list args, int count)
 		write (1, str, 1);
 		return (print_input(str + 2, args, count + 1));
 	}
-	return (flag_treat(str, args, count));
+	return (flag_treat(str + 1, args, count));
 }
 
 int	flag_treat(const char *str, va_list args, int count)
