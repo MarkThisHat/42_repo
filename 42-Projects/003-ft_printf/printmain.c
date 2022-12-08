@@ -6,13 +6,34 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:25:19 by maalexan          #+#    #+#             */
-/*   Updated: 2022/12/07 21:58:50 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/12/08 22:21:34 by coder            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-int	ft_printf(const char *str, ...);
+#include "ft_printf.h"
 
+int	main(void)
+{
+	char	c;
+	char	*s = "hello";
+	int		i;
+	int		original;
+	int		farseta;
+	unsigned int	u;
+
+	c = 'z';
+	i = 2147483647;
+	u = 3849023849;
+	printf("Ft:\n");
+	farseta = ft_printf("Percent here: %%, Character c is %c\nString is %s\nInteger i is %i and d %d\nand unsigned %u\nand smolhex %x\nand bighex %X\nand ptr %p\n", c, s, i, i, u, u, u, s);
+	printf("Ori:\n");
+	original = printf("Percent here: %%, Character c is %c\nString is %s\nInteger i is %i and d %d\nand unsigned %u\nand smolhex %x\nand bighex %X\nand ptr %p\n", c, s, i, i, u, u, u, s);
+	printf("ft: %i std: %i\n", farseta, original);
+}
+
+
+/*
 int	main(void)
 {
 	char	c;
@@ -30,4 +51,4 @@ int	main(void)
 	printf("Ori:\n");
 	original = printf("Percent here: %%, Character c is %c\nString is %s\nInteger i is %i and d %d\nUnsigned is %u\nPepe\n%%\n", c, s, i, i, u);
 	printf("ft: %i std: %i\n", farseta, original);
-}
+}*/
