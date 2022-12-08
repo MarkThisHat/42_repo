@@ -6,11 +6,11 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/27 14:23:12 by maalexan          #+#    #+#              #
-#    Updated: 2022/10/16 00:10:19 by maalexan         ###   ########.fr        #
+#    Updated: 2022/12/08 22:39:24 by coder            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf.a
+NAME = libftprintf.a
 FLAGS = -Wall -Werror -Wextra
 SRC = ./
 HDR = -I ./
