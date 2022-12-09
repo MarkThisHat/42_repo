@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:45:27 by maalexan          #+#    #+#             */
-/*   Updated: 2022/12/08 18:12:34 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:50:03 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	s_flag(const char *str, va_list args, int count)
 	if (*str == 's')
 	{
 		s = va_arg(args, char *);
+		if (!s)
+			return (print_input(str + 1, args, count += write (1, "(null)", 6)));
 		count += print_str(s);
 		return (print_input(str + 1, args, count));
 	}
@@ -83,6 +85,8 @@ int	u_flag(const char *str, va_list args, int count)
 	if (*str == 'p')
 	{
 		u = va_arg(args, unsigned long);
+		if (!u)
+			return (print_input(str + 1, args, count += write (1, "(nil)", 5)));
 		write (1, "0x", 2);
 		count += print_base(u, 16, 0) + 2;
 	}

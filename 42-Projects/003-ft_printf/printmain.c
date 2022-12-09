@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 18:25:19 by maalexan          #+#    #+#             */
-/*   Updated: 2022/12/08 22:21:34 by coder            ###   ########.fr       */
+/*   Updated: 2022/12/09 11:38:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	main(void)
 	int		original;
 	int		farseta;
 	unsigned int	u;
+	char	*nulo;
 
+	nulo = NULL;
 	c = 'z';
 	i = 2147483647;
 	u = 3849023849;
@@ -30,6 +32,7 @@ int	main(void)
 	printf("Ori:\n");
 	original = printf("Percent here: %%, Character c is %c\nString is %s\nInteger i is %i and d %d\nand unsigned %u\nand smolhex %x\nand bighex %X\nand ptr %p\n", c, s, i, i, u, u, u, s);
 	printf("ft: %i std: %i\n", farseta, original);
+	ft_printf("nuloboy %s\n", nulo);
 }
 
 
