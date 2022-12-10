@@ -15,7 +15,7 @@ FLAGS = -Wall -Werror -Wextra
 SRC = ./
 HDR = -I ./
 FUNC = ft_printf.c ft_printf_utils.c
-BONI = 
+BONI = ft_printf_bonus.c ft_printf_utils_bonus.c ft_printf_flags_bonus.c
 JOINSRCFUNC = ${addprefix ${SRC}, ${FUNC}}
 JOINBONUS = ${addprefix ${SRC}, ${BONI}}
 OBJ = ${FUNC:.c=.o}
