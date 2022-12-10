@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 19:58:02 by maalexan          #+#    #+#             */
-/*   Updated: 2022/12/09 21:01:03 by maalexan         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:05:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	i_flag(const char *str, va_list args, int count, int mode)
 	if (*str == 'i' || *str == 'd')
 	{
 		i = va_arg(args, int);
-		if (i > 0 && mode)
+		if (i >= 0 && mode)
 		{
 			if (mode == 1)
 				count += write (1, " ", 1);
