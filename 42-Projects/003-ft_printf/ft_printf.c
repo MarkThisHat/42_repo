@@ -89,7 +89,7 @@ int	u_flag(const char *str, va_list args, int count)
 		count += write (1, "0x", 2);
 	}
 	if (*str == 'u')
-	base = 10;
+		base = 10;
 	if (*str == 'X')
 		upp = 1;
 	else

@@ -30,8 +30,8 @@ int	print_in(const char *str, va_list args, int count)
 	while (*str != '%' && *str)
 	{
 		write(1, str, 1);
-			count++;
-			str++;
+		count++;
+		str++;
 	}
 	if (!*str)
 		return (count);
