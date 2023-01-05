@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/27 14:23:12 by maalexan          #+#    #+#              #
-#    Updated: 2022/12/10 01:54:57 by coder            ###   ########.fr        #
+#    Updated: 2023/01/03 22:01:54 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ ${NAME}: ${OBJ}
 		ar -rcs ${NAME} ${OBJ}
 
 bonus: ${OBONUS}
-		ar -rcs ${NAME} ${OBONUS}
+#		ar -rcs ${NAME} ${OBONUS}
 	
 ${OBONUS}:
 		cc ${FLAGS} ${HDR} -c ${@:.o=.c}
