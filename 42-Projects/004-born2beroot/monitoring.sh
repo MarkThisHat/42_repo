@@ -8,7 +8,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/05 15:22:36 by maalexan          #+#    #+#              #
-#    Updated: 2023/01/05 15:26:50 by maalexan         ###   ########.fr        #
+#    Updated: 2023/01/05 20:45:09 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,5 +22,23 @@ dspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $2} END {prin
 uspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $3} END {print sum}') # space in MB
 pspc=$(df -Bm --output=source,size,used | grep /dev | awk '{d += $3} {u += $2} END {printf("%.2f"), d/u*100}')
 cplo=$(top -bn1 | grep load | awk '{print $11})') #can use sudo apt-get install sysstat and (mpstat | grep all | awk '{print 100-$13}')
-
-
+rebo=$(who -b | awk '{print $3" "$4}')
+lvmb=$(lsblk | grep lvm | wc -l)
+lvmu=$(if [ $lvmb -ge 1 ]; then echo yes; else echo no; fi)
+tcpc=$(netstat -ant | grep ESTABLISHED | wc -l) #add another rule
+usrs=$(users | wc -l)
+dbip=$(hostname -I)
+maca=$(ip addr | grep ether | head -1 | awk '{print $2}')
+suco=$(journalctl -q _COMM=sudo | grep COMMAND | wc -l)
+wall "  #Architecture: $arch
+	    #CPU physical: $cpup
+	    #vCPU: $vcpu
+	    #Memory Usage: $tmem/${umem}MB ($pmem%)
+	    #Disk Usage: $dspc/${uspc}Gb ($pspc%)
+	    #CPU load: $cplo
+	    #Last boot: $rebo
+	    #LVM use: $lvmu
+	    #Connexions TCP: $tcpc ESTABLISHED
+	    #User log: $usrs
+	    #Network: IP $dbip ($maca)
+	    #Sudo: $suco cmd"
