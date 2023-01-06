@@ -17,11 +17,11 @@ cpup=$(nproc --all) # alt: $(lscpu | grep "CPU(s):" | tr -d -c 0-9 OR sed 's/[^0
 vcpu=$(grep "^processor" /proc/cpuinfo | wc -l)
 tmem=$(free -m | grep Mem | awk '{print $2}')
 umem=$(free -m | grep Mem | awk '{print $3}')
-pmem=$(free -m | awk '{printf("%.2f"), $3/$2*100}')
-dspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $2} END {print sum}') # space in MB  (/1000 to get Gb)
-uspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $3} END {print sum}') # space in MB
+pmem=$(free -m | grep Mem | awk '{printf("%.2f"), $3/$2*100}')
+dspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $2} END {print sum/1000}') # space in MB  (/1000 to get Gb)
+uspc=$(df -Bm --output=source,size,used | grep /dev | awk '{sum += $3} END {print sum/1000}') # space in MB
 pspc=$(df -Bm --output=source,size,used | grep /dev | awk '{d += $3} {u += $2} END {printf("%.2f"), d/u*100}')
-cplo=$(top -bn1 | grep load | awk '{print $11})') #can use sudo apt-get install sysstat and (mpstat | grep all | awk '{print 100-$13}')
+cplo=$(top -bn1 | grep load | awk '{print $11}') #can use sudo apt-get install sysstat and (mpstat | grep all | awk '{print 100-$13}')
 rebo=$(who -b | awk '{print $3" "$4}')
 lvmb=$(lsblk | grep lvm | wc -l)
 lvmu=$(if [ $lvmb -ge 1 ]; then echo yes; else echo no; fi)
@@ -33,12 +33,12 @@ suco=$(journalctl -q _COMM=sudo | grep COMMAND | wc -l)
 wall "  #Architecture: $arch
 	    #CPU physical: $cpup
 	    #vCPU: $vcpu
-	    #Memory Usage: $tmem/${umem}MB ($pmem%)
-	    #Disk Usage: $dspc/${uspc}Gb ($pspc%)
+	    #Memory Usage: $umem/${tmem}MB ($pmem%)
+	    #Disk Usage: $uspc/${dspc}Gb ($pspc%)
 	    #CPU load: $cplo
 	    #Last boot: $rebo
 	    #LVM use: $lvmu
-	    #Connexions TCP: $tcpc ESTABLISHED
+	    #Connections TCP: $tcpc ESTABLISHED
 	    #User log: $usrs
 	    #Network: IP $dbip ($maca)
 	    #Sudo: $suco cmd"
