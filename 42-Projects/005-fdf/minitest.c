@@ -13,57 +13,42 @@ typedef struct	s_data {
 typedef struct	s_ptrs {
 	void	*mlx;
 	void	*win;
+	int		x;
+	int		y;
+	int		next;
 }			t_ptrs;
 
 void	fx_mlx_pixel_put(t_data *data, int x, int y, int color);
-int	close(int keycode, t_ptrs *ptrs);
-int	hi(int keycode);
+int		close(int keycode, t_ptrs *ptrs);
+int		movement(int keycode, t_ptrs *ptrs);
+int		hi(int keycode);
 
 int	main(void)
 {
 	t_ptrs	mlxs;
-	int		i;
-	int		pixa;
-	t_data	turt;
 
-	i = 0;
 	mlxs.mlx = mlx_init();
 	mlxs.win = mlx_new_window(mlxs.mlx, 1000, 700, "Hello world!");
-	turt.img = mlx_new_image(mlxs.mlx, 300, 300);
-	turt.addr = mlx_get_data_addr(turt.img, &turt.bits_per_pixel, &turt.line_length, &turt.endian);
-	int color = 0x0000FF00;
-	pixa = i;
-	while (i < 170)
-	{
-		fx_mlx_pixel_put(&turt, pixa, i, color++);
-		mlx_pixel_put(mlxs.mlx, mlxs.win, pixa + 30, i, color);
-		i++;
-	}
-	pixa = i;
-	i = 0;
-	color = ~color;
-	while (i < 170)
-	{
-		fx_mlx_pixel_put(&turt, i, pixa, color--);
-		i++;
-	}
-	pixa = i;
-	color = ~color;
-	while (i > 0)
-	{
-		fx_mlx_pixel_put(&turt, pixa, i, color++);
-		i--;
-	}
-	color = ~color;
-	while (pixa)
-	{
-		fx_mlx_pixel_put(&turt, pixa, i, color--);
-		pixa--;
-	}
-	mlx_put_image_to_window(mlxs.mlx, mlxs.win, turt.img, 200, 300);
+	mlxs.x = 100;
+	mlxs.y = 0;
+	mlxs.next = 170;
+	movement(1, &mlxs);
 	mlx_hook(mlxs.win, 2, 1L<<0, close, &mlxs);
 	mlx_mouse_hook(mlxs.win, hi, &mlxs);
 	mlx_loop(mlxs.mlx);
+}
+
+int	movement(int keycode, t_ptrs *ptrs)
+{
+	int	color = 0x0000FF00;
+	if (!keycode)
+		return (0);
+	while (ptrs->y < ptrs->next)
+	{
+		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x, ptrs->y, color);
+		ptrs->y++;
+	}
+	return (ptrs->next);
 }
 
 int	hi(int keycode)
