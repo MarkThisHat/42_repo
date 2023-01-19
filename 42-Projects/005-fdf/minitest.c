@@ -1,4 +1,5 @@
 #include "mlx.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -23,7 +24,8 @@ typedef struct	s_ptrs {
 
 void	fx_mlx_pixel_put(t_data *data, int x, int y, int color);
 int		buttons(int keycode, t_ptrs *ptrs);
-int		movement(int keycode, t_ptrs *ptrs);
+int		square(int keycode, t_ptrs *ptrs);
+int		circle(int keycode, t_ptrs *ptrs);
 int		handle_x_button(t_ptrs *data);
 int		clear_window(t_ptrs *mlxs);
 int		hi(int keycode);
@@ -36,19 +38,42 @@ int	main(void)
 	mlxs.win = mlx_new_window(mlxs.mlx, 1000, 700, "Hello world!");
 	mlxs.offx = 0;
 	mlxs.offy = 0;
-	//mlx_loop_hook(mlxs.win, movement, &mlxs);
+	mlxs.color = 0x00FFFFFF;
+	//mlx_loop_hook(mlxs.win, square, &mlxs);
 	mlx_hook(mlxs.win, 2, 1L<<0, buttons, &mlxs);
 	mlx_hook(mlxs.win, 17, 0, &handle_x_button, &mlxs);
 	mlx_mouse_hook(mlxs.win, buttons, &mlxs);
 	mlx_loop(mlxs.mlx);
 }
 
-int	movement(int keycode, t_ptrs *ptrs)
+int	circle(int keycode, t_ptrs *ptrs)
+{
+	float dist;
+	float radius = 18;
+
+	// for horizontal movement
+	printf("circle\n");
+	for (int i = 0; i < 3 * radius; i++) {
+
+	// for vertical movement
+	for (int j = 0; j < 3 * radius; j++) {
+		dist = sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius));
+
+		// dist should be in the range (radius - 0.5)
+		// and (radius + 0.5) to print stars(*)
+		//if (dist > radius - 0.5 && dist < radius + 0.5)
+		mlx_pixel_put(ptrs->mlx, ptrs->win, i, j, ptrs->color);
+		}
+	}
+	return (keycode);
+}
+
+
+int	square(int keycode, t_ptrs *ptrs)
 {
 	ptrs->x = 100;
 	ptrs->y = 0;
 	ptrs->next = 200;
-	ptrs->color = 0x00FFFFFF;
 	if (keycode == 119 || keycode == 65362)
 	{
 		ptrs->offy -= 10;
@@ -73,6 +98,8 @@ int	movement(int keycode, t_ptrs *ptrs)
 		ptrs->color = 0x0000FF00;
 	if (keycode == 99)
 		return (clear_window(ptrs));
+	if (keycode == 112)
+		return (circle(1, ptrs));
 	while (ptrs->y < ptrs->next)
 	{
 		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
@@ -118,7 +145,7 @@ int	buttons(int keycode, t_ptrs *ptrs)
 	else
 	{
 		printf("%i\n", keycode);
-		movement(keycode, ptrs);
+		square(keycode, ptrs);
 	}
 	return (1);
 }

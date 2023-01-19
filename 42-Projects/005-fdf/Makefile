@@ -1,5 +1,5 @@
 all:
-	gcc -Wall -Werror -Wextra minitest.c -lbsd -lmlx -lXext -lX11
+	gcc -Wall -Werror -Wextra minitest.c -lbsd -lmlx -lXext -lX11 -lm
 
 unu:
 	gcc -Wall -Wextra minitest.c -lbsd -lmlx -lXext -lX11
