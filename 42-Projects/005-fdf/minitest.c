@@ -3,17 +3,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct	s_data {
+typedef struct	s_img {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}			t_data;
+}			t_img;
 
 typedef struct	s_ptrs {
 	void	*mlx;
 	void	*win;
+	t_img	*img1;
+	t_img	*img2;
 	int		x;
 	int		y;
 	int		offx;
@@ -22,52 +24,61 @@ typedef struct	s_ptrs {
 	int		color;
 }			t_ptrs;
 
-void	fx_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	fx_mlx_pixel_put(t_img *data, int x, int y, int color);
 int		buttons(int keycode, t_ptrs *ptrs);
 int		square(int keycode, t_ptrs *ptrs);
-int		circle(int keycode, t_ptrs *ptrs);
 int		handle_x_button(t_ptrs *data);
 int		clear_window(t_ptrs *mlxs);
+int		pixelputz(t_ptrs *ptrs);
 int		hi(int keycode);
+int		mousers(int keycode, t_ptrs *ptrs);
+		//return (mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there"));
+		//int     mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
 
 int	main(void)
 {
 	t_ptrs	mlxs;
+	t_img	img1;
 
 	mlxs.mlx = mlx_init();
 	mlxs.win = mlx_new_window(mlxs.mlx, 1000, 700, "Hello world!");
 	mlxs.offx = 0;
 	mlxs.offy = 0;
 	mlxs.color = 0x00FFFFFF;
+	mlxs.img1 = &img1;
+	img1.img = mlx_new_image(mlxs.mlx, 1000, 700);
+	img1.addr = mlx_get_data_addr(img1.img, &img1.bits_per_pixel, &img1.line_length, &img1.endian);
+	printf("Data Adress: %p\nBitsPerPix = %i\nLineLength = %i\nEndian = %i\n", img1.addr, img1.bits_per_pixel, img1.line_length, img1.endian);
 	//mlx_loop_hook(mlxs.win, square, &mlxs);
 	mlx_hook(mlxs.win, 2, 1L<<0, buttons, &mlxs);
 	mlx_hook(mlxs.win, 17, 0, &handle_x_button, &mlxs);
-	mlx_mouse_hook(mlxs.win, buttons, &mlxs);
+	//mlx_mouse_hook(mlxs.win, mousers, &mlxs);
 	mlx_loop(mlxs.mlx);
 }
 
-int	circle(int keycode, t_ptrs *ptrs)
+int		mousers(int keycode, t_ptrs *ptrs)
 {
-	float dist;
-	float radius = 18;
-
-	// for horizontal movement
-	printf("circle\n");
-	for (int i = 0; i < 3 * radius; i++) {
-
-	// for vertical movement
-	for (int j = 0; j < 3 * radius; j++) {
-		dist = sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius));
-
-		// dist should be in the range (radius - 0.5)
-		// and (radius + 0.5) to print stars(*)
-		//if (dist > radius - 0.5 && dist < radius + 0.5)
-		mlx_pixel_put(ptrs->mlx, ptrs->win, i, j, ptrs->color);
-		}
-	}
-	return (keycode);
+		//if (keycode == 1)
+		//	mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there");
+		//int     mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+		printf("%i, %i\n", keycode, ptrs->color);
+		return (3);
 }
 
+int	pixelputz(t_ptrs *ptrs)
+{
+	int	i;
+
+	i = 0;
+	while (i < 80000)
+	{
+		*(unsigned int*)(ptrs->img1->addr + i) = 0x000000FF;
+		i += 4;
+	}
+	mlx_put_image_to_window(ptrs->mlx, ptrs->win, ptrs->img1->img, 0, 0);
+	return (i);
+
+}
 
 int	square(int keycode, t_ptrs *ptrs)
 {
@@ -99,7 +110,16 @@ int	square(int keycode, t_ptrs *ptrs)
 	if (keycode == 99)
 		return (clear_window(ptrs));
 	if (keycode == 112)
-		return (circle(1, ptrs));
+		return (pixelputz(ptrs));
+	if (keycode == 113)
+		ptrs->color = 0x00FFFFFF;
+	if (keycode == 107)
+		return (mlx_clear_window(ptrs->mlx, ptrs->win));
+	if (keycode == 104)
+	{
+		mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "hello there");
+		return (mlx_string_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color, "GENERAL KENOBI!"));
+	}
 	while (ptrs->y < ptrs->next)
 	{
 		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
@@ -118,21 +138,15 @@ int	square(int keycode, t_ptrs *ptrs)
 	}
 	while (ptrs->x < ptrs->next * 1.5)
 	{
-		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
+	mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
 		ptrs->x++;
 	}
 	while (ptrs->y < ptrs->next)
 	{
-		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
+	mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
 		ptrs->y++;
 	}
 	return (ptrs->next);
-}
-
-int	hi(int keycode)
-{
-	printf("Hi! %i\n", keycode);
-	return (keycode);
 }
 
 int	buttons(int keycode, t_ptrs *ptrs)
@@ -140,7 +154,6 @@ int	buttons(int keycode, t_ptrs *ptrs)
 	if (keycode == 65307)
 	{
 		handle_x_button(ptrs);
-		exit (0);
 	}
 	else
 	{
@@ -150,7 +163,7 @@ int	buttons(int keycode, t_ptrs *ptrs)
 	return (1);
 }
 
-void	fx_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	fx_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
 
