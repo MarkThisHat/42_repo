@@ -31,8 +31,10 @@ int		handle_x_button(t_ptrs *data);
 int		clear_window(t_ptrs *mlxs);
 int		pixelputz(t_ptrs *ptrs);
 int		hi(int keycode);
+int		plot_cube(t_ptrs *ptrs);
 int		mousers(int keycode, t_ptrs *ptrs);
 int		plot_line(t_ptrs *ptrs, int x1, int x2, int y1, int y2);
+int		plot_liney(t_ptrs *mlxs, int x1, int x2, int y1, int y2);
 		//return (mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there"));
 		//int     mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
 
@@ -57,6 +59,52 @@ int	main(void)
 	mlx_loop(mlxs.mlx);
 }
 
+int		plot_cube(t_ptrs *ptrs)
+{
+	int	i;
+	int	a;
+	int b;
+	int	tempcolor;
+	int angle;
+
+	angle = 30;
+	a = 50;
+	i = 250;
+	b = 450;
+	plot_line(ptrs, a, i, i, i); //draws a line from a to i at column i
+	plot_line(ptrs, a, i, b, b); //draws a line from a to i at column b
+	plot_liney(ptrs, i, b, i, i); //draws a column from b to i at line i
+	plot_liney(ptrs, i, b, a, a); //draws a column from b to i at line a
+	tempcolor = ptrs->color;
+	//ptrs->color = 0x00FF0000;
+	plot_line(ptrs, a, (i + cos(angle) * 50), i, (i + sin(angle) * 50));
+	plot_line(ptrs, a, (i + cos(angle) * 50), b, (b + sin(angle) * 50));
+	plot_line(ptrs, i, (b + cos(angle) * 50), i, (i + sin(angle) * 50));
+	plot_line(ptrs, i, (b + cos(angle) * 50), b, (b + sin(angle) * 50));
+
+	i += 150;
+	a += 205;
+	b += 205;
+	plot_line(ptrs, a, i + 55, i, i);
+	plot_line(ptrs, a, i + 55, i/2, i/2);
+	plot_liney(ptrs, i - 200, b - 257, i + 55, i + 55); //draws a column from b to i at line i
+	plot_liney(ptrs, i - 200, b - 257, i - 142, i - 142);
+	//plot_line(ptrs, a, i, b, b); //draws a line from a to i at column b
+	//plot_liney(ptrs, i, b, i, i); //draws a column from b to i at line i
+	//plot_liney(ptrs, i, b, a, a); //draws a column from b to i at line a
+	ptrs->color = tempcolor;
+
+	/*
+	i = 250;
+	plot_line(ptrs, 50, 250, 250, 250);
+	plot_line(ptrs, 50, 250, 450, 450);
+	plot_liney(ptrs, 250, 450, 250, 250);
+	plot_liney(ptrs, 250, 450, 50, 50);
+	*/
+
+	return (i);
+}
+
 int		plot_line(t_ptrs *mlxs, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
 {
 	int	dx;
@@ -76,6 +124,27 @@ int		plot_line(t_ptrs *mlxs, int x1, int x2, int y1, int y2) //based on https://
 	}
 	return (i);
 }
+
+int		plot_liney(t_ptrs *mlxs, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
+{
+	int	dx;
+	int	dy;
+	int	y;
+	int	i;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	i = x1;
+
+	while (i <= x2)
+	{
+		y = y1 + dy * (i - x1) / dx;
+		mlx_pixel_put(mlxs->mlx, mlxs->win, y, i, mlxs->color);
+		i++;
+	}
+	return (i);
+}
+
 
 int		mousers(int keycode, t_ptrs *ptrs)
 {
@@ -134,16 +203,20 @@ int	square(int keycode, t_ptrs *ptrs)
 		return (pixelputz(ptrs));
 	if (keycode == 113)
 		ptrs->color = 0x00FFFFFF;
+	if (keycode == 110) //n
+		ptrs->color = 0x00000000;
 	if (keycode == 107)
 		return (mlx_clear_window(ptrs->mlx, ptrs->win));
 	if (keycode == 121) //y
 		return ((plot_line(ptrs, 150, 400, 20, 180)));
 	if (keycode == 120) //x
 		return ((plot_line(ptrs, 150, 400, 180, 20)));
+	if (keycode == 49) //key1
+		return ((plot_cube(ptrs)));
 	if (keycode == 104) //h
 	{
 		mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "hello there");
-		return (mlx_string_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color, "GENERAL KENOBI!"));
+		return (mlx_string_put(ptrs->mlx, ptrs->win, 100 + ptrs->offx, 0 + ptrs->offy, ptrs->color, "GENERAL KENOBI!"));
 	}
 	while (ptrs->y < ptrs->next)
 	{
