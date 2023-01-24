@@ -32,7 +32,7 @@ int		clear_window(t_ptrs *mlxs);
 int		pixelputz(t_ptrs *ptrs);
 int		hi(int keycode);
 int		plot_cube(t_ptrs *ptrs);
-int		mousers(int keycode, t_ptrs *ptrs);
+int		mousers(int keycode, int x, int y, t_ptrs *ptrs);
 int		plot_line(t_ptrs *ptrs, int x1, int x2, int y1, int y2);
 int		plot_liney(t_ptrs *mlxs, int x1, int x2, int y1, int y2);
 		//return (mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there"));
@@ -55,7 +55,7 @@ int	main(void)
 	//mlx_loop_hook(mlxs.win, square, &mlxs);
 	mlx_hook(mlxs.win, 2, 1L<<0, buttons, &mlxs);
 	mlx_hook(mlxs.win, 17, 0, &handle_x_button, &mlxs);
-	//mlx_mouse_hook(mlxs.win, mousers, &mlxs);
+	mlx_mouse_hook(mlxs.win, mousers, &mlxs);
 	mlx_loop(mlxs.mlx);
 }
 
@@ -146,12 +146,13 @@ int		plot_liney(t_ptrs *mlxs, int x1, int x2, int y1, int y2) //based on https:/
 }
 
 
-int		mousers(int keycode, t_ptrs *ptrs)
+int		mousers(int keycode, int x, int y, t_ptrs *ptrs)
 {
-		//if (keycode == 1)
-		//	mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there");
+		if (keycode == 1)
+			mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there");
 		//int     mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
-		printf("%i, %i\n", keycode, ptrs->color);
+		mlx_string_put(ptrs->mlx, ptrs->win, x, y, ptrs->color, "GENERAL KENOBI!");
+		printf("Keycode: %i, X = %i, Y = %i Colors = %i\n", keycode, x, y, ptrs->color);
 		return (3);
 }
 
@@ -214,10 +215,10 @@ int	square(int keycode, t_ptrs *ptrs)
 	if (keycode == 49) //key1
 		return ((plot_cube(ptrs)));
 	if (keycode == 104) //h
-	{
+	/*{
 		mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "hello there");
 		return (mlx_string_put(ptrs->mlx, ptrs->win, 100 + ptrs->offx, 0 + ptrs->offy, ptrs->color, "GENERAL KENOBI!"));
-	}
+	}*/
 	while (ptrs->y < ptrs->next)
 	{
 		mlx_pixel_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color);
