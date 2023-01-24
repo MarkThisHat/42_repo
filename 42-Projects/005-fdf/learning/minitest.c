@@ -32,6 +32,7 @@ int		clear_window(t_ptrs *mlxs);
 int		pixelputz(t_ptrs *ptrs);
 int		hi(int keycode);
 int		mousers(int keycode, t_ptrs *ptrs);
+int		plot_line(t_ptrs *ptrs, int x1, int x2, int y1, int y2);
 		//return (mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "Hello there"));
 		//int     mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
 
@@ -54,6 +55,26 @@ int	main(void)
 	mlx_hook(mlxs.win, 17, 0, &handle_x_button, &mlxs);
 	//mlx_mouse_hook(mlxs.win, mousers, &mlxs);
 	mlx_loop(mlxs.mlx);
+}
+
+int		plot_line(t_ptrs *mlxs, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
+{
+	int	dx;
+	int	dy;
+	int	y;
+	int	i;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	i = x1;
+
+	while (i <= x2)
+	{
+		y = y1 + dy * (i - x1) / dx;
+		mlx_pixel_put(mlxs->mlx, mlxs->win, i, y, mlxs->color);
+		i++;
+	}
+	return (i);
 }
 
 int		mousers(int keycode, t_ptrs *ptrs)
@@ -115,7 +136,11 @@ int	square(int keycode, t_ptrs *ptrs)
 		ptrs->color = 0x00FFFFFF;
 	if (keycode == 107)
 		return (mlx_clear_window(ptrs->mlx, ptrs->win));
-	if (keycode == 104)
+	if (keycode == 121) //y
+		return ((plot_line(ptrs, 150, 400, 20, 180)));
+	if (keycode == 120) //x
+		return ((plot_line(ptrs, 150, 400, 180, 20)));
+	if (keycode == 104) //h
 	{
 		mlx_string_put(ptrs->mlx, ptrs->win, 10, 20, 0x00FF00FF, "hello there");
 		return (mlx_string_put(ptrs->mlx, ptrs->win, ptrs->x + ptrs->offx, ptrs->y + ptrs->offy, ptrs->color, "GENERAL KENOBI!"));
