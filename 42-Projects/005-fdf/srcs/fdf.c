@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/26 14:44:16 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:37:54 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parse_map(t_mlxs *ms, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		leave_program("Error opening file\n", 2, 1);
-	ms->xy = malloc(sizeof(t_coord) * (ms->row * ms->col));
+	ms->xy = malloc(sizeof(t_coord *) * (ms->row * ms->col));
 	if (!ms->xy)
 		leave_program("Not enough memory\n", 2, 1);
 	line = get_next_line(fd);
@@ -69,7 +69,9 @@ int	parse_map(t_mlxs *ms, char *filename)
 		fill_col(ms, line, i);
 		free(line);
 		line = get_next_line(fd);
+		i++;
 	}
+	return (ms->row);
 }
 
 int	fill_col(t_mlxs *ms, char *line, int row)
@@ -77,11 +79,26 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	int	col;
 
 	col = 0;
-	ms->xy[row][col]->z = ft_atoi(line);
-	/*struct fix*/
+	while(*line == ' ')
+		line++;
+	while (col < ms->col)
+	{
+		ms->xy[row][col] = *(t_coord *)malloc(sizeof(t_coord));
+		ms->xy[row][col].z = ft_atoi(line);/*struct fix?*/
+		ms->xy[row][col].color = 0;
+		while(*line != '\n' && *line != ' ' && *line != ',')
+			line++;
+		if (*line == ',')
+		{
+			ms->xy[row][col].color = ft_atoi_base(line++, 16);
+			while(*line != '\n' && *line != ' ')
+				line++;
+		}
+		col++;
+	}
+	return(col);
 }
 
-int	populate()
 
 int	validate_usage(int	argc, char **argv, t_mlxs *ms)
 {
