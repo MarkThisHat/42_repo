@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/25 13:23:07 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:44:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,22 @@ typedef struct	s_img {
 	int		endian;
 }			t_img;
 
+typedef struct	s_coord {
+	
+	int		z;
+	int		color;
+
+}			t_coord;
+
+
 typedef struct	s_mlxs {
 	void	*mlx;
 	void	*win;
 	t_img	*img1;
 	t_img	*img2;
+	t_coord	**xy;
 	int		col;
 	int		row;
-	int		x;
-	int		y;
-	int		z;
 	int		color;
 }			t_mlxs;
 */
@@ -39,9 +45,43 @@ int	main(int argc, char **argv)
 {
 	t_mlxs	main_struct;
 
-	if (validate_usage(argc, argv, &main_struct))
-		leave_program(0, 0, 0);
+	validate_usage(argc, argv, &main_struct);
+	parse_map(&main_struct, argv[1]);
+	leave_program(0, 0, 0);
 }
+
+int	parse_map(t_mlxs *ms, char *filename)
+{
+	int		i;
+	int		fd;
+	char	*line;
+
+	i = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		leave_program("Error opening file\n", 2, 1);
+	ms->xy = malloc(sizeof(t_coord) * (ms->row * ms->col));
+	if (!ms->xy)
+		leave_program("Not enough memory\n", 2, 1);
+	line = get_next_line(fd);
+	while(i < ms->row)
+	{
+		fill_col(ms, line, i);
+		free(line);
+		line = get_next_line(fd);
+	}
+}
+
+int	fill_col(t_mlxs *ms, char *line, int row)
+{
+	int	col;
+
+	col = 0;
+	ms->xy[row][col]->z = ft_atoi(line);
+	/*struct fix*/
+}
+
+int	populate()
 
 int	validate_usage(int	argc, char **argv, t_mlxs *ms)
 {
