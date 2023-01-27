@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 15:51:04 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:50:33 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct	s_mlxs {
 	int		color;
 }			t_mlxs;
 
-
+void	set_struct(t_mlxs *ms);
 int		count_map(int fd, t_mlxs *ms);
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);

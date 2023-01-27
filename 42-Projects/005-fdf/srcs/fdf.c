@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 17:36:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:01:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,17 @@ int	main(int argc, char **argv)
 {
 	t_mlxs	main_struct;
 
+	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-//	printmap(&main_struct);
+	//printmap(&main_struct);
 	free_close(&main_struct, 0, main_struct.row);
+}
+
+void	set_struct(t_mlxs *ms)
+{
+	ms->col = 1;
+	ms->row = 0;
 }
 
 void	free_close(t_mlxs *ms, char *str, int rows)
@@ -130,8 +137,7 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 			line++;
 		if (*line == ',')
 		{
-			ms->xy[row][col].color = ft_atoi_base(line + 1, 16);
-			line++;
+			ms->xy[row][col].color = ft_atoi_base(++line, 16);
 			while(*line != '\n' && *line != ' ')
 				line++;
 		} 
@@ -163,17 +169,13 @@ int	validate_usage(int	argc, char **argv, t_mlxs *ms)
 int	count_map(int fd, t_mlxs *ms)
 {
 	char	c;
-	char	col_val;
 
 	c = ' ';
 	while (c == ' ')
 		read(fd, &c, 1);
-	ms->row = 0;
-	ms->col = 1;
-	col_val = 1;
 	while(read(fd, &c, 1))
 	{
-		if (c == ' ' && col_val)
+		if (c == ' ' && !ms->row) //removed validator
 		{
 			while (c == ' ')
 				read(fd, &c, 1);
@@ -183,7 +185,6 @@ int	count_map(int fd, t_mlxs *ms)
 		if (c == '\n' || c == 0)
 		{
 			ms->row++;
-			col_val = 0;
 			while (read(fd, &c, 1) && (c == '\n' || c == 0))
 				read(fd, &c, 1);
 		}
