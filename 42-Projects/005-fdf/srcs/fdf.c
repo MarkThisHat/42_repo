@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 17:33:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:36:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct	s_mlxs {
 	int		row;
 	int		color;
 }			t_mlxs;
-*/
 
 void	printmap(t_mlxs *ms)
 {
@@ -61,6 +60,7 @@ void	printmap(t_mlxs *ms)
 		i++;
 	}
 }
+*/
 
 int	main(int argc, char **argv)
 {
@@ -68,7 +68,7 @@ int	main(int argc, char **argv)
 
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	printmap(&main_struct);
+//	printmap(&main_struct);
 	free_close(&main_struct, 0, main_struct.row);
 }
 
@@ -134,14 +134,11 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 			line++;
 			while(*line != '\n' && *line != ' ')
 				line++;
-		}
-		if(ms->xy[row][col].color == 16711680) //test early exit with map elem-col.fdf
-			free_close(ms, "Not enough memory to fill map\n", row + 1); 
+		} 
 		col++;
 	}
 	return(col);
 }
-
 
 int	validate_usage(int	argc, char **argv, t_mlxs *ms)
 {
