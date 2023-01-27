@@ -41,12 +41,33 @@ typedef struct	s_mlxs {
 }			t_mlxs;
 */
 
+void	printmap(t_mlxs *ms)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < ms->row)
+	{
+		j = 0;
+		{
+			while (j < ms->col)
+			{
+				ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->xy[i][j].z, ms->xy[i][j].color);
+				j++;
+			}
+		}
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_mlxs	main_struct;
 
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
+	printmap(&main_struct);
 	leave_program(0, 0, 0);
 }
 
@@ -60,9 +81,9 @@ int	parse_map(t_mlxs *ms, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		leave_program("Error opening file\n", 2, 1);
-	ms->xy = malloc(sizeof(t_coord *) * (ms->row * ms->col));
+	ms->xy = malloc(sizeof(t_coord *) * (ms->row));
 	if (!ms->xy)
-		leave_program("Not enough memory\n", 2, 1);
+		leave_program("Not enough memory(change this to free everything)\n", 2, 1);
 	line = get_next_line(fd);
 	while(i < ms->row)
 	{
@@ -79,18 +100,21 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	int	col;
 
 	col = 0;
-	while(*line == ' ')
-		line++;
+	ms->xy[row] = malloc(sizeof(t_coord) * ms->col);
+	if (!ms->xy[row])
+		leave_program("Not enough memory(change this to free everything)\n", 2, 1);
 	while (col < ms->col)
 	{
-		ms->xy[row][col] = *(t_coord *)malloc(sizeof(t_coord));
-		ms->xy[row][col].z = ft_atoi(line);/*struct fix?*/
+		while(*line == ' ')
+			line++;
+		ms->xy[row][col].z = ft_atoi(line);
 		ms->xy[row][col].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')
 			line++;
 		if (*line == ',')
 		{
-			ms->xy[row][col].color = ft_atoi_base(line++, 16);
+			ms->xy[row][col].color = ft_atoi_base(line + 1, 16);
+			line++;
 			while(*line != '\n' && *line != ' ')
 				line++;
 		}
