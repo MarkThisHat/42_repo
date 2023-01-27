@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/26 17:22:35 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 15:51:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_coord {
 
 }			t_coord;
 
-
 typedef struct	s_mlxs {
 	void	*mlx;
 	void	*win;
@@ -49,6 +48,7 @@ int		count_map(int fd, t_mlxs *ms);
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
 int		validate_usage(int argc, char **argv, t_mlxs *ms);
+void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 
 #endif
