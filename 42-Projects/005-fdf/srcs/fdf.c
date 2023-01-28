@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 18:01:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:51:42 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,62 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	//printmap(&main_struct);
-	free_close(&main_struct, 0, main_struct.row);
+	mlx_setup(&main_struct);
+//	printmap(&main_struct);
 }
 
+int	close_win(t_mlxs *ms)
+{
+	mlx_destroy_window(ms->mlx, ms->win);
+	mlx_destroy_display(ms->mlx);
+	free(ms->mlx);
+	free_close(ms, 0, ms->row);
+	return (1);	
+}
+
+int		keypress(int keycode, t_mlxs *ms)
+{
+	if (keycode == ESC_K)
+		close_win(ms);
+	return (keycode);
+}
+
+int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
+{
+	int	dx;
+	int	dy;
+	int	y;
+	int	x;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	x = x1;
+
+	while (x <= x2)
+	{
+		y = y1 + dy * (x - x1) / dx;
+		put_pixel(ms->img1, x, y, -1);
+		x++;
+	}
+	return (x);
+}
+
+void	put_pixel(t_img *img, int x, int y, int color)
+{
+	char	*painter;
+
+	painter = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	*(unsigned int*)painter = color;
+}
+
+void	mlx_setup(t_mlxs *ms)
+{
+	ms->mlx = mlx_init();
+	ms->win = mlx_new_window(ms->mlx, WIN_W/2, WIN_H/2, "FDF");
+	mlx_hook(ms->win, 17, 0, &close_win, ms);
+	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
+	mlx_loop(ms->mlx);
+}
 void	set_struct(t_mlxs *ms)
 {
 	ms->col = 1;
@@ -114,8 +166,8 @@ int	parse_map(t_mlxs *ms, char *filename)
 		line = get_next_line(fd);
 		i++;
 	}
-	free(line);
 	close(fd);
+	free(line);
 	return (ms->row);
 }
 
@@ -126,7 +178,7 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	col = 0;
 	ms->xy[row] = malloc(sizeof(t_coord) * ms->col);
 	if (!ms->xy[row])
-		free_close(ms, "Not enough memory to fill map\n", row + 1);
+		free_close(ms, "Not enough memory to fill map\n", row);
 	while (col < ms->col)
 	{
 		while(*line == ' ')
