@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 21:56:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:04:03 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-#  define WIN_H 1080
-#  define WIN_W 1920
+#  define WIN_H 1080 / 2
+#  define WIN_W 1920 / 2
 #  define ESC_K 65307
 
 typedef struct	s_img {

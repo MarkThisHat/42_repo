@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 21:51:42 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:09:29 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ int	main(int argc, char **argv)
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
 	mlx_setup(&main_struct);
+	//mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 0, 0);
 //	printmap(&main_struct);
 }
 
 int	close_win(t_mlxs *ms)
 {
 	mlx_destroy_window(ms->mlx, ms->win);
+	mlx_destroy_image(ms->mlx, ms->img1->img);
 	mlx_destroy_display(ms->mlx);
 	free(ms->mlx);
 	free_close(ms, 0, ms->row);
@@ -120,7 +122,8 @@ void	put_pixel(t_img *img, int x, int y, int color)
 void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
-	ms->win = mlx_new_window(ms->mlx, WIN_W/2, WIN_H/2, "FDF");
+	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
+	ms->img1->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
 	mlx_loop(ms->mlx);
