@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 22:04:03 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 12:10:48 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
 int		validate_usage(int argc, char **argv, t_mlxs *ms);
 void	mlx_setup(t_mlxs *ms);
+int		draw_map(t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
 void	put_pixel(t_img *img, int x, int y, int color);
 int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2);
+int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/27 22:09:29 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 12:15:06 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,16 @@ void	printmap(t_mlxs *ms)
 int	main(int argc, char **argv)
 {
 	t_mlxs	main_struct;
+	t_img	image;
 
+	main_struct.img1 = &image;
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
 	mlx_setup(&main_struct);
-	//mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 0, 0);
+//	draw_map(&main_struct);
+//	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
 //	printmap(&main_struct);
-}
-
-int	close_win(t_mlxs *ms)
-{
-	mlx_destroy_window(ms->mlx, ms->win);
-	mlx_destroy_image(ms->mlx, ms->img1->img);
-	mlx_destroy_display(ms->mlx);
-	free(ms->mlx);
-	free_close(ms, 0, ms->row);
-	return (1);	
 }
 
 int		keypress(int keycode, t_mlxs *ms)
@@ -89,6 +82,27 @@ int		keypress(int keycode, t_mlxs *ms)
 	if (keycode == ESC_K)
 		close_win(ms);
 	return (keycode);
+}
+
+int		draw_map(t_mlxs *ms)
+{
+	int	i;
+	int	j;
+
+ft_printf("draw_map addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
+	i = 0;
+	j = 0;
+	while (i < ms->row)
+	{
+		j = 0;
+		while (j< ms->col)
+		{
+			plot_line(ms, i, i + 1, j, j + 1);
+			j++;
+		}
+		i++;
+	}
+	return (i);
 }
 
 int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
@@ -101,11 +115,11 @@ int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en
 	dx = x2 - x1;
 	dy = y2 - y1;
 	x = x1;
-
+	ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	while (x <= x2)
 	{
 		y = y1 + dy * (x - x1) / dx;
-		put_pixel(ms->img1, x, y, -1);
+		put_pixel(ms->img1, x, y, 0x00FF00FF);
 		x++;
 	}
 	return (x);
@@ -115,6 +129,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*painter;
 
+	ft_printf("put_pixel addr: %p llength: %i bpp: %i endian: %i\n", img->addr, img->line_length, img->bits_per_pixel, img->endian);
 	painter = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)painter = color;
 }
@@ -124,14 +139,32 @@ void	mlx_setup(t_mlxs *ms)
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
 	ms->img1->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+	ms->img1->addr = mlx_get_data_addr(ms->img1->img, &ms->img1->bits_per_pixel, &ms->img1->line_length, &ms->img1->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 10, 10);
 	mlx_loop(ms->mlx);
 }
+
+int	close_win(t_mlxs *ms)
+{
+	mlx_destroy_image(ms->mlx, ms->img1->img);
+	mlx_destroy_window(ms->mlx, ms->win);
+	mlx_destroy_display(ms->mlx);
+	free(ms->mlx);
+	free_close(ms, 0, ms->row);
+	return (1);	
+}
+
 void	set_struct(t_mlxs *ms)
 {
 	ms->col = 1;
 	ms->row = 0;
+//	ms->mlx = NULL;
+//	ms->win = NULL;
+//	ms->xy = NULL;
+//	ms->img1->img = NULL;
 }
 
 void	free_close(t_mlxs *ms, char *str, int rows)
