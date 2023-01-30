@@ -90,7 +90,6 @@ int		draw_map(t_mlxs *ms)
 	int	j;
 	int	mult;
 
-ft_printf("draw_map addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	i = 0;
 	j = 0;
 	mult = 30;
@@ -99,6 +98,8 @@ ft_printf("draw_map addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, 
 		j = 0;
 		while (j < ms->col - 1)
 		{
+			if (ms->xy[i][j].color)
+				ms->color = ms->xy[i][j].color;
 			plot_line(ms, j * mult, (j + 1) * mult, i * mult, i * mult);
 			j++;
 		}
@@ -110,6 +111,8 @@ ft_printf("draw_map addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, 
 		j = 0;
 		while (j < ms->row - 1)
 		{
+			if (ms->xy[i][j].color)
+				ms->color = ms->xy[i][j].color;
 			plot_liney(ms, j * mult, (j + 1) * mult, i * mult, i * mult);
 			j++;
 		}
@@ -124,17 +127,21 @@ int		plot_liney(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://e
 	int	dy;
 	int	y;
 	int	x;
+	int	color;
 
+	color = 0xFFFFFFFF;
+	if (ms->color)
+		color = ms->color;
 	dx = x2 - x1;
 	dy = y2 - y1;
 	x = x1;
-//  ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	while (x <= x2)
 	{
 		y = y1 + dy * (x - x1) / dx;
-		put_pixel(ms->img1, y, x, 0x00FF00FF);
+		put_pixel(ms->img1, y, x, color);
 		x++;
 	}
+	ms->color = 0;
 	return (x);
 }
 
@@ -145,17 +152,21 @@ int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en
 	int	dy;
 	int	y;
 	int	x;
-
+	int	color;
+	
+	color = 0xFFFFFFFF;
+	if (ms->color)
+		color = ms->color;
 	dx = x2 - x1;
 	dy = y2 - y1;
 	x = x1;
-//  ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	while (x <= x2)
 	{
 		y = y1 + dy * (x - x1) / dx;
-		put_pixel(ms->img1, x, y, 0x00FF00FF);
+		put_pixel(ms->img1, x, y, color);
 		x++;
 	}
+	ms->color = 0;
 	return (x);
 }
 
@@ -163,7 +174,6 @@ void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*painter;
 
-//	ft_printf("put_pixel addr: %p llength: %i bpp: %i endian: %i\n", img->addr, img->line_length, img->bits_per_pixel, img->endian);
 	painter = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)painter = color;
 }
@@ -195,6 +205,7 @@ void	set_struct(t_mlxs *ms)
 {
 	ms->col = 1;
 	ms->row = 0;
+	ms->color = 0;
 //	ms->mlx = NULL;
 //	ms->win = NULL;
 //	ms->xy = NULL;
