@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/29 12:15:06 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/01/29 22:02:40 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,56 @@ int		draw_map(t_mlxs *ms)
 {
 	int	i;
 	int	j;
+	int	mult;
 
 ft_printf("draw_map addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	i = 0;
 	j = 0;
+	mult = 30;
 	while (i < ms->row)
 	{
 		j = 0;
-		while (j< ms->col)
+		while (j < ms->col - 1)
 		{
-			plot_line(ms, i, i + 1, j, j + 1);
+			plot_line(ms, j * mult, (j + 1) * mult, i * mult, i * mult);
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < ms->col)
+	{
+		j = 0;
+		while (j < ms->row - 1)
+		{
+			plot_liney(ms, j * mult, (j + 1) * mult, i * mult, i * mult);
 			j++;
 		}
 		i++;
 	}
 	return (i);
 }
+
+int		plot_liney(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
+{
+	int	dx;
+	int	dy;
+	int	y;
+	int	x;
+
+	dx = x2 - x1;
+	dy = y2 - y1;
+	x = x1;
+//  ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
+	while (x <= x2)
+	{
+		y = y1 + dy * (x - x1) / dx;
+		put_pixel(ms->img1, y, x, 0x00FF00FF);
+		x++;
+	}
+	return (x);
+}
+
 
 int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en.wikipedia.org/wiki/Line_drawing_algorithm
 {
@@ -115,7 +149,7 @@ int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2) //based on https://en
 	dx = x2 - x1;
 	dy = y2 - y1;
 	x = x1;
-	ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
+//  ft_printf("plot line addr: %p llength: %i bpp: %i endian: %i\n", ms->img1->addr, ms->img1->line_length, ms->img1->bits_per_pixel, ms->img1->endian);
 	while (x <= x2)
 	{
 		y = y1 + dy * (x - x1) / dx;
@@ -129,7 +163,7 @@ void	put_pixel(t_img *img, int x, int y, int color)
 {
 	char	*painter;
 
-	ft_printf("put_pixel addr: %p llength: %i bpp: %i endian: %i\n", img->addr, img->line_length, img->bits_per_pixel, img->endian);
+//	ft_printf("put_pixel addr: %p llength: %i bpp: %i endian: %i\n", img->addr, img->line_length, img->bits_per_pixel, img->endian);
 	painter = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int*)painter = color;
 }
@@ -143,7 +177,7 @@ void	mlx_setup(t_mlxs *ms)
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 10, 10);
+	mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 400, 200);
 	mlx_loop(ms->mlx);
 }
 
