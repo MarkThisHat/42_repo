@@ -24,18 +24,21 @@ all: $(NAME)
 $(NAME): $(OBJ)
 		@ar -rcs $(NAME) $(addprefix ./objs/, $(OBJ))
 
-$(OBJ):
-		@mkdir -p objs
+$(OBJ): putdir
 		@cc $(FLAGS) $(HDR) -c ./srcs/$(@:.o=.c) -o ./objs/$@
 
+putdir:
+		@mkdir -p objs
+
+only:	$(NAME)
+		@[ -d ./objs ] && rm -rf ./objs && echo built $(NAME) || echo Something went wrong
+
 clean:
-		@echo cleaning objects
-		@rm -rf ./objs
+		@[ -d ./objs ] && rm -rf ./objs && echo cleaning objects || echo libft objects already cleaned
 
 fclean: clean
-		@echo cleaning archive
-		@rm -f $(NAME)
+		@[ -f $(NAME) ] && rm $(NAME) || echo libft isn\'t compiled
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all only putdir clean fclean re

@@ -30,6 +30,7 @@ $(OBJ): putdir
 
 putdir:
 	@mkdir -p objs
+	@[ -f $(FTLIB) ] && echo libft is already built || make only -C ./libs/libft/
 
 learn:
 	gcc -Wall -Werror -Wextra ./learning/minitest.c -lbsd -lmlx -lXext -lX11 -lm
@@ -50,6 +51,7 @@ clean:
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean:
+	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
 	@[ -d ./objs ] && rm -rf ./objs || echo Directory objs doesn\'t exist
 	@[ -f ./fdf ] && rm fdf || echo Program fdf isn\'t compiled
 
