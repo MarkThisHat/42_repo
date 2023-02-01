@@ -27,6 +27,7 @@ typedef struct	s_img {
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
+	int		color;
 	int		endian;
 }			t_img;
 
@@ -34,6 +35,12 @@ typedef struct	s_coord {
 	int		z;
 	int		color;
 }			t_coord;
+
+typedef struct	s_vect {
+	double	x;
+	double	y;
+	double	z;
+}				t_vect;
 
 typedef struct	s_mlxs {
 	void	*mlx;
@@ -44,22 +51,27 @@ typedef struct	s_mlxs {
 	int		col;
 	int		row;
 	int		color;
+	int		steep;
+	int		gradient;
+	int		toggle;
 }			t_mlxs;
 
-void	set_struct(t_mlxs *ms);
+void	mlx_setup(t_mlxs *ms);
+int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 int		count_map(int fd, t_mlxs *ms);
+void	set_struct(t_mlxs *ms);
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
-int		validate_usage(int argc, char **argv, t_mlxs *ms);
-void	mlx_setup(t_mlxs *ms);
-int		draw_map(t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
-void	put_pixel(t_img *img, int x, int y, int color);
-int		plot_line(t_mlxs *ms, int x1, int x2, int y1, int y2);
 int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
-
-int		plot_liney(t_mlxs *ms, int x1, int x2, int y1, int y2);
+int 	invert_endian(int color);
+void	swap(double *a, double *b);
+double	get_fract(double n);
+void	put_line(t_mlxs *ms, t_vect p1, t_vect p2);
+void	plot_coords(t_mlxs *ms, t_vect p1, t_vect p2);
+void	draw_slope(t_mlxs *ms, double x, double y);
+void	put_pixel(t_img *img, int x, int y, double smoother);
 
 #endif
