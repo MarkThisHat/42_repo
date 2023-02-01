@@ -29,7 +29,7 @@ $(OBJ): putdir
 	cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@ $(MFLAG)
 
 putdir:
-	mkdir -p objs
+	@mkdir -p objs
 
 learn:
 	gcc -Wall -Werror -Wextra ./learning/minitest.c -lbsd -lmlx -lXext -lX11 -lm
@@ -43,14 +43,15 @@ gambs:
 val:
 	gcc -Wall -Wextra -Werror -g ./srcs/fdf.c ./libs/libft/libft.a -I ./incl -lbsd -lmlx -lXext -lX11 -lm
 
+test:
+	@[ -f $(addprefix ./objs/, $(FUN:.c=.o)) ] || echo Object file\(s\) missing
+
 clean:
-	rm $(addprefix ./objs/, $(FUN:.c=.o))
-	rmdir ./objs
+	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean:
-	@rm $(addprefix ./objs/, $(FUN:.c=.o))
-	@rmdir ./objs
-	@rm fdf
+	@[ -d ./objs ] && rm -rf ./objs || echo Directory objs doesn\'t exist
+	@[ -f ./fdf ] && rm fdf || echo Program fdf isn\'t compiled
 
 #valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./a.out
 #garbage gcc -Wall -Wextra -Lmlx_linux -I /usr/local/include -L/usr/local/lib -Imlx_linux -lXext -lX11 -lm -lz /usr/local/lib/libmlx.a minitest.c
