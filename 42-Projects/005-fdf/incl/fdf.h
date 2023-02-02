@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/01/29 20:56:02 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/01 21:36:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ double	get_fract(double n);
 void	put_line(t_mlxs *ms, t_vect p1, t_vect p2);
 void	plot_coords(t_mlxs *ms, t_vect p1, t_vect p2);
 void	draw_slope(t_mlxs *ms, double x, double y);
+void	draw_map(t_mlxs *ms);
 void	put_pixel(t_img *img, int x, int y, double smoother);
 
 #endif

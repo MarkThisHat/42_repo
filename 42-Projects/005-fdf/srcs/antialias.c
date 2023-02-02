@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   antialias.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
+/*   Updated: 2023/02/01 20:48:29 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/fdf.h"
 
 void	put_line(t_mlxs *ms, t_vect p1, t_vect p2)
@@ -64,15 +76,21 @@ void	draw_slope(t_mlxs *ms, double x, double y)
 void	put_pixel(t_img *img, int x, int y, double smoother)
 {
 	char			*painter;
-	int				color;
 	unsigned int	alpha;
+	int				color;
+	int				target;
 
 	if (!smoother)
 		return ;
+	target = y * img->line_length + x * (img->bits_per_pixel / 8);
+	if (target < 0 || target > WIN_H * WIN_W)
+		return ;
+	if (img->endian)
+		img->color = invert_endian(img->color);
 	alpha = img->color;
 	alpha = alpha >> 24;
 	alpha = alpha * smoother;
 	color = (alpha << 24) + (img->color - (img->color & 0xFF000000));
-	painter = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
+	painter = img->addr + target;
 	*(unsigned int*)painter = color;
 }

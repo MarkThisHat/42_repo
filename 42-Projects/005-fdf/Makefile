@@ -15,6 +15,7 @@ SRC = ./srcs/
 HDR = -I ./incl/
 FUN = fdf.c management.c validators.c maptreat.c antialias.c utils.c
 CFLAG = -Wall -Wextra -Werror
+MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm
 PFUNC = $(addprefix $(SRC), $(FUN))
 FTLIB = ./libs/libft/libft.a
@@ -23,14 +24,17 @@ OBJ = $(FUN:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	cc $(CFLAG) $(HDR) $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -o fdf
+	@cc $(CFLAG) $(HDR) $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -o fdf && echo done || echo Something went wrong
 
 $(OBJ): putdir
-	cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@ $(MFLAG)
+	@cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@ $(MFLAG)
 
-putdir:
+putdir: look4mlx
 	@mkdir -p objs
 	@[ -f $(FTLIB) ] && echo libft is already built || make only -C ./libs/libft/
+
+look4mlx:
+		@[ -f $(MLXINCL) ] && echo building fdf... || echo It seems your mlx.h isn\'t at /usr/local/include
 
 learn:
 	gcc -Wall -Werror -Wextra ./learning/minitest.c -lbsd -lmlx -lXext -lX11 -lm
@@ -45,15 +49,19 @@ val:
 	gcc -Wall -Wextra -Werror -g ./srcs/fdf.c ./libs/libft/libft.a -I ./incl -lbsd -lmlx -lXext -lX11 -lm
 
 test:
-	@[ -f $(addprefix ./objs/, $(FUN:.c=.o)) ] || echo Object file\(s\) missing
+	@[ -f $(MLXINCL) ] && echo let\'s go  || echo not here
+
 
 clean:
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
-fclean:
+fclean: clean
 	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
-	@[ -d ./objs ] && rm -rf ./objs || echo Directory objs doesn\'t exist
-	@[ -f ./fdf ] && rm fdf || echo Program fdf isn\'t compiled
+	@[ -f ./fdf ] && rm fdf && echo fdf cleaned || echo Program fdf isn\'t compiled
+
+re: fclean all
+
+.PHONY: all putdir look4mlx clean fclean re
 
 #valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./a.out
 #garbage gcc -Wall -Wextra -Lmlx_linux -I /usr/local/include -L/usr/local/lib -Imlx_linux -lXext -lX11 -lm -lz /usr/local/lib/libmlx.a minitest.c
