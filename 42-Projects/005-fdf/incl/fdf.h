@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 21:36:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:33:17 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,17 @@ typedef struct	s_coord {
 	int		color;
 }			t_coord;
 
-typedef struct	s_vect {
-	double	x;
-	double	y;
-	double	z;
-}				t_vect;
+typedef struct	s_line {
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+
+}		t_line;
 
 typedef struct	s_mlxs {
 	void	*mlx;
@@ -51,8 +57,6 @@ typedef struct	s_mlxs {
 	int		col;
 	int		row;
 	int		color;
-	int		steep;
-	int		gradient;
 	int		toggle;
 }			t_mlxs;
 
@@ -67,7 +71,8 @@ int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 int 	invert_endian(int color);
-void	put_line(t_mlxs *ms, int x0, int y0, int x1, int y1);
+int		set_points(t_line *l);
+void	put_line(t_mlxs *ms, t_line *l);
 void	draw_map(t_mlxs *ms);
 void	put_pixel(t_img *img, int x, int y);
 

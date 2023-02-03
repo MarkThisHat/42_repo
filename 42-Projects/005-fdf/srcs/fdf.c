@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 21:48:35 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/03 18:34:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,14 @@ int	main(int argc, char **argv)
 
 void	draw_map(t_mlxs *ms)
 {
-	t_vect	p1;
-	t_vect	p2;
+	t_line	line;
 
-	p1.x = 50;
-	p2.x = 40;
-	p1.y = -120;
-	p2.y = 130;
+	line.x0 = 50;
+	line.x1 = 70;
+	line.y0 = -120;
+	line.y1 = 130;
 	ms->img1->color = 0xFFFFFFFF;
-	put_line(ms, p1.x, p2.x, p1.y, p2.y);
+	put_line(ms, &line);
 	ft_printf("got to draw_map\n");
 }
 
