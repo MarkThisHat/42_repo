@@ -18,7 +18,6 @@ void	put_pixel(t_img *img, int x, int y)
 	int				color;
 	int				target;
 
-	ft_printf("got to put pixel b4if\n");
 	target = (y * img->line_length) + (x * (img->bits_per_pixel / 8));
 	ft_printf("img->line_length %i img->bits_per_pixel %i x %i y %i WIN_H * WIN_W %i target %i\n",img->line_length, img->bits_per_pixel, x, y, WIN_H * WIN_W, target);
 	if (target < 0)// || target > WIN_H * WIN_W)
@@ -28,7 +27,6 @@ void	put_pixel(t_img *img, int x, int y)
 	painter = img->addr + target;
 	color = img->color & 0xFF000000;
 	*(unsigned int*)painter = color;
-	ft_printf("got to put pixel afterif\n");
 }
 
 
