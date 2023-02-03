@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 21:37:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/01 21:48:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	main(int argc, char **argv)
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
 	mlx_setup(&main_struct);
-	draw_map(&main_struct);
-	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
+//	draw_map(&main_struct);
+//	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
 //	printmap(&main_struct);
 }
 
@@ -88,12 +88,13 @@ void	draw_map(t_mlxs *ms)
 	t_vect	p1;
 	t_vect	p2;
 
-	p1.x = 10;
-	p2.x = 10;
-	p1.y = 140;
-	p2.y = 280;
-	ms->img1->color = 0x00FFFFFF;
-	put_line(ms, p1, p2);
+	p1.x = 50;
+	p2.x = 40;
+	p1.y = -120;
+	p2.y = 130;
+	ms->img1->color = 0xFFFFFFFF;
+	put_line(ms, p1.x, p2.x, p1.y, p2.y);
+	ft_printf("got to draw_map\n");
 }
 
 void	mlx_setup(t_mlxs *ms)
@@ -104,7 +105,7 @@ void	mlx_setup(t_mlxs *ms)
 	ms->img1->addr = mlx_get_data_addr(ms->img1->img, &ms->img1->bits_per_pixel, &ms->img1->line_length, &ms->img1->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
-	//draw_map(ms);
+	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 10, 10);
 	mlx_loop(ms->mlx);
 }

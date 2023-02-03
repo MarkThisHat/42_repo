@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/01/29 11:09:02 by maalexan         ###   ########.fr        #
+#    Updated: 2023/02/01 21:47:09 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ $(OBJ): putdir
 
 putdir: look4mlx
 	@mkdir -p objs
-	@[ -f $(FTLIB) ] && echo libft is already built || make only -C ./libs/libft/
+#	@[ -f $(FTLIB) ] && echo libft is already built || make only -C ./libs/libft/
 
 look4mlx:
 		@[ -f $(MLXINCL) ] && echo building fdf... || echo It seems your mlx.h isn\'t at /usr/local/include
@@ -56,7 +56,7 @@ clean:
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean: clean
-	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
+#	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
 	@[ -f ./fdf ] && rm fdf && echo fdf cleaned || echo Program fdf isn\'t compiled
 
 re: fclean all

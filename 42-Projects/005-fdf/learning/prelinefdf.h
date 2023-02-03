@@ -67,9 +67,18 @@ int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 int 	invert_endian(int color);
-void	put_line(t_mlxs *ms, int x0, int y0, int x1, int y1);
+void	swap(double *a, double *b);
+double	get_fract(double n);
+void	put_line(t_mlxs *ms, t_vect p1, t_vect p2);
+void best_put_line(t_mlxs *ms, int x0, int y0, int x1, int y1);
+void	plot_coords(t_mlxs *ms, t_vect p1, t_vect p2);
+void	draw_slope(t_mlxs *ms, double x, double y);
 void	draw_map(t_mlxs *ms);
-void	put_pixel(t_img *img, int x, int y);
+void	put_pixel(t_img *img, int x, int y, double smoother);
 
+void	wu_xiao(t_mlxs *ms, double x0, double x1, double y0, double y1);
+double rfpart(double x);
+double fpart(double x);
+double floor_round(double x);
 
 #endif
