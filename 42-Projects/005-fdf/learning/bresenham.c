@@ -22,6 +22,20 @@ void	bresenham(t_mlxs *ms, t_vect p1, t_vect p2)
 		p1.x++;
 	}
 }
+//test map drawing, works with version 1.1.3
+void	draw_map(t_mlxs *ms)
+{
+	t_line	line;
+
+	line.x0 = 100;
+	line.x1 = 110;
+	line.y0 = -100;
+	line.y1 = 100;
+	ms->img1->color = 0xFFFFFFFF;
+	put_line(ms, &line);
+	ft_printf("got to draw_map\n");
+}
+
 /*
 0a1
 > 

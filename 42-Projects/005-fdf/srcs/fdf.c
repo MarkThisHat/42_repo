@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/03 18:34:37 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 10:02:12 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,52 @@ int	main(int argc, char **argv)
 void	draw_map(t_mlxs *ms)
 {
 	t_line	line;
+	int		i;
+	int		j;
 
-	line.x0 = 50;
-	line.x1 = 70;
-	line.y0 = -120;
-	line.y1 = 130;
-	ms->img1->color = 0xFFFFFFFF;
-	put_line(ms, &line);
-	ft_printf("got to draw_map\n");
+	i = 0;
+	while (i < ms->row)
+	{
+		j = 0;
+		while (j < ms->col - 1)
+		{
+			if (ms->xy[i][j].color)
+				ms->img1->color = ms->xy[i][j].color;
+			else
+				ms->img1->color = 0xFFFFFFFF;
+			connect_row(ms, i, j, &line);
+			j++;
+		}
+		i++;
+	}
 }
+
+void	connect_row(t_mlxs *ms, int	i, int j, t_line *l)
+{
+	l->x0 = i * ms->scale;
+	l->x1 = i * ms->scale;
+	while (j + 1 < ms->col)
+	{
+		l->y0 = j * ms->scale;
+		l->y1 = (j + 1) * ms->scale;
+		/*if (i + 1 < ms->row)
+			connect_col(ms, i, j);*/
+		put_line(ms, l);
+		j++;
+	}
+}
+
+void	connect_col(t_mlxs *ms, int	i, int j)
+{
+	t_line	line;
+
+	line.x0 = i * ms->scale;
+	line.x1 = (i + 1) * ms->scale;
+	line.y1 = j * ms->scale;
+	line.y1 = j * ms->scale;
+	put_line(ms, &line);
+}
+
 
 void	mlx_setup(t_mlxs *ms)
 {
