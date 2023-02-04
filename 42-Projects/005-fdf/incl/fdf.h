@@ -75,9 +75,10 @@ int 	invert_endian(int color);
 int		set_points(t_line *l);
 void	put_line(t_mlxs *ms, t_line *l);
 void	draw_map(t_mlxs *ms);
-void	draw_col(t_mlxs *ms, int	i, int j, t_line *l);
-void	draw_line(t_mlxs *ms, int	i, int j, t_line *l);
+void	draw_col(t_mlxs *ms, int i, int j, t_line *l);
+void	draw_row(t_mlxs *ms, int i, int j, t_line *l);
 void	put_pixel(t_img *img, int x, int y);
 
+void	printmap(t_mlxs *ms);
 
 #endif

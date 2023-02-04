@@ -45,7 +45,7 @@ typedef struct	s_mlxs {
 	int		gradient;
 	int		toggle;
 }			t_mlxs;
-
+*/
 void	printmap(t_mlxs *ms)
 {
 	int i;
@@ -58,7 +58,7 @@ void	printmap(t_mlxs *ms)
 		{
 			while (j < ms->col)
 			{
-				if (ms->xy[i][j].color)
+				//if (ms->xy[i][j].color)
 					ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->xy[i][j].z, ms->xy[i][j].color);
 				j++;
 			}
@@ -66,7 +66,7 @@ void	printmap(t_mlxs *ms)
 		i++;
 	}
 }
-*/
+
 
 int	main(int argc, char **argv)
 {
@@ -77,12 +77,12 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
+	printmap(&main_struct);
 	mlx_setup(&main_struct);
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
-//	printmap(&main_struct);
 }
-
+/*
 void	draw_map(t_mlxs *ms)
 {
 	t_line	line;
@@ -100,14 +100,39 @@ void	draw_map(t_mlxs *ms)
 			else
 				ms->img1->color = 0xFFFFFFFF;
 			draw_col(ms, i, j, &line);
-			draw_line(ms, i, j, &line);
+			draw_row(ms, i, j, &line);
 			j++;
 		}
 		i++;
 	}
+}*/
+
+void	draw_map(t_mlxs *ms)
+{
+	t_line	line;
+	int		i;
+	int		j;
+
+	j = 0;
+	while (j < ms->row)
+	{
+		i = 0;
+		while (i < ms->col)
+		{
+			if (ms->xy[i][j].color)
+				ms->img1->color = ms->xy[i][j].color;
+			else
+				ms->img1->color = 0xFFFFFFFF;
+			draw_row(ms, i, j, &line);
+			i++;
+		}
+		j++;
+	}
+
+
 }
 
-void	draw_col(t_mlxs *ms, int	i, int j, t_line *l)
+void	draw_col(t_mlxs *ms, int i, int j, t_line *l)
 {
 	if ((j + 1) == ms->col)
 		return ;
@@ -118,9 +143,9 @@ void	draw_col(t_mlxs *ms, int	i, int j, t_line *l)
 	put_line(ms, l);
 }
 
-void	draw_line(t_mlxs *ms, int	i, int j, t_line *l)
+void	draw_row(t_mlxs *ms, int i, int j, t_line *l)
 {
-	if (i + 1 == ms->row)
+	if ((i + 1) == ms->row)
 		return ;
 	l->x0 = i * ms->scale;
 	l->x1 = (i + 1) * ms->scale;
