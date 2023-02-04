@@ -93,45 +93,41 @@ void	draw_map(t_mlxs *ms)
 	while (i < ms->row)
 	{
 		j = 0;
-		while (j < ms->col - 1)
+		while (j < ms->col)
 		{
 			if (ms->xy[i][j].color)
 				ms->img1->color = ms->xy[i][j].color;
 			else
 				ms->img1->color = 0xFFFFFFFF;
-			connect_row(ms, i, j, &line);
+			draw_col(ms, i, j, &line);
+			draw_line(ms, i, j, &line);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	connect_row(t_mlxs *ms, int	i, int j, t_line *l)
+void	draw_col(t_mlxs *ms, int	i, int j, t_line *l)
 {
+	if ((j + 1) == ms->col)
+		return ;
 	l->x0 = i * ms->scale;
 	l->x1 = i * ms->scale;
-	while (j + 1 < ms->col)
-	{
-		l->y0 = j * ms->scale;
-		l->y1 = (j + 1) * ms->scale;
-		/*if (i + 1 < ms->row)
-			connect_col(ms, i, j);*/
-		put_line(ms, l);
-		j++;
-	}
+	l->y0 = j * ms->scale;
+	l->y1 = (j + 1) * ms->scale;
+	put_line(ms, l);
 }
 
-void	connect_col(t_mlxs *ms, int	i, int j)
+void	draw_line(t_mlxs *ms, int	i, int j, t_line *l)
 {
-	t_line	line;
-
-	line.x0 = i * ms->scale;
-	line.x1 = (i + 1) * ms->scale;
-	line.y1 = j * ms->scale;
-	line.y1 = j * ms->scale;
-	put_line(ms, &line);
+	if (i + 1 == ms->row)
+		return ;
+	l->x0 = i * ms->scale;
+	l->x1 = (i + 1) * ms->scale;
+	l->y0 = j * ms->scale;
+	l->y1 = j * ms->scale;
+	put_line(ms, l);
 }
-
 
 void	mlx_setup(t_mlxs *ms)
 {

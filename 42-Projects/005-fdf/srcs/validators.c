@@ -63,7 +63,7 @@ void	set_struct(t_mlxs *ms)
 	ms->row = 0;
 	ms->color = 0;
 	ms->toggle = 0;
-	ms->scale = 10;
+	ms->scale = 100;
 //	ms->mlx = NULL;
 //	ms->win = NULL;
 //	ms->xy = NULL;
