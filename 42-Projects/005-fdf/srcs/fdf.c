@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/04 21:01:43 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:29:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,10 @@ void	draw_map(t_mlxs *ms)
 	int		y;
 
 	x = 0;
-	while (x < 11)
+	while (x < ms->row)
 	{
 		y = 0;
-		while (y < 19)
+		while (y < ms->col)
 		{
 			if (ms->xy[x][y].color)
 				ms->img1->color = ms->xy[x][y].color;
@@ -125,7 +125,7 @@ void	draw_map(t_mlxs *ms)
 				ms->img1->color = 0xFFFFFFFF;
 			ft_printf("%i", ms->xy[x][y].z);
 			draw_col(ms, x, y, &line);
-		//	draw_row(ms, x, y, &line);
+			draw_row(ms, x, y, &line);
 			y++;
 		}
 		ft_printf("\n");
@@ -137,10 +137,10 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-	l->x0 = x * ms->scale;//0
-	l->x1 = (x + 1) * ms->scale;//0
-	l->y0 = y * ms->scale;//1
-	l->y1 = y * ms->scale;//2   0,0 0,1
+	l->x0 = x * ms->scale;
+	l->x1 = x * ms->scale;
+	l->y0 = y * ms->scale;
+	l->y1 = (y + 1) * ms->scale;
 	put_line(ms, l);
 }
 

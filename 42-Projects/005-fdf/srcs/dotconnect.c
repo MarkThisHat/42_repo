@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/04 21:08:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:28:33 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ void	put_pixel(t_img *img, int x, int y)
 	unsigned int	color;
 	int				target;
 
-	target = (y * img->line_length) + (x * (img->bits_per_pixel / 8));
+	if (x > WIN_H || y > WIN_W)
+		return ;
+	target = (x * img->line_length) + (y * (img->bits_per_pixel / 8));
 	//ft_printf("img->line_length %i img->bits_per_pixel %i x %i y %i WIN_H * WIN_W %i target %i\n",img->line_length, img->bits_per_pixel, x, y, WIN_H * WIN_W, target);
-	if (target < 0) //|| target > WIN_H * WIN_W)
+	if (target < 0) //|| target > WIN_H * img->line_length)
 		return ;
 	if (img->endian)
 		img->color = invert_endian(img->color);
@@ -31,7 +33,6 @@ void	put_pixel(t_img *img, int x, int y)
 	*(unsigned int*)painter = color;
 }
 
-
 void put_line(t_mlxs *ms, t_line *l)
 {
     int err;
@@ -40,7 +41,7 @@ void put_line(t_mlxs *ms, t_line *l)
 	err = set_points(l);
 	while(l->x0 <= l->x1 && l->y0 <= l->y1) 
 	{
-		put_pixel(ms->img1, l->y0, l->x0);
+		put_pixel(ms->img1, l->x0, l->y0);
 		e2 = 2 * err;
 		if (e2 >= l->dy) 
 		{
