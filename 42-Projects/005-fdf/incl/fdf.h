@@ -78,6 +78,8 @@ void	draw_map(t_mlxs *ms);
 void	draw_col(t_mlxs *ms, int i, int j, t_line *l);
 void	draw_row(t_mlxs *ms, int i, int j, t_line *l);
 void	put_pixel(t_img *img, int x, int y);
+int	isox(int x, int z);
+int	isoy(int y, int z);
 
 void	printmap(t_mlxs *ms);
 

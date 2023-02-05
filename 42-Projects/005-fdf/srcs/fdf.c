@@ -107,10 +107,10 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-	l->x0 = x * ms->scale;
-	l->x1 = x * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = (y + 1) * ms->scale;
+	l->x0 = isox(x, ms->xy[x][y].z) * ms->scale;
+	l->x1 = isox(x, ms->xy[x][y + 1].z) * ms->scale;
+	l->y0 = isoy(y, ms->xy[x][y].z) * ms->scale;
+	l->y1 = isoy(y + 1, ms->xy[x][y + 1].z) * ms->scale;
 	put_line(ms, l);
 }
 
@@ -118,12 +118,39 @@ void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((x + 1) == ms->row)
 		return ;
-	l->x0 = x * ms->scale;
-	l->x1 = (x + 1) * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = y * ms->scale;
+	l->x0 = isox(x, ms->xy[x][y].z) * ms->scale;
+	l->x1 = isox(x + 1, ms->xy[x + 1][y].z) * ms->scale;
+	l->y0 = isoy(y, ms->xy[x][y].z) * ms->scale;
+	l->y1 = isoy(y, ms->xy[x + 1][y].z) * ms->scale;
 	put_line(ms, l);
 }
+
+
+int	isox(int x, int z)
+{
+	int	angle;
+	
+	angle = 0.5235988;
+	return (x + cos(angle) * z);
+}
+
+int	isoy(int y, int z)
+{
+	int	angle;
+	
+	angle = 0.5235988;
+	return (y + sin(angle) * z);
+}
+
+
+	/* expression One
+	*	destX = x + cos(angle) * z - cos(angle) * y;
+	*	destY = -y * sin(angle) - z * sin(angle);
+	*/
+	/* expression two
+	* destX = x + cos(angle) * z;
+	* destY = y + sin(angle) * z;
+	*/
 
 void	mlx_setup(t_mlxs *ms)
 {

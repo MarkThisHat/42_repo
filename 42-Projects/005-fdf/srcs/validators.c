@@ -40,7 +40,7 @@ int		count_map(int fd, t_mlxs *ms)
 	while (c == ' ' && read(fd, &c, 1));
 	while(read(fd, &c, 1))
 	{
-		if (c == ' ' && !ms->row) //removed validator
+		if (c == ' ' && !ms->row)
 		{
 			while (c == ' ' && read(fd, &c, 1));
 			if (c != '\n')
