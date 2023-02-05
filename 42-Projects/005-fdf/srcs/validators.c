@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:50:18 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 20:50:42 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 20:37:44 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	set_struct(t_mlxs *ms)
 	ms->row = 0;
 	ms->color = 0;
 	ms->toggle = 0;
-	ms->scale = 100;
+	ms->scale = 10;
 //	ms->mlx = NULL;
 //	ms->win = NULL;
 //	ms->xy = NULL;

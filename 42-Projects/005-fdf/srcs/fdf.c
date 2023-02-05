@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/04 10:02:12 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:01:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	printmap(t_mlxs *ms)
 			while (j < ms->col)
 			{
 				//if (ms->xy[i][j].color)
-					ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->xy[i][j].z, ms->xy[i][j].color);
+			//		ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->xy[i][j].z, ms->xy[i][j].color);
+			//ft_printf("%i\n", ms->xy[0][18].z);
 				j++;
 			}
 		}
@@ -89,30 +90,6 @@ void	draw_map(t_mlxs *ms)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (i < ms->row)
-	{
-		j = 0;
-		while (j < ms->col)
-		{
-			if (ms->xy[i][j].color)
-				ms->img1->color = ms->xy[i][j].color;
-			else
-				ms->img1->color = 0xFFFFFFFF;
-			draw_col(ms, i, j, &line);
-			draw_row(ms, i, j, &line);
-			j++;
-		}
-		i++;
-	}
-}*/
-
-void	draw_map(t_mlxs *ms)
-{
-	t_line	line;
-	int		i;
-	int		j;
-
 	j = 0;
 	while (j < ms->row)
 	{
@@ -123,34 +100,58 @@ void	draw_map(t_mlxs *ms)
 				ms->img1->color = ms->xy[i][j].color;
 			else
 				ms->img1->color = 0xFFFFFFFF;
-			draw_row(ms, i, j, &line);
+			draw_row(ms, j, i, &line);
 			i++;
 		}
 		j++;
 	}
+}
+*/
+void	draw_map(t_mlxs *ms)
+{
+	t_line	line;
+	int		x;
+	int		y;
 
-
+	x = 0;
+	while (x < 11)
+	{
+		y = 0;
+		while (y < 19)
+		{
+			if (ms->xy[x][y].color)
+				ms->img1->color = ms->xy[x][y].color;
+			else
+				ms->img1->color = 0xFFFFFFFF;
+			ft_printf("%i", ms->xy[x][y].z);
+			draw_col(ms, x, y, &line);
+		//	draw_row(ms, x, y, &line);
+			y++;
+		}
+		ft_printf("\n");
+		x++;
+	}
 }
 
-void	draw_col(t_mlxs *ms, int i, int j, t_line *l)
+void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
-	if ((j + 1) == ms->col)
+	if ((y + 1) == ms->col)
 		return ;
-	l->x0 = i * ms->scale;
-	l->x1 = i * ms->scale;
-	l->y0 = j * ms->scale;
-	l->y1 = (j + 1) * ms->scale;
+	l->x0 = x * ms->scale;//0
+	l->x1 = (x + 1) * ms->scale;//0
+	l->y0 = y * ms->scale;//1
+	l->y1 = y * ms->scale;//2   0,0 0,1
 	put_line(ms, l);
 }
 
-void	draw_row(t_mlxs *ms, int i, int j, t_line *l)
+void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
-	if ((i + 1) == ms->row)
+	if ((x + 1) == ms->row)
 		return ;
-	l->x0 = i * ms->scale;
-	l->x1 = (i + 1) * ms->scale;
-	l->y0 = j * ms->scale;
-	l->y1 = j * ms->scale;
+	l->x0 = x * ms->scale;
+	l->x1 = (x + 1) * ms->scale;
+	l->y0 = y * ms->scale;
+	l->y1 = y * ms->scale;
 	put_line(ms, l);
 }
 

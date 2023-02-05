@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   antialias.c                                        :+:      :+:    :+:   */
+/*   dotconnect.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/03 18:43:28 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/04 21:08:15 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void put_line(t_mlxs *ms, t_line *l)
 	err = set_points(l);
 	while(l->x0 <= l->x1 && l->y0 <= l->y1) 
 	{
-		put_pixel(ms->img1, l->x0, l->y0);
+		put_pixel(ms->img1, l->y0, l->x0);
 		e2 = 2 * err;
 		if (e2 >= l->dy) 
 		{
@@ -69,3 +69,46 @@ int	set_points(t_line *l)
 		l->sy = -1;
 	return (l->dx + l->dy);
 }
+
+
+/*
+
+void put_line(t_mlxs *ms, t_line *l)
+{
+    int err;
+	int	e2;
+
+	err = set_points(l);
+	while(x0 <= x1 && y0 <= y1) 
+	{
+		put_pixel(ms->img1, y0, x0);
+		e2 = 2 * err;
+		if (e2 >= dy) 
+		{
+			err += dy;
+			x0 += sx;
+        }
+        if (e2 <= dx)
+		{
+			err += dx;
+			y0 += sy;
+        }
+    }
+}
+
+int	set_points(t_line *l)
+{
+	dx = abs(x1 - x0);
+	dy = -abs(y1 - y0);
+	if (x0 < x1)
+		sx = 1;
+	else
+		sx = -1;
+	if (y0 < y1)
+		sy = 1;
+	else
+		sy = -1;
+	return (dx + dy);
+}
+
+*/
