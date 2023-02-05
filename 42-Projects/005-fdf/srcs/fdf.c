@@ -13,39 +13,6 @@
 #include "../incl/fdf.h"
 
 /*
-typedef struct	s_img {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}			t_img;
-
-typedef struct	s_coord {
-	int		z;
-	int		color;
-}			t_coord;
-
-typedef struct	s_vect {
-	double	x;
-	double	y;
-	double	z;
-}				t_vect
-
-typedef struct	s_mlxs {
-	void	*mlx;
-	void	*win;
-	t_img	*img1;
-	t_img	*img2;
-	t_coord	**xy;
-	int		col;
-	int		row;
-	int		color;
-	int		steep;
-	int		gradient;
-	int		toggle;
-}			t_mlxs;
-*/
 void	printmap(t_mlxs *ms)
 {
 	int i;
@@ -67,7 +34,7 @@ void	printmap(t_mlxs *ms)
 		i++;
 	}
 }
-
+*/
 
 int	main(int argc, char **argv)
 {
@@ -78,7 +45,12 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	printmap(&main_struct);
+	//printmap(&main_struct);
+	int ratiow = WIN_W / main_struct.col;
+	int ratioh = WIN_H / main_struct.row;
+	main_struct.scale = ratioh;
+	if (ratiow < ratioh)
+		main_struct.scale = ratiow;
 	mlx_setup(&main_struct);
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
@@ -123,12 +95,10 @@ void	draw_map(t_mlxs *ms)
 				ms->img1->color = ms->xy[x][y].color;
 			else
 				ms->img1->color = 0xFFFFFFFF;
-			ft_printf("%i", ms->xy[x][y].z);
 			draw_col(ms, x, y, &line);
 			draw_row(ms, x, y, &line);
 			y++;
 		}
-		ft_printf("\n");
 		x++;
 	}
 }

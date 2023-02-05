@@ -18,12 +18,11 @@ void	put_pixel(t_img *img, int x, int y)
 	unsigned int	color;
 	int				target;
 
-	if (x > WIN_H || y > WIN_W)
-		return ;
 	target = (x * img->line_length) + (y * (img->bits_per_pixel / 8));
 	//ft_printf("img->line_length %i img->bits_per_pixel %i x %i y %i WIN_H * WIN_W %i target %i\n",img->line_length, img->bits_per_pixel, x, y, WIN_H * WIN_W, target);
-	if (target < 0) //|| target > WIN_H * img->line_length)
+	if (target < 0 || target > (WIN_H * img->line_length))
 		return ;
+	//this draws most of the last line of the screen: target = (WIN_H * img->line_length) - (11 * img->line_length);
 	if (img->endian)
 		img->color = invert_endian(img->color);
 	painter = img->addr + target;
