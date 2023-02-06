@@ -64,3 +64,50 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	}
 	return(col);
 }
+
+int		count_col(int fd, t_mlxs *ms)
+{
+	char	c;
+
+	c = ' ';
+	while (c == ' ' && read(fd, &c, 1));
+	while(read(fd, &c, 1))
+	{
+		if (c == ' ')
+		{
+			while (c == ' ' && read(fd, &c, 1));
+			if (c != '\n')
+				ms->col++;
+		}
+		if (c == '\n')
+		{
+			ms->col++;
+			return (count_row(fd, ms));
+		}
+	}
+	return (0);
+}
+
+int		count_row(int fd, t_mlxs *ms)
+{
+	char 	c;
+	int		val;
+
+	if (!ms->col)
+		return (0);
+	ms->row++;
+	val = 1;
+	while(read(fd, &c, 1))
+	{
+		if (val && c != '\n')
+		{
+			ms->row++;
+			val = 0;
+		}
+		if (c == '\n')
+			val = 1;
+	}
+	if (ms->row < 3 && c != '\n')
+		return (0);
+	return (1);
+}

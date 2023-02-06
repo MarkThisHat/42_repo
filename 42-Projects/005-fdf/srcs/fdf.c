@@ -55,6 +55,23 @@ int	main(int argc, char **argv)
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
 }
+
+void	set_struct(t_mlxs *ms)
+{
+	ms->col = 0;
+	ms->row = 0;
+	ms->color = 0;
+	ms->toggle = 0;
+	ms->angle = 0.6154729;
+	ms->focus = 100;
+	ms->img2->img = NULL;
+	ms->fad = &ms->img1;
+//	ms->mlx = NULL;
+//	ms->win = NULL;
+//	ms->xy = NULL;
+//	ms->img1->img = NULL;
+}
+
 /*
 void	draw_map(t_mlxs *ms)
 {
@@ -85,6 +102,7 @@ void	draw_map(t_mlxs *ms)
 	int		x;
 	int		y;
 
+	line.angle = ms->angle;
 	x = 0;
 	while (x < ms->row)
 	{
@@ -92,9 +110,9 @@ void	draw_map(t_mlxs *ms)
 		while (y < ms->col)
 		{
 			if (ms->xy[x][y].color)
-				ms->img1->color = ms->xy[x][y].color;
+				(*ms->fad)->color = ms->xy[x][y].color;
 			else
-				ms->img1->color = 0xFFFFFFFF;
+				(*ms->fad)->color = 0xFFFFFFFF;
 			draw_row(ms, x, y, &line);
 			draw_col(ms, x, y, &line);
 			y++;
@@ -109,10 +127,10 @@ void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 		return ;
 	iso_zero(l, x, y, ms->xy[x][y].z);
 	iso_one(l, x, y + 1, ms->xy[x][y + 1].z);
-	l->x0 *= ms->scale;
-	l->x1 *= ms->scale;
-	l->y0 *= ms->scale;
-	l->y1 *= ms->scale;
+	l->x0 = l->x0 * ms->scale + ms->focus;
+	l->x1 = l->x1 * ms->scale + ms->focus;
+	l->y0 = l->y0 * ms->scale + ms->focus;
+	l->y1 = l->y1 * ms->scale + ms->focus;
 	put_line(ms, l);
 	ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -123,47 +141,35 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 		return ;
 	iso_zero(l, x, y, ms->xy[x][y].z);
 	iso_one(l, x + 1, y, ms->xy[x + 1][y].z);
-	l->x0 *= ms->scale;
-	l->x1 *= ms->scale;
-	l->y0 *= ms->scale;
-	l->y1 *= ms->scale;
+	l->x0 = l->x0 * ms->scale + ms->focus;
+	l->x1 = l->x1 * ms->scale + ms->focus;
+	l->y0 = l->y0 * ms->scale + ms->focus;
+	l->y1 = l->y1 * ms->scale + ms->focus;
 	put_line(ms, l);
 	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
 */
 
-int	isox(int x, int z)
+int	isox(t_mlxs *ms, int x, int z)
 {
-	double	angle;
-	
-	angle = 0.5235988;
-	return (x + cos(angle) * z);
+		return (x + cos(ms->angle) * z);
 }
 
-int	isoy(int y, int z)
+int	isoy(t_mlxs *ms, int y, int z)
 {
-	double	angle;
-	
-	angle = 0.5235988;
-	return (y + sin(angle) * z);
+	return (y + sin(ms->angle) * z);
 }
 
 void	iso_zero(t_line *l, int x, int y, int z)
 {
-	double	angle;	
-	angle = 0.5235988;
-
-	l->x0 = x + cos(angle) * z - cos(angle) * y;
-	l->y0 = y * sin(angle) - z * sin(angle);
+	l->x0 = x + cos(l->angle) * z - cos(l->angle) * y;
+	l->y0 = -y * sin(l->angle) - z * sin(l->angle);
 }
 
 void	iso_one(t_line *l, int x, int y, int z)
 {
-	double	angle;
-	
-	angle = 0.5235988;
-	l->x1 = x + cos(angle) * z - cos(angle) * y;
-	l->y1 = y * sin(angle) - z * sin(angle);
+	l->x1 = x + cos(l->angle) * z - cos(l->angle) * y;
+	l->y1 = -y * sin(l->angle) - z * sin(l->angle);
 }
 
 	/* expression One
@@ -180,10 +186,10 @@ void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-	l->x0 = isox(x, ms->xy[x][y].z) * ms->scale;
-	l->x1 = isox(x, ms->xy[x][y + 1].z) * ms->scale;
-	l->y0 = isoy(y, ms->xy[x][y].z) * ms->scale;
-	l->y1 = isoy(y + 1, ms->xy[x][y + 1].z) * ms->scale;
+	l->x0 = (isox(ms, x, ms->xy[x][y].z) * ms->scale) + ms->focus;
+	l->x1 = (isox(ms, x, ms->xy[x][y + 1].z) * ms->scale) + ms->focus;
+	l->y0 = (isoy(ms, y, ms->xy[x][y].z) * ms->scale) + ms->focus;
+	l->y1 = (isoy(ms, y + 1, ms->xy[x][y + 1].z) * ms->scale) + ms->focus;
 	put_line(ms, l);
 }
 
@@ -191,21 +197,22 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((x + 1) == ms->row)
 		return ;
-	l->x0 = isox(x, ms->xy[x][y].z) * ms->scale;
-	l->x1 = isox(x + 1, ms->xy[x + 1][y].z) * ms->scale;
-	l->y0 = isoy(y, ms->xy[x][y].z) * ms->scale;
-	l->y1 = isoy(y, ms->xy[x + 1][y].z) * ms->scale;
+	l->x0 = (isox(ms, x, ms->xy[x][y].z) * ms->scale) + ms->focus;
+	l->x1 = (isox(ms, x + 1, ms->xy[x + 1][y].z) * ms->scale) + ms->focus;
+	l->y0 = (isoy(ms, y, ms->xy[x][y].z) * ms->scale) + ms->focus;
+	l->y1 = (isoy(ms, y, ms->xy[x + 1][y].z) * ms->scale) + ms->focus;
 	put_line(ms, l);
 }
+
 /*
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-	l->x0 = x * ms->scale;
-	l->x1 = x * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = (y + 1) * ms->scale;
+	l->x0 = x * ms->scale + ms->focus;
+	l->x1 = x * ms->scale + ms->focus;
+	l->y0 = y * ms->scale + ms->focus;
+	l->y1 = (y + 1) * ms->scale + ms->focus;
 	put_line(ms, l);
 	ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -214,10 +221,10 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((x + 1) == ms->row)
 		return ;
-	l->x0 = x * ms->scale;
-	l->x1 = (x + 1) * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = y * ms->scale;
+	l->x0 = x * ms->scale + ms->focus;
+	l->x1 = (x + 1) * ms->scale + ms->focus;
+	l->y0 = y * ms->scale + ms->focus;
+	l->y1 = y * ms->scale + ms->focus;
 	put_line(ms, l);
 	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -228,11 +235,11 @@ void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
-	ms->img1->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
-	ms->img1->addr = mlx_get_data_addr(ms->img1->img, &ms->img1->bits_per_pixel, &ms->img1->line_length, &ms->img1->endian);
+	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+	(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, ms->img1->img, 10, 10);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
 	mlx_loop(ms->mlx);
 }

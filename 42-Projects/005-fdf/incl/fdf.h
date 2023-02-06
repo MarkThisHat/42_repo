@@ -37,15 +37,13 @@ typedef struct	s_coord {
 }			t_coord;
 
 typedef struct	s_line {
-	int	x0;
-	int	x1;
-	int	y0;
-	int	y1;
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-
+	int		x0;
+	int		x1;
+	int		y0;
+	int		y1;
+	int		dx;
+	int		dy;
+	double	angle;
 }		t_line;
 
 typedef struct	s_mlxs {
@@ -53,17 +51,21 @@ typedef struct	s_mlxs {
 	void	*win;
 	t_img	*img1;
 	t_img	*img2;
+	t_img	**fad;
 	t_coord	**xy;
 	int		col;
 	int		row;
 	int		color;
+	int		focus;
 	int		scale;
 	int		toggle;
+	double	angle;
 }			t_mlxs;
 
 void	mlx_setup(t_mlxs *ms);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
-int		count_map(int fd, t_mlxs *ms);
+int		count_col(int fd, t_mlxs *ms);
+int		count_row(int fd, t_mlxs *ms);
 void	set_struct(t_mlxs *ms);
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
@@ -78,8 +80,8 @@ void	draw_map(t_mlxs *ms);
 void	draw_col(t_mlxs *ms, int i, int j, t_line *l);
 void	draw_row(t_mlxs *ms, int i, int j, t_line *l);
 void	put_pixel(t_img *img, int x, int y);
-int	isox(int x, int z);
-int	isoy(int y, int z);
+int	isoy(t_mlxs *ms, int y, int z);
+int	isox(t_mlxs *ms, int x, int z);
 void	iso_zero(t_line *l, int x, int y, int z);
 void	iso_one(t_line *l, int x, int y, int z);
 void	high(t_mlxs *ms, t_line *l);

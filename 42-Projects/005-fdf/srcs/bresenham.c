@@ -49,7 +49,7 @@ void	low(t_mlxs *ms, t_line *l)
 	x = l->x0;
 	while (x < l->x1)
 	{
-		put_pixel(ms->img1, x, y);
+		put_pixel(*ms->fad, x, y);
 		if (d > 0)
 		{
 			y = y + n;
@@ -81,7 +81,7 @@ void	high(t_mlxs *ms, t_line *l)
 	y = l->y0;
 	while (y < l->y1)
 	{
-		put_pixel(ms->img1, x, y);
+		put_pixel(*ms->fad, x, y);
 		if (d > 0)
 		{
 			x = x + n;
