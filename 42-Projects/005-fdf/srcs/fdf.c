@@ -102,7 +102,7 @@ void	draw_map(t_mlxs *ms)
 		x++;
 	}
 }
-
+/*
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
@@ -130,11 +130,11 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 	put_line(ms, l);
 	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
+*/
 
-/*
 int	isox(int x, int z)
 {
-	int	angle;
+	double	angle;
 	
 	angle = 0.5235988;
 	return (x + cos(angle) * z);
@@ -142,11 +142,11 @@ int	isox(int x, int z)
 
 int	isoy(int y, int z)
 {
-	int	angle;
+	double	angle;
 	
 	angle = 0.5235988;
 	return (y + sin(angle) * z);
-}*/
+}
 
 void	iso_zero(t_line *l, int x, int y, int z)
 {
@@ -175,7 +175,7 @@ void	iso_one(t_line *l, int x, int y, int z)
 	* destY = y + sin(angle) * z;
 	*/
 
-/*
+
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
@@ -197,7 +197,7 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 	l->y1 = isoy(y, ms->xy[x + 1][y].z) * ms->scale;
 	put_line(ms, l);
 }
-
+/*
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
