@@ -13,7 +13,7 @@
 NAME = fdf
 SRC = ./srcs/
 HDR = -I ./incl/
-FUN = fdf.c management.c validators.c maptreat.c dotconnect.c utils.c
+FUN = fdf.c management.c validators.c maptreat.c bresenham.c utils.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm

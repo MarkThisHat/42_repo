@@ -80,7 +80,10 @@ void	draw_row(t_mlxs *ms, int i, int j, t_line *l);
 void	put_pixel(t_img *img, int x, int y);
 int	isox(int x, int z);
 int	isoy(int y, int z);
-
+void	iso_zero(t_line *l, int x, int y, int z);
+void	iso_one(t_line *l, int x, int y, int z);
+void	high(t_mlxs *ms, t_line *l);
+void	low(t_mlxs *ms, t_line *l);
 void	printmap(t_mlxs *ms);
 
 #endif
