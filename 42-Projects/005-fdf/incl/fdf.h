@@ -43,7 +43,7 @@ typedef struct	s_line {
 	int		y1;
 	int		dx;
 	int		dy;
-	double	angle;
+	double	angl;
 }		t_line;
 
 typedef struct	s_mlxs {
