@@ -107,12 +107,12 @@ void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-//	iso_zero(l, x, y, ms->xy[x][y].z);
-//	iso_one(l, x, y + 1, ms->xy[x][y + 1].z);
-	l->x0 = x * ms->scale;
-	l->x1 = x * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = (y + 1) * ms->scale;
+	iso_zero(l, x, y, ms->xy[x][y].z);
+	iso_one(l, x, y + 1, ms->xy[x][y + 1].z);
+	l->x0 *= ms->scale;
+	l->x1 *= ms->scale;
+	l->y0 *= ms->scale;
+	l->y1 *= ms->scale;
 	put_line(ms, l);
 	ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -121,12 +121,12 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((x + 1) == ms->row)
 		return ;
-//	iso_zero(l, x, y, ms->xy[x][y].z);
-//	iso_one(l, x + 1, y, ms->xy[x + 1][y].z);
-	l->x0 = x * ms->scale;
-	l->x1 = (x + 1) * ms->scale;
-	l->y0 = y * ms->scale;
-	l->y1 = y * ms->scale;
+	iso_zero(l, x, y, ms->xy[x][y].z);
+	iso_one(l, x + 1, y, ms->xy[x + 1][y].z);
+	l->x0 *= ms->scale;
+	l->x1 *= ms->scale;
+	l->y0 *= ms->scale;
+	l->y1 *= ms->scale;
 	put_line(ms, l);
 	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -197,6 +197,31 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 	l->y1 = isoy(y, ms->xy[x + 1][y].z) * ms->scale;
 	put_line(ms, l);
 }
+
+void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
+{
+	if ((y + 1) == ms->col)
+		return ;
+	l->x0 = x * ms->scale;
+	l->x1 = x * ms->scale;
+	l->y0 = y * ms->scale;
+	l->y1 = (y + 1) * ms->scale;
+	put_line(ms, l);
+	ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
+}
+
+void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
+{
+	if ((x + 1) == ms->row)
+		return ;
+	l->x0 = x * ms->scale;
+	l->x1 = (x + 1) * ms->scale;
+	l->y0 = y * ms->scale;
+	l->y1 = y * ms->scale;
+	put_line(ms, l);
+	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
+}
+
 */
 
 void	mlx_setup(t_mlxs *ms)
