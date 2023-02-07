@@ -40,8 +40,10 @@ int	main(int argc, char **argv)
 {
 	t_mlxs	main_struct;
 	t_img	image;
+	t_img	image2;
 
 	main_struct.img1 = &image;
+	main_struct.img2 = &image2;
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
@@ -61,7 +63,7 @@ void	set_struct(t_mlxs *ms)
 	ms->col = 0;
 	ms->row = 0;
 	ms->color = 0;
-	ms->toggle = 0;
+	ms->toggle = 42;
 	ms->focus = 100;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
@@ -240,7 +242,23 @@ void	mlx_setup(t_mlxs *ms)
 	(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
+	//mlx_mouse_hook(ms->win, mouse_group, &ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
 	mlx_loop(ms->mlx);
 }
+
+/* /bonus?
+
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
+{
+	ft_printf("%i and\n", keycode);
+	if (keycode == 1)
+		ms->angle += 0.1;
+	if (keycode == 3)
+		ms->angle -= 0.1;
+	mlx_clear_window(ms->mlx, ms->win);
+	//draw_map(ms);
+	return (x + y);
+}
+*/

@@ -36,5 +36,38 @@ int		keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)
 		close_win(ms);
+	//below here is bonus
+	if (keycode == 112)
+		ms->angle += 0.1;
+	if (keycode == 111)
+		ms->angle -= 0.1;
+	mlx_clear_window(ms->mlx, ms->win);
+	fad_toggle(ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+	ft_printf("%i\n", keycode);
 	return (keycode);
 }
+
+void	fad_toggle(t_mlxs *ms)
+{
+	if (ms->toggle == 42)
+	{
+		ms->fad = &ms->img2;
+		(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+		(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
+		ms->toggle = 0;
+		return ;
+	}
+	if (!ms->toggle)
+	{
+		ms->fad = &ms->img1;
+		ms->toggle = 1;
+	}
+	else
+	{
+		ms->fad = &ms->img2;
+		ms->toggle = 0;
+	}
+}
+

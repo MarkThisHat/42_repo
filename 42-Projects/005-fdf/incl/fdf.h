@@ -88,4 +88,7 @@ void	high(t_mlxs *ms, t_line *l);
 void	low(t_mlxs *ms, t_line *l);
 void	printmap(t_mlxs *ms);
 
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
+void	fad_toggle(t_mlxs *ms);
+
 #endif
