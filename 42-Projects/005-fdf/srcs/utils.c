@@ -29,7 +29,13 @@ int invert_endian(int color)
 
 int		close_win(t_mlxs *ms)
 {
-	mlx_destroy_image(ms->mlx, (*ms->fad)->img);
+	if (ms->toggle == 42)
+		mlx_destroy_image(ms->mlx, (*ms->fad)->img);
+	else
+	{
+		mlx_destroy_image(ms->mlx, ms->img1->img);
+		mlx_destroy_image(ms->mlx, ms->img2->img);
+	}
 	mlx_destroy_window(ms->mlx, ms->win);
 	mlx_destroy_display(ms->mlx);
 	free(ms->mlx);

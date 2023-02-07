@@ -24,7 +24,7 @@ OBJ = $(FUN:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@cc $(CFLAG) $(HDR) $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -o fdf && echo done || echo Something went wrong
+	@cc $(CFLAG) $(HDR) $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf && echo done || echo Something went wrong
 
 $(OBJ): putdir
 	@cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@

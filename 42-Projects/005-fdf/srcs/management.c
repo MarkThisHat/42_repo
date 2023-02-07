@@ -42,6 +42,7 @@ int		keypress(int keycode, t_mlxs *ms)
 	if (keycode == 111)
 		ms->angle -= 0.1;
 	mlx_clear_window(ms->mlx, ms->win);
+	clear_img(*ms->fad);
 	fad_toggle(ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
@@ -71,3 +72,16 @@ void	fad_toggle(t_mlxs *ms)
 	}
 }
 
+void	clear_img(t_img *img)
+{
+	char			*painter;
+	char			*target;
+
+	target = img->addr + (WIN_H * img->line_length);
+	painter = img->addr;
+	while(painter < target + 1)
+	{
+		*(unsigned int*)painter = 0;
+		painter++;
+	}
+}

@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <math.h>
 
-#  define WIN_H 1080 / 2
-#  define WIN_W 1920 / 2
+#  define WIN_H 1080 // 2
+#  define WIN_W 1920 // 2
 #  define ESC_K 65307
 
 typedef struct	s_img {
@@ -90,5 +90,6 @@ void	printmap(t_mlxs *ms);
 
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
+void	clear_img(t_img *img);
 
 #endif

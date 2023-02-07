@@ -50,9 +50,9 @@ int	main(int argc, char **argv)
 	//printmap(&main_struct);
 	int ratiow = WIN_W / main_struct.col;
 	int ratioh = WIN_H / main_struct.row;
-	main_struct.scale = ratioh / 2;
+	main_struct.scale = ratioh / 3;
 	if (ratiow < ratioh)
-		main_struct.scale = ratiow / 2;
+		main_struct.scale = ratiow / 3;
 	mlx_setup(&main_struct);
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
@@ -64,10 +64,21 @@ void	set_struct(t_mlxs *ms)
 	ms->row = 0;
 	ms->color = 0;
 	ms->toggle = 42;
-	ms->focus = 100;
+	ms->focus = 500;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.6154729;
+	/*
+	*	35,264°
+	*	0.6154729
+	*	
+	*	80,264°
+	*	1.400871
+	*
+	*	155,264°
+	*	2.709868
+	*
+	*/
 //	ms->mlx = NULL;
 //	ms->win = NULL;
 //	ms->xy = NULL;
@@ -122,7 +133,7 @@ void	draw_map(t_mlxs *ms)
 		x++;
 	}
 }
-/*
+
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
@@ -150,28 +161,34 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 	put_line(ms, l);
 	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
-*/
+
 
 int	isox(t_mlxs *ms, int x, int z)
 {
+		z++;
 		return (x + cos(ms->angle) * z);
 }
 
 int	isoy(t_mlxs *ms, int y, int z)
 {
+	z++;
 	return (y + sin(ms->angle) * z);
 }
 
 void	iso_zero(t_line *l, int x, int y, int z)
 {
+	if (!z)
+		z = 1;
 	l->x0 = x + cos(l->angl) * z - cos(l->angl) * y;
-	l->y0 = -y * sin(l->angl) - z * sin(l->angl);
+	l->y0 = y * sin(l->angl) + z * sin(l->angl);
 }
 
 void	iso_one(t_line *l, int x, int y, int z)
 {
+	if (!z)
+		z = 1;
 	l->x1 = x + cos(l->angl) * z - cos(l->angl) * y;
-	l->y1 = -y * sin(l->angl) - z * sin(l->angl);
+	l->y1 = y * sin(l->angl) + z * sin(l->angl);
 }
 
 	/* expression One
@@ -183,7 +200,7 @@ void	iso_one(t_line *l, int x, int y, int z)
 	* destY = y + sin(angle) * z;
 	*/
 
-
+/*
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
@@ -206,7 +223,7 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 	put_line(ms, l);
 }
 
-/*
+
 
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
