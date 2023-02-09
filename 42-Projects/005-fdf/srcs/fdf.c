@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/04 21:29:59 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:57:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ void	set_struct(t_mlxs *ms)
 	ms->row = 0;
 	ms->color = 0;
 	ms->toggle = 42;
-	ms->focus = 500;
+	ms->focus_x = 500;
+	ms->focus_y = 500;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.6154729;
+	ms->tilt = 0.785;
 	/*
 	*	35,264°
 	*	0.6154729
@@ -140,12 +142,13 @@ void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 		return ;
 	iso_zero(l, x, y, ms->xy[x][y].z);
 	iso_one(l, x, y + 1, ms->xy[x][y + 1].z);
-	l->x0 = l->x0 * ms->scale + ms->focus;
-	l->x1 = l->x1 * ms->scale + ms->focus;
-	l->y0 = l->y0 * ms->scale + ms->focus;
-	l->y1 = l->y1 * ms->scale + ms->focus;
+	l->x0 = l->x0 * ms->scale + ms->focus_x;
+	l->x1 = l->x1 * ms->scale + ms->focus_x;
+	l->y0 = l->y0 * ms->scale + ms->focus_y;
+	l->y1 = l->y1 * ms->scale + ms->focus_y;
+	rot(ms, l);
 	put_line(ms, l);
-	ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
+	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
 
 void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
@@ -154,12 +157,27 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 		return ;
 	iso_zero(l, x, y, ms->xy[x][y].z);
 	iso_one(l, x + 1, y, ms->xy[x + 1][y].z);
-	l->x0 = l->x0 * ms->scale + ms->focus;
-	l->x1 = l->x1 * ms->scale + ms->focus;
-	l->y0 = l->y0 * ms->scale + ms->focus;
-	l->y1 = l->y1 * ms->scale + ms->focus;
+	l->x0 = l->x0 * ms->scale + ms->focus_x;
+	l->x1 = l->x1 * ms->scale + ms->focus_x;
+	l->y0 = l->y0 * ms->scale + ms->focus_y;
+	l->y1 = l->y1 * ms->scale + ms->focus_y;
+	rot(ms, l);
 	put_line(ms, l);
-	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
+	//ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
+}
+
+void	rot(t_mlxs *ms, t_line *l)
+{
+	t_line	temp;
+	
+	temp.x0 = l->x0 * cos(ms->tilt) + l->y0 * sin(ms->tilt);
+	temp.y0 = l->y0 * cos(ms->tilt) - l->x0 * sin(ms->tilt);
+	temp.x1 = l->x1 * cos(ms->tilt) + l->y1 * sin(ms->tilt);
+	temp.y1 = l->y1 * cos(ms->tilt) - l->x1 * sin(ms->tilt);
+	l->x0 = temp.x0;
+	l->y0 = temp.y0;
+	l->x1 = temp.x1;
+	l->y1 = temp.y1;
 }
 
 

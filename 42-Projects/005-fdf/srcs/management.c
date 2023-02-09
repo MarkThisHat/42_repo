@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 20:49:01 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/08 22:02:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,38 @@ int		keypress(int keycode, t_mlxs *ms)
 		close_win(ms);
 	//below here is bonus
 	if (keycode == 112)
+	{
 		ms->angle += 0.1;
+		//printf("%f\n", ms->angle);
+	}
 	if (keycode == 111)
+	{
 		ms->angle -= 0.1;
+		//printf("%f\n", ms->angle);
+	}
+	if (keycode == N_PLU_K)
+		ms->scale -= 10;
+	if (keycode == N_MIN_K)
+		ms->scale += 10;
+	if(keycode == ARW_U_K)
+		ms->focus_x -= 10;
+	if(keycode == ARW_D_K)
+		ms->focus_x += 10;
+	if(keycode == ARW_L_K)
+		ms->focus_y -= 10;
+	if(keycode == ARW_R_K)
+		ms->focus_y += 10;
+	if(keycode == 107)
+		ms->tilt += 0.1;
+	if(keycode == 108)
+		ms->tilt -= 0.1;
+	else
+		ft_printf("%i\n", keycode);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);
 	fad_toggle(ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
-	ft_printf("%i\n", keycode);
 	return (keycode);
 }
 

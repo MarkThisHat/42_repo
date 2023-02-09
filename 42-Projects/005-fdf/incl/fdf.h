@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/03 18:33:17 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/08 21:58:17 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 #  define WIN_H 1080 // 2
 #  define WIN_W 1920 // 2
 #  define ESC_K 65307
+#  define N_PLU_K 65453
+#  define N_MIN_K 65451
+#  define ARW_U_K 65362
+#  define ARW_D_K 65364
+#  define ARW_L_K 65361
+#  define ARW_R_K 65363
 
 typedef struct	s_img {
 	void	*img;
@@ -56,10 +62,12 @@ typedef struct	s_mlxs {
 	int		col;
 	int		row;
 	int		color;
-	int		focus;
+	int		focus_x;
+	int		focus_y;
 	int		scale;
 	int		toggle;
 	double	angle;
+	double	tilt;
 }			t_mlxs;
 
 void	mlx_setup(t_mlxs *ms);
@@ -91,5 +99,6 @@ void	printmap(t_mlxs *ms);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
+void	rot(t_mlxs *ms, t_line *l);
 
 #endif
