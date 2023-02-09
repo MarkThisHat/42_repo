@@ -27,6 +27,14 @@
 #  define ARW_D_K 65364
 #  define ARW_L_K 65361
 #  define ARW_R_K 65363
+#  define O_KEY 111
+#  define P_KEY 112
+#  define K_KEY 107
+#  define L_KEY 108
+#  define R_KEY 114
+#  define G_KEY 103
+#  define B_KEY 98
+#  define QUEST_K 47
 
 typedef struct	s_img {
 	void	*img;
@@ -68,6 +76,7 @@ typedef struct	s_mlxs {
 	int		toggle;
 	double	angle;
 	double	tilt;
+	int		leveler;
 }			t_mlxs;
 
 void	mlx_setup(t_mlxs *ms);
@@ -100,5 +109,6 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
 void	rot(t_mlxs *ms, t_line *l);
+int	see_color(t_mlxs *ms, int color);
 
 #endif

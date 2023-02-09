@@ -62,14 +62,15 @@ void	set_struct(t_mlxs *ms)
 {
 	ms->col = 0;
 	ms->row = 0;
-	ms->color = 0;
+	ms->color = 0xFFFFFFFF;
 	ms->toggle = 42;
-	ms->focus_x = 500;
-	ms->focus_y = 500;
+	ms->focus_x = 420;
+	ms->focus_y = -780;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.6154729;
-	ms->tilt = 0.785;
+	ms->tilt = -1.785;
+	ms->leveler = 15;
 	/*
 	*	35,264°
 	*	0.6154729
@@ -128,12 +129,21 @@ void	draw_map(t_mlxs *ms)
 				(*ms->fad)->color = ms->xy[x][y].color;
 			else
 				(*ms->fad)->color = 0xFFFFFFFF;
+			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
 			draw_row(ms, x, y, &line);
+			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
 			draw_col(ms, x, y, &line);
 			y++;
 		}
 		x++;
 	}
+}
+
+int	see_color(t_mlxs *ms, int color)
+{
+	if (ms->toggle == 42)
+		return (color);
+	return (ms->color);
 }
 
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)

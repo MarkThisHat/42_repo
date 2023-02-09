@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/08 22:02:55 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include "../incl/fdf.h"
 
 int		validate_usage(int	argc, char **argv, t_mlxs *ms)
@@ -37,12 +37,12 @@ int		keypress(int keycode, t_mlxs *ms)
 	if (keycode == ESC_K)
 		close_win(ms);
 	//below here is bonus
-	if (keycode == 112)
+	if (keycode == P_KEY)
 	{
 		ms->angle += 0.1;
 		//printf("%f\n", ms->angle);
 	}
-	if (keycode == 111)
+	if (keycode == O_KEY)
 	{
 		ms->angle -= 0.1;
 		//printf("%f\n", ms->angle);
@@ -54,17 +54,34 @@ int		keypress(int keycode, t_mlxs *ms)
 	if(keycode == ARW_U_K)
 		ms->focus_x -= 10;
 	if(keycode == ARW_D_K)
+	{
 		ms->focus_x += 10;
+		ft_printf("focX%i\n", ms->focus_x);
+	}
 	if(keycode == ARW_L_K)
+	{
 		ms->focus_y -= 10;
+		ft_printf("focY%i\n", ms->focus_y);
+	}
 	if(keycode == ARW_R_K)
 		ms->focus_y += 10;
-	if(keycode == 107)
+	if(keycode == K_KEY)
+	{
 		ms->tilt += 0.1;
-	if(keycode == 108)
+		printf("%f\n", ms->tilt);
+	}
+	if(keycode == L_KEY)
+	{
 		ms->tilt -= 0.1;
-	else
-		ft_printf("%i\n", keycode);
+		printf("%f\n", ms->tilt);
+	}
+	if(keycode == R_KEY)
+		ms->color = 0xFFFF0000;
+	if(keycode == G_KEY)
+		ms->color = 0xFF00FF00;
+	if(keycode == B_KEY)
+		ms->color = 0xFF0000FF;
+	ft_printf("%i\n", keycode);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);
 	fad_toggle(ms);
