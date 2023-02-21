@@ -46,6 +46,8 @@ typedef struct	s_img {
 }			t_img;
 
 typedef struct	s_coord {
+	int		x;
+	int		y;
 	int		z;
 	int		color;
 }			t_coord;
@@ -66,17 +68,14 @@ typedef struct	s_mlxs {
 	t_img	*img1;
 	t_img	*img2;
 	t_img	**fad;
-	t_coord	**xy;
+	t_coord	**cart;
+	int		matrix[4][4];
 	int		col;
 	int		row;
 	int		color;
-	int		focus_x;
-	int		focus_y;
-	int		scale;
 	int		toggle;
+	int		scale;
 	double	angle;
-	double	tilt;
-	int		leveler;
 }			t_mlxs;
 
 void	mlx_setup(t_mlxs *ms);
@@ -97,18 +96,16 @@ void	draw_map(t_mlxs *ms);
 void	draw_col(t_mlxs *ms, int i, int j, t_line *l);
 void	draw_row(t_mlxs *ms, int i, int j, t_line *l);
 void	put_pixel(t_img *img, int x, int y);
-int	isoy(t_mlxs *ms, int y, int z);
-int	isox(t_mlxs *ms, int x, int z);
-void	iso_zero(t_line *l, int x, int y, int z);
-void	iso_one(t_line *l, int x, int y, int z);
 void	high(t_mlxs *ms, t_line *l);
 void	low(t_mlxs *ms, t_line *l);
 void	printmap(t_mlxs *ms);
+void	diag_matrix(t_mlxs *ms, int diag, int fill);
 
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
-void	rot(t_mlxs *ms, t_line *l);
-int	see_color(t_mlxs *ms, int color);
+int		see_color(t_mlxs *ms, int color);
+void	mult_matrix(int m1[4][4], int m2[4][4]);
+void	printma(int	matrix[4][4]);
 
 #endif

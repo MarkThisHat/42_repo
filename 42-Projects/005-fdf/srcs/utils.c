@@ -48,10 +48,10 @@ void	free_close(t_mlxs *ms, char *str, int rows)
 	while(rows)
 	{
 		rows--;
-		free(ms->xy[rows]);
+		free(ms->cart[rows]);
 	}
-	if(ms->xy)
-		free(ms->xy);
+	if(ms->cart)
+		free(ms->cart);
 	if (!str)
 		leave_program(0, 0, 0);
 	leave_program(str, 2, 5);

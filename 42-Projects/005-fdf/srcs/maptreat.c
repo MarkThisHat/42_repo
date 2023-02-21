@@ -22,8 +22,8 @@ int	parse_map(t_mlxs *ms, char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		leave_program("Error opening file\n", 2, 1);
-	ms->xy = malloc(sizeof(t_coord *) * (ms->row));
-	if (!ms->xy)
+	ms->cart = malloc(sizeof(t_coord *) * (ms->row));
+	if (!ms->cart)
 		free_close(ms, "Not enough memory to store map\n", 0);
 	line = get_next_line(fd);
 	while(i < ms->row)
@@ -43,20 +43,22 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	int	col;
 
 	col = 0;
-	ms->xy[row] = malloc(sizeof(t_coord) * ms->col);
-	if (!ms->xy[row])
+	ms->cart[row] = malloc(sizeof(t_coord) * ms->col);
+	if (!ms->cart[row])
 		free_close(ms, "Not enough memory to fill map\n", row);
 	while (col < ms->col)
 	{
 		while(*line == ' ')
 			line++;
-		ms->xy[row][col].z = ft_atoi(line);
-		ms->xy[row][col].color = 0;
+		ms->cart[row][col].x = row;
+		ms->cart[row][col].y = col;
+		ms->cart[row][col].z = ft_atoi(line);
+		ms->cart[row][col].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')
 			line++;
 		if (*line == ',')
 		{
-			ms->xy[row][col].color = ft_atoi_base(++line, 16);
+			ms->cart[row][col].color = ft_atoi_base(++line, 16);
 			while(*line != '\n' && *line != ' ')
 				line++;
 		} 

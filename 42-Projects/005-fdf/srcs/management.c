@@ -20,7 +20,7 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 	if (argc != 2)
 		leave_program("Usage: <program name> <file.fdf>\n", 2, 1);
 	len = ft_strlen(argv[1]);
-	if (len < 5 || ft_strncmp(".fdf", &argv[1][len -4], 5))
+	if (len < 5 || ft_strncmp(".fdf", &argv[1][len - 4], 5))
 		leave_program("Please input a valid <.fdf> file\n", 2, 2);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
@@ -36,7 +36,7 @@ int		keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)
 		close_win(ms);
-	//below here is bonus
+	/*below here is bonus
 	if (keycode == P_KEY)
 	{
 		ms->angle += 0.1;
@@ -86,7 +86,7 @@ int		keypress(int keycode, t_mlxs *ms)
 	clear_img(*ms->fad);
 	fad_toggle(ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);*/
 	return (keycode);
 }
 

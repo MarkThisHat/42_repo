@@ -25,9 +25,9 @@ void	printmap(t_mlxs *ms)
 		{
 			while (j < ms->col)
 			{
-				//if (ms->xy[i][j].color)
-			//		ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->xy[i][j].z, ms->xy[i][j].color);
-			//ft_printf("%i\n", ms->xy[0][18].z);
+				//if (ms->cart[i][j].color)
+			//		ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->cart[i][j].z, ms->cart[i][j].color);
+			//ft_printf("%i\n", ms->cart[0][18].z);
 				j++;
 			}
 		}
@@ -64,13 +64,10 @@ void	set_struct(t_mlxs *ms)
 	ms->row = 0;
 	ms->color = 0xFFFFFFFF;
 	ms->toggle = 42;
-	ms->focus_x = 420;
-	ms->focus_y = -780;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.6154729;
-	ms->tilt = -1.785;
-	ms->leveler = 15;
+	diag_matrix(ms, 1, 0);
 	/*
 	*	35,264°
 	*	0.6154729
@@ -84,49 +81,67 @@ void	set_struct(t_mlxs *ms)
 	*/
 //	ms->mlx = NULL;
 //	ms->win = NULL;
-//	ms->xy = NULL;
+//	ms->cart = NULL;
 //	ms->img1->img = NULL;
 }
 
-/*
-void	draw_map(t_mlxs *ms)
+void	diag_matrix(t_mlxs *ms, int diag, int fill)
 {
-	t_line	line;
+	int	i;
+	int	j;
+
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (i != j)
+				ms->matrix[i][j] = fill;
+			else
+				ms->matrix[i][j] = diag;
+		j++;
+		}
+		i++;
+	}
+}
+
+void	mult_matrix(int m1[4][4], int m2[4][4])
+{
+	int	prod[4][4];
 	int		i;
 	int		j;
 
-	j = 0;
-	while (j < ms->row)
+	i = 0;
+	while (i < 4)
 	{
-		i = 0;
-		while (i < ms->col)
+		j = 0;
+		while (j < 4)
 		{
-			if (ms->xy[i][j].color)
-				ms->img1->color = ms->xy[i][j].color;
-			else
-				ms->img1->color = 0xFFFFFFFF;
-			draw_row(ms, j, i, &line);
-			i++;
+			prod[i][j] = m1[i][0] * m2[0][j] +\
+						m1[i][1] * m2[1][j] +\
+						m1[i][2] * m2[2][j] +\
+						m1[i][3] * m2[3][j];
+			j++;
 		}
-		j++;
+	i++;
 	}
+	printma(prod);
 }
-*/
+
 void	draw_map(t_mlxs *ms)
 {
 	t_line	line;
 	int		x;
 	int		y;
 
-	line.angl = ms->angle;
 	x = 0;
 	while (x < ms->row)
 	{
 		y = 0;
 		while (y < ms->col)
 		{
-			if (ms->xy[x][y].color)
-				(*ms->fad)->color = ms->xy[x][y].color;
+			if (ms->cart[x][y].color)
+				(*ms->fad)->color = ms->cart[x][y].color;
 			else
 				(*ms->fad)->color = 0xFFFFFFFF;
 			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
@@ -139,24 +154,15 @@ void	draw_map(t_mlxs *ms)
 	}
 }
 
-int	see_color(t_mlxs *ms, int color)
-{
-	if (ms->toggle == 42)
-		return (color);
-	return (ms->color);
-}
 
 void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((y + 1) == ms->col)
 		return ;
-	iso_zero(l, x, y, ms->xy[x][y].z);
-	iso_one(l, x, y + 1, ms->xy[x][y + 1].z);
-	l->x0 = l->x0 * ms->scale + ms->focus_x;
-	l->x1 = l->x1 * ms->scale + ms->focus_x;
-	l->y0 = l->y0 * ms->scale + ms->focus_y;
-	l->y1 = l->y1 * ms->scale + ms->focus_y;
-	rot(ms, l);
+	l->x0 = x;
+	l->x1 = x;
+	l->y0 = y;
+	l->y1 = (y + 1);
 	put_line(ms, l);
 	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -165,119 +171,13 @@ void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
 {
 	if ((x + 1) == ms->row)
 		return ;
-	iso_zero(l, x, y, ms->xy[x][y].z);
-	iso_one(l, x + 1, y, ms->xy[x + 1][y].z);
-	l->x0 = l->x0 * ms->scale + ms->focus_x;
-	l->x1 = l->x1 * ms->scale + ms->focus_x;
-	l->y0 = l->y0 * ms->scale + ms->focus_y;
-	l->y1 = l->y1 * ms->scale + ms->focus_y;
-	rot(ms, l);
+	l->x0 = x;
+	l->x1 = (x + 1);
+	l->y0 = y;
+	l->y1 = y;
 	put_line(ms, l);
 	//ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
-
-void	rot(t_mlxs *ms, t_line *l)
-{
-	t_line	temp;
-	
-	temp.x0 = l->x0 * cos(ms->tilt) + l->y0 * sin(ms->tilt);
-	temp.y0 = l->y0 * cos(ms->tilt) - l->x0 * sin(ms->tilt);
-	temp.x1 = l->x1 * cos(ms->tilt) + l->y1 * sin(ms->tilt);
-	temp.y1 = l->y1 * cos(ms->tilt) - l->x1 * sin(ms->tilt);
-	l->x0 = temp.x0;
-	l->y0 = temp.y0;
-	l->x1 = temp.x1;
-	l->y1 = temp.y1;
-}
-
-
-int	isox(t_mlxs *ms, int x, int z)
-{
-		z++;
-		return (x + cos(ms->angle) * z);
-}
-
-int	isoy(t_mlxs *ms, int y, int z)
-{
-	z++;
-	return (y + sin(ms->angle) * z);
-}
-
-void	iso_zero(t_line *l, int x, int y, int z)
-{
-	if (!z)
-		z = 1;
-	l->x0 = x + cos(l->angl) * z - cos(l->angl) * y;
-	l->y0 = y * sin(l->angl) + z * sin(l->angl);
-}
-
-void	iso_one(t_line *l, int x, int y, int z)
-{
-	if (!z)
-		z = 1;
-	l->x1 = x + cos(l->angl) * z - cos(l->angl) * y;
-	l->y1 = y * sin(l->angl) + z * sin(l->angl);
-}
-
-	/* expression One
-	*	destX = x + cos(angle) * z - cos(angle) * y;
-	*	destY = -y * sin(angle) - z * sin(angle);
-	*/
-	/* expression two
-	* destX = x + cos(angle) * z;
-	* destY = y + sin(angle) * z;
-	*/
-
-/*
-void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
-{
-	if ((y + 1) == ms->col)
-		return ;
-	l->x0 = (isox(ms, x, ms->xy[x][y].z) * ms->scale) + ms->focus;
-	l->x1 = (isox(ms, x, ms->xy[x][y + 1].z) * ms->scale) + ms->focus;
-	l->y0 = (isoy(ms, y, ms->xy[x][y].z) * ms->scale) + ms->focus;
-	l->y1 = (isoy(ms, y + 1, ms->xy[x][y + 1].z) * ms->scale) + ms->focus;
-	put_line(ms, l);
-}
-
-void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
-{
-	if ((x + 1) == ms->row)
-		return ;
-	l->x0 = (isox(ms, x, ms->xy[x][y].z) * ms->scale) + ms->focus;
-	l->x1 = (isox(ms, x + 1, ms->xy[x + 1][y].z) * ms->scale) + ms->focus;
-	l->y0 = (isoy(ms, y, ms->xy[x][y].z) * ms->scale) + ms->focus;
-	l->y1 = (isoy(ms, y, ms->xy[x + 1][y].z) * ms->scale) + ms->focus;
-	put_line(ms, l);
-}
-
-
-
-void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
-{
-	if ((y + 1) == ms->col)
-		return ;
-	l->x0 = x * ms->scale + ms->focus;
-	l->x1 = x * ms->scale + ms->focus;
-	l->y0 = y * ms->scale + ms->focus;
-	l->y1 = (y + 1) * ms->scale + ms->focus;
-	put_line(ms, l);
-	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
-}
-
-void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
-{
-	if ((x + 1) == ms->row)
-		return ;
-	l->x0 = x * ms->scale + ms->focus;
-	l->x1 = (x + 1) * ms->scale + ms->focus;
-	l->y0 = y * ms->scale + ms->focus;
-	l->y1 = y * ms->scale + ms->focus;
-	put_line(ms, l);
-//	ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
-}
-*/
-
 
 void	mlx_setup(t_mlxs *ms)
 {
@@ -287,23 +187,80 @@ void	mlx_setup(t_mlxs *ms)
 	(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
-	//mlx_mouse_hook(ms->win, mouse_group, &ms);
+	//mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
 	mlx_loop(ms->mlx);
 }
 
-/* /bonus?
-
-int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
+int	see_color(t_mlxs *ms, int color)
 {
-	ft_printf("%i and\n", keycode);
-	if (keycode == 1)
-		ms->angle += 0.1;
-	if (keycode == 3)
-		ms->angle -= 0.1;
-	mlx_clear_window(ms->mlx, ms->win);
-	//draw_map(ms);
-	return (x + y);
+	if (ms->toggle == 42)
+		return (color);
+	return (ms->color);
 }
+
+void	printma(int	matrix[4][4])
+{
+	for (int i = 0;i < 4; i++)
+	{
+		for(int j = 0; j < 4; j++)
+			ft_printf("%i\n", matrix[i][j]);
+	}
+}
+
+/*
+pythtutor
+
+#include <stdio.h>
+void  id_matrix(int matrix[4][4]);
+void  mult_matrix(int m1[4][4], int m2[4][4], int size);
+
+int main(void)
+{
+  int matrix1[4][4] = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+  static int matrix2[4][4];
+  
+  id_matrix(matrix2);
+  mult_matrix(matrix1, matrix2, 4);
+  for (int i = 0;i < 4; i++)
+  {
+    for(int j = 0; j < 4; j++)
+    {
+      printf("%i\n", matrix1[i][j]);
+    }
+  }
+  return 0;
+}
+
+void    id_matrix(int matrix[4][4])
+{
+    matrix[0][0] = 1;
+    matrix[1][1] = 1;
+    matrix[2][2] = 1;
+    matrix[3][3] = 1;
+}
+
+void    mult_matrix(int m1[4][4], int m2[4][4], int size)
+{
+    int    prod[4][4];
+    int        i;
+    int        j;
+
+    i = 0;
+    while (i < size)
+    {
+        j = 0;
+        while (j < 4)
+        {
+            prod[i][j] = m1[i][0] * m2[0][j] +\
+                        m1[i][1] * m2[1][j] +\
+                        m1[i][2] * m2[2][j] +\
+                        m1[i][3] * m2[3][j];
+            j++;
+        }
+    i++;
+    }
+}
+
 */
