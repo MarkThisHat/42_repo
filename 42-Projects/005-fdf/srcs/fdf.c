@@ -53,6 +53,7 @@ int	main(int argc, char **argv)
 	main_struct.scale = ratioh / 3;
 	if (ratiow < ratioh)
 		main_struct.scale = ratiow / 3;
+	scale_matrix(&main_struct, main_struct.scale, 0);
 	mlx_setup(&main_struct);
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
@@ -67,7 +68,6 @@ void	set_struct(t_mlxs *ms)
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.6154729;
-	diag_matrix(ms, 1, 0);
 	/*
 	*	35,264°
 	*	0.6154729
@@ -85,7 +85,19 @@ void	set_struct(t_mlxs *ms)
 //	ms->img1->img = NULL;
 }
 
-void	diag_matrix(t_mlxs *ms, int diag, int fill)
+void	x_angle_matrix(t_mlxs *ms)
+{
+	/*ms->matrix[0][0] = cos(ms->angle);
+	ms->matrix[1][1] = cos(ms->angle);
+	ms->matrix[1][0] = -sin(ms->angle);
+	ms->matrix[0][1] = sin(ms->angle);*/
+	ms->matrix[1][1] = cos(ms->angle);
+	ms->matrix[2][2] = cos(ms->angle);
+	ms->matrix[2][1] = -sin(ms->angle);
+	ms->matrix[1][2] = sin(ms->angle);
+}
+
+void	scale_matrix(t_mlxs *ms, int diag, int fill)
 {
 	int	i;
 	int	j;
@@ -128,6 +140,15 @@ void	mult_matrix(int m1[4][4], int m2[4][4])
 	printma(prod);
 }
 
+void	apply_matrix(t_mlxs *ms, t_line *l)
+{
+	//x_angle_matrix(ms);
+	l->x0 = l->x0 * ms->matrix[0][0] + l->y0 * ms->matrix[1][0];
+	l->x1 = l->x1 * ms->matrix[0][0] + l->y1 * ms->matrix[1][0];
+	l->y0 = l->x0 * ms->matrix[0][1] + l->y0 * ms->matrix[1][1];
+	l->y1 = l->x1 * ms->matrix[0][1] + l->y1 * ms->matrix[1][1];
+}
+
 void	draw_map(t_mlxs *ms)
 {
 	t_line	line;
@@ -145,38 +166,25 @@ void	draw_map(t_mlxs *ms)
 			else
 				(*ms->fad)->color = 0xFFFFFFFF;
 			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
-			draw_row(ms, x, y, &line);
-			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
-			draw_col(ms, x, y, &line);
+			if ((x + 1) != ms->row)
+				draw_line(ms, ms->cart[x][y], ms->cart[x + 1][y], &line);
+			if ((y + 1) != ms->col)
+				draw_line(ms, ms->cart[x][y], ms->cart[x][y + 1], &line);
 			y++;
 		}
 		x++;
 	}
 }
 
-
-void	draw_row(t_mlxs *ms, int x, int y, t_line *l)
+void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	if ((y + 1) == ms->col)
-		return ;
-	l->x0 = x;
-	l->x1 = x;
-	l->y0 = y;
-	l->y1 = (y + 1);
+	l->x0 = ini.x;
+	l->x1 = fin.x;
+	l->y0 = ini.y;
+	l->y1 = fin.y;
+	apply_matrix(ms, l);
 	put_line(ms, l);
 	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
-}
-
-void	draw_col(t_mlxs *ms, int x, int y, t_line *l)
-{
-	if ((x + 1) == ms->row)
-		return ;
-	l->x0 = x;
-	l->x1 = (x + 1);
-	l->y0 = y;
-	l->y1 = y;
-	put_line(ms, l);
-	//ft_printf("Draw Col x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
 
 void	mlx_setup(t_mlxs *ms)
@@ -187,9 +195,9 @@ void	mlx_setup(t_mlxs *ms)
 	(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
-	//mlx_mouse_hook(ms->win, mouse_group, ms);
+	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / 3, WIN_H /3);
 	mlx_loop(ms->mlx);
 }
 

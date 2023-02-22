@@ -32,6 +32,14 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 	return (1);
 }
 
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
+{
+	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	if (keycode == 7)
+		ms->scale++;
+	return (keycode);
+}
+
 int		keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)

@@ -40,9 +40,7 @@ int	ref_base(int c, int base)
 
 int	hexnotation(const char *str, int i)
 {
-	if (str[i] == '0' && str[i + 1] == 'x')
-		i += 2;
-	if (str[i] == '0' && str[i + 1] == 'X')
+	if (str[i] == '0' && (str[i + 1] == 'x' || str[i + 1] == 'X'))
 		i += 2;
 	return (i);
 }
