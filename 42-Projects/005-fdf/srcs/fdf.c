@@ -6,13 +6,13 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/08 21:57:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:05:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-/*
+/**\
 void	printmap(t_mlxs *ms)
 {
 	int i;
@@ -26,15 +26,15 @@ void	printmap(t_mlxs *ms)
 			while (j < ms->col)
 			{
 				//if (ms->cart[i][j].color)
-			//		ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->cart[i][j].z, ms->cart[i][j].color);
-			//ft_printf("%i\n", ms->cart[0][18].z);
+					ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n", i, j, ms->cart[i][j].z, ms->cart[i][j].color);
+					ft_printf("Row: %i Col: %i has Z of: %i and Color of %i\n\n", ms->cart[i][j].xyz[0], ms->cart[i][j].xyz[1], ms->cart[i][j].xyz[2]);
 				j++;
 			}
 		}
 		i++;
 	}
 }
-*/
+\**/
 
 int	main(int argc, char **argv)
 {
@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	//printmap(&main_struct);
+//	printmap(&main_struct);
 	int ratiow = WIN_W / main_struct.col;
 	int ratioh = WIN_H / main_struct.row;
 	main_struct.scale = ratioh / 3;
@@ -78,75 +78,13 @@ void	set_struct(t_mlxs *ms)
 	*	155,264°
 	*	2.709868
 	*
+		iso: 45 z-axis
+			 54,736 x-axis
 	*/
 //	ms->mlx = NULL;
 //	ms->win = NULL;
 //	ms->cart = NULL;
 //	ms->img1->img = NULL;
-}
-
-void	x_angle_matrix(t_mlxs *ms)
-{
-	/*ms->matrix[0][0] = cos(ms->angle);
-	ms->matrix[1][1] = cos(ms->angle);
-	ms->matrix[1][0] = -sin(ms->angle);
-	ms->matrix[0][1] = sin(ms->angle);*/
-	ms->matrix[1][1] = cos(ms->angle);
-	ms->matrix[2][2] = cos(ms->angle);
-	ms->matrix[2][1] = -sin(ms->angle);
-	ms->matrix[1][2] = sin(ms->angle);
-}
-
-void	scale_matrix(t_mlxs *ms, int diag, int fill)
-{
-	int	i;
-	int	j;
-
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			if (i != j)
-				ms->matrix[i][j] = fill;
-			else
-				ms->matrix[i][j] = diag;
-		j++;
-		}
-		i++;
-	}
-}
-
-void	mult_matrix(int m1[4][4], int m2[4][4])
-{
-	int	prod[4][4];
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			prod[i][j] = m1[i][0] * m2[0][j] +\
-						m1[i][1] * m2[1][j] +\
-						m1[i][2] * m2[2][j] +\
-						m1[i][3] * m2[3][j];
-			j++;
-		}
-	i++;
-	}
-	printma(prod);
-}
-
-void	apply_matrix(t_mlxs *ms, t_line *l)
-{
-	//x_angle_matrix(ms);
-	l->x0 = l->x0 * ms->matrix[0][0] + l->y0 * ms->matrix[1][0];
-	l->x1 = l->x1 * ms->matrix[0][0] + l->y1 * ms->matrix[1][0];
-	l->y0 = l->x0 * ms->matrix[0][1] + l->y0 * ms->matrix[1][1];
-	l->y1 = l->x1 * ms->matrix[0][1] + l->y1 * ms->matrix[1][1];
 }
 
 void	draw_map(t_mlxs *ms)
@@ -178,10 +116,10 @@ void	draw_map(t_mlxs *ms)
 
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	l->x0 = ini.x;
-	l->x1 = fin.x;
-	l->y0 = ini.y;
-	l->y1 = fin.y;
+	l->x0 = ini.xyz[X];
+	l->x1 = fin.xyz[X];
+	l->y0 = ini.xyz[Y];
+	l->y1 = fin.xyz[Y];
 	apply_matrix(ms, l);
 	put_line(ms, l);
 	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
@@ -208,14 +146,6 @@ int	see_color(t_mlxs *ms, int color)
 	return (ms->color);
 }
 
-void	printma(int	matrix[4][4])
-{
-	for (int i = 0;i < 4; i++)
-	{
-		for(int j = 0; j < 4; j++)
-			ft_printf("%i\n", matrix[i][j]);
-	}
-}
 
 /*
 pythtutor

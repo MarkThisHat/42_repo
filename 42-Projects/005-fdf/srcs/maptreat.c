@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:51:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 20:52:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:37:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	{
 		while(*line == ' ')
 			line++;
-		ms->cart[row][col].x = row;
-		ms->cart[row][col].y = col;
+		ms->cart[row][col].xyz[0] = row;// probably
+		ms->cart[row][col].xyz[1] = col;// can loop this
 		ms->cart[row][col].z = ft_atoi(line);
+		ms->cart[row][col].xyz[2] = ms->cart[row][col].z; //somewhere else
 		ms->cart[row][col].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')
 			line++;

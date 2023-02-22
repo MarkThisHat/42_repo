@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/08 21:58:17 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:04:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@
 #  define G_KEY 103
 #  define B_KEY 98
 #  define QUEST_K 47
+#  define X 0
+#  define Y 1
+#  define Z 2
 
 typedef struct	s_img {
 	void	*img;
@@ -46,8 +49,7 @@ typedef struct	s_img {
 }			t_img;
 
 typedef struct	s_coord {
-	int		x;
-	int		y;
+	int		xyz[3];
 	int		z;
 	int		color;
 }			t_coord;
@@ -103,10 +105,11 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
 int		see_color(t_mlxs *ms, int color);
-void	mult_matrix(int m1[4][4], int m2[4][4]);
+void	mult_matrix(t_mlxs *ms, int m1[4][4], int m2[4][4]);
 void	apply_matrix(t_mlxs *ms, t_line *l);
 void	printma(int	matrix[4][4]);
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
+void	maatrix(t_coord *c, int matrix[4][4]);
 
 void	x_angle_matrix(t_mlxs *ms);
 

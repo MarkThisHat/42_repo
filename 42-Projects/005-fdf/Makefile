@@ -6,14 +6,14 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/02/04 20:12:48 by maalexan         ###   ########.fr        #
+#    Updated: 2023/02/22 18:04:00 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 SRC = ./srcs/
 HDR = -I ./incl/
-FUN = fdf.c management.c maptreat.c bresenham.c utils.c
+FUN = fdf.c management.c maptreat.c bresenham.c utils.c matrix.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm
