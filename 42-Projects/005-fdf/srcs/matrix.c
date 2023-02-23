@@ -13,7 +13,7 @@
 #include "fdf.h"
 
 
-void	maatrix(t_coord *c, int matrix[4][4])
+void	dot_product(t_coord *c, int m[4][4])
 {
 	int	temp[3];
 
@@ -21,28 +21,55 @@ void	maatrix(t_coord *c, int matrix[4][4])
 	temp[1] = c->xyz[1];
 	temp[2] = c->xyz[2];
 
-	temp[X] = c->xyz[X] * matrix[0][0] + c->xyz[Y] * matrix[1][0] + c->xyz[Z] * matrix[2][0];
-	temp[Y] = c->xyz[X] * matrix[0][1] + c->xyz[Y] * matrix[1][1] + c->xyz[Z] * matrix[2][1];
-	temp[Z] = c->xyz[X] * matrix[0][2] + c->xyz[Y] * matrix[1][2] + c->xyz[Z] * matrix[2][2];
+	temp[X] = c->xyz[X] * m[0][0] + c->xyz[Y] * m[1][0] + c->xyz[Z] * m[2][0];
+	temp[Y] = c->xyz[X] * m[0][1] + c->xyz[Y] * m[1][1] + c->xyz[Z] * m[2][1];
+	temp[Z] = c->xyz[X] * m[0][2] + c->xyz[Y] * m[1][2] + c->xyz[Z] * m[2][2];
 
 	c->xyz[X] = temp[0];
 	c->xyz[Y] = temp[1];
 	c->xyz[Z] = temp[2];
 }
 
-void	x_angle_matrix(t_mlxs *ms)
+void	angle_matrix(t_mlxs *ms, int axis, double angle)
 {
-	/*ms->matrix[0][0] = cos(ms->angle);
-	ms->matrix[1][1] = cos(ms->angle);
-	ms->matrix[1][0] = -sin(ms->angle);
-	ms->matrix[0][1] = sin(ms->angle);*/
-	ms->matrix[1][1] = cos(ms->angle);
-	ms->matrix[2][2] = cos(ms->angle);
-	ms->matrix[2][1] = -sin(ms->angle);
-	ms->matrix[1][2] = sin(ms->angle);
+	double	rife;
+	double	matrix[4][4];
+
+	if (angle)
+		rife = angle;
+	else
+		rife = ms->angle;
+	crosswise_matrix(matrix, 1, 0);
+	rotation_matrix(matrix, axis, rife);
+	meld_matrix(ms, ms->matrix, matrix);
 }
 
-void	scale_matrix(t_mlxs *ms, int diag, int fill)
+void	rotation_matrix(double matrix[4][4], int axis, double angle)
+{
+	if (axis == 0)
+	{
+		matrix[1][1] = cos(angle);
+		matrix[1][2] = sin(angle);
+		matrix[2][1] = -sin(angle);
+		matrix[2][2] = cos(angle);
+	}
+	if (axis == 1)
+	{
+		matrix[0][0] = cos(angle);
+		matrix[0][2] = -sin(angle);
+		matrix[2][0] = sin(angle);
+		matrix[2][2] = cos(angle);
+	}
+	if (axis == 2)
+	{
+		matrix[0][0] = cos(angle);
+		matrix[0][1] = sin(angle);
+		matrix[1][0] = -sin(angle);
+		matrix[1][1] = cos(angle);
+	}
+}
+
+void	crosswise_matrix(double matrix[4][4], double diag, double fill)
 {
 	int	i;
 	int	j;
@@ -54,16 +81,16 @@ void	scale_matrix(t_mlxs *ms, int diag, int fill)
 		while (j < 4)
 		{
 			if (i != j)
-				ms->matrix[i][j] = fill;
+				matrix[i][j] = fill;
 			else
-				ms->matrix[i][j] = diag;
+				matrix[i][j] = diag;
 		j++;
 		}
 		i++;
 	}
 }
 
-void	mult_matrix(t_mlxs *ms, int m1[4][4], int m2[4][4])
+void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4])
 {
 //	int	ms->matrix[4][4];
 	int	i;
@@ -86,13 +113,11 @@ void	mult_matrix(t_mlxs *ms, int m1[4][4], int m2[4][4])
 //	printma(prod);
 }
 
-void	apply_matrix(t_mlxs *ms, t_line *l)
+
+
+void	apply_matrix(t_mlxs *ms)
 {
-	//x_angle_matrix(ms);
-	l->x0 = l->x0 * ms->matrix[0][0] + l->y0 * ms->matrix[1][0];
-	l->x1 = l->x1 * ms->matrix[0][0] + l->y1 * ms->matrix[1][0];
-	l->y0 = l->x0 * ms->matrix[0][1] + l->y0 * ms->matrix[1][1];
-	l->y1 = l->x1 * ms->matrix[0][1] + l->y1 * ms->matrix[1][1];
+			
 }
 
 

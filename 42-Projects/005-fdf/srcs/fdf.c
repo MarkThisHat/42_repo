@@ -53,7 +53,7 @@ int	main(int argc, char **argv)
 	main_struct.scale = ratioh / 3;
 	if (ratiow < ratioh)
 		main_struct.scale = ratiow / 3;
-	scale_matrix(&main_struct, main_struct.scale, 0);
+//	scale_matrix(&main_struct, main_struct.scale, 0);
 	mlx_setup(&main_struct);
 //	draw_map(&main_struct);
 //	mlx_put_image_to_window(main_struct.mlx, main_struct.win, main_struct.img1->img, 10, 10);
@@ -67,7 +67,10 @@ void	set_struct(t_mlxs *ms)
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
-	ms->angle = 0.6154729;
+	ms->angle = 0.955323;
+	crosswise_matrix(ms->matrix, 1, 0);
+	angle_matrix(t_mlxs *ms, Z, 0.785398);
+	angle_matrix(t_mlxs *ms, X, 0.955323);
 	/*
 	*	35,264°
 	*	0.6154729
@@ -78,8 +81,8 @@ void	set_struct(t_mlxs *ms)
 	*	155,264°
 	*	2.709868
 	*
-		iso: 45 z-axis
-			 54,736 x-axis
+		iso: 45° z-axis (0.785398 RAD)
+			 54,736° x-axis (0.955323 RAD)
 	*/
 //	ms->mlx = NULL;
 //	ms->win = NULL;
@@ -120,7 +123,7 @@ void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 	l->x1 = fin.xyz[X];
 	l->y0 = ini.xyz[Y];
 	l->y1 = fin.xyz[Y];
-	apply_matrix(ms, l);
+//	apply_matrix(ms, l);
 	put_line(ms, l);
 	//ft_printf("Draw Row x0: %i, x1: %i, y0: %i, y1:%i\n", l->x0, l->x1, l->y0, l->y1);
 }
@@ -130,7 +133,9 @@ void	mlx_setup(t_mlxs *ms)
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
 	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
-	(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
+	(*ms->fad)->addr = mlx_get_data_addr\
+	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
+	&(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
