@@ -68,9 +68,9 @@ void	set_struct(t_mlxs *ms)
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.955323;
-	crosswise_matrix(ms->matrix, 1, 0);
-	angle_matrix(t_mlxs *ms, Z, 0.785398);
-	angle_matrix(t_mlxs *ms, X, 0.955323);
+	crosswise_matrix(ms->matrix, 30, 0);
+	angle_matrix(ms, Z, 0.785398);
+	angle_matrix(ms, X, 0.955323);
 	/*
 	*	35,264°
 	*	0.6154729

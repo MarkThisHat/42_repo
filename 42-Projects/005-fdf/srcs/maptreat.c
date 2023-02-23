@@ -50,10 +50,8 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	{
 		while(*line == ' ')
 			line++;
-		ms->cart[row][col].xyz[0] = row;// probably
-		ms->cart[row][col].xyz[1] = col;// can loop this
 		ms->cart[row][col].z = ft_atoi(line);
-		ms->cart[row][col].xyz[2] = ms->cart[row][col].z; //somewhere else
+		calibration(ms, &ms->cart[row][col], row, col);
 		ms->cart[row][col].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')
 			line++;
@@ -113,4 +111,12 @@ int		count_row(int fd, t_mlxs *ms)
 	if (ms->row < 3 && c != '\n')
 		return (0);
 	return (1);
+}
+
+void	calibration(t_mlxs *ms, t_coord *cart, int i, int j)
+{
+	cart->xyz[0] = i;
+	cart->xyz[1] = j;
+	cart->xyz[2] = cart->z;
+	dot_product(cart, ms->matrix);
 }

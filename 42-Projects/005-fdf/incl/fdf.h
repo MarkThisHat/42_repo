@@ -105,11 +105,14 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
 int		see_color(t_mlxs *ms, int color);
-void	mult_matrix(t_mlxs *ms, int m1[4][4], int m2[4][4]);
-void	apply_matrix(t_mlxs *ms, t_line *l);
-void	printma(int	matrix[4][4]);
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
-void	maatrix(t_coord *c, int matrix[4][4]);
+void	dot_product(t_coord *c, double m[4][4]);
+void	angle_matrix(t_mlxs *ms, int axis, double angle);
+void	rotation_matrix(double matrix[4][4], int axis, double angle);
+void	crosswise_matrix(double matrix[4][4], double diag, double fill);
+void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
+void	calibration(t_mlxs *ms, t_coord *cart, int i, int j);
+
 
 void	x_angle_matrix(t_mlxs *ms);
 
