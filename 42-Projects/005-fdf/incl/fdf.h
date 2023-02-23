@@ -80,6 +80,42 @@ typedef struct	s_mlxs {
 	double	angle;
 }			t_mlxs;
 
+//fdf.c
+void	set_struct(t_mlxs *ms);
+void	draw_map(t_mlxs *ms);
+void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
+void	mlx_setup(t_mlxs *ms);
+//bresenham.c
+void	put_pixel(t_img *img, int x, int y);
+void	low_slope(t_mlxs *ms, t_line *l, int n);
+void	high_slope(t_mlxs *ms, t_line *l, int n);
+void 	put_line(t_mlxs *ms, t_line *l);
+//management.c
+int		validate_usage(int	argc, char **argv, t_mlxs *ms);
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
+int		keypress(int keycode, t_mlxs *ms);
+//maptreat.c
+int		parse_map(t_mlxs *ms, char *filename);
+int		fill_col(t_mlxs *ms, char *line, int row);
+int		count_col(int fd, t_mlxs *ms);
+int		count_row(int fd, t_mlxs *ms);
+void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
+//matrix.c
+void	dot_product(t_coord *c, double m[4][4]);
+void	angle_matrix(t_mlxs *ms, int axis, double angle);
+void	rotation_matrix(double matrix[4][4], int axis, double angle);
+void	crosswise_matrix(double matrix[4][4], double diag, double fill);
+void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
+//utils.c
+int		invert_endian(int color);
+int		close_win(t_mlxs *ms);
+void	free_close(t_mlxs *ms, char *str, int rows);
+void	leave_program(char *str, int fd, int return_code);
+int		see_color(t_mlxs *ms, int color);
+
+#endif
+
+/****\
 void	mlx_setup(t_mlxs *ms);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 int		count_col(int fd, t_mlxs *ms);
@@ -115,5 +151,4 @@ void	calibration(t_mlxs *ms, t_coord *cart, int i, int j);
 
 
 void	x_angle_matrix(t_mlxs *ms);
-
-#endif
+\*****/

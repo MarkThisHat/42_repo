@@ -12,7 +12,7 @@
 
 #include "../incl/fdf.h"
 
-int invert_endian(int color)
+int		invert_endian(int color)
 {
 	int alpha;
 	int red;
@@ -63,4 +63,11 @@ void	leave_program(char *str, int fd, int return_code)
 		exit (0);
 	ft_putstr_fd(str, fd);
 	exit (return_code);
+}
+
+int		see_color(t_mlxs *ms, int color)
+{
+	if (ms->toggle == 42)
+		return (color);
+	return (ms->color);
 }

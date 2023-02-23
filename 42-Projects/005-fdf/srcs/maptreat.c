@@ -51,7 +51,7 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 		while(*line == ' ')
 			line++;
 		ms->cart[row][col].z = ft_atoi(line);
-		calibration(ms, &ms->cart[row][col], row, col);
+		coord_calibrate(ms, &ms->cart[row][col], row, col);
 		ms->cart[row][col].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')
 			line++;
@@ -113,7 +113,7 @@ int		count_row(int fd, t_mlxs *ms)
 	return (1);
 }
 
-void	calibration(t_mlxs *ms, t_coord *cart, int i, int j)
+void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
 {
 	cart->xyz[0] = i;
 	cart->xyz[1] = j;

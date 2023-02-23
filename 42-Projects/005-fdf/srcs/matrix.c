@@ -12,7 +12,6 @@
 
 #include "fdf.h"
 
-
 void	dot_product(t_coord *c, double m[4][4])
 {
 	int	temp[3];
@@ -108,23 +107,5 @@ void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4])
 			j++;
 		}
 	i++;
-	}
-}
-
-
-
-void	apply_matrix(t_mlxs *ms)
-{
-	ms->scale *= 1;
-	return ;		
-}
-
-
-void	printma(int	matrix[4][4])
-{
-	for (int i = 0;i < 4; i++)
-	{
-		for(int j = 0; j < 4; j++)
-			ft_printf("%i\n", matrix[i][j]);
 	}
 }
