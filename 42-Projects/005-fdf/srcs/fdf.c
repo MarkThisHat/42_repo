@@ -41,8 +41,11 @@ void	set_struct(t_mlxs *ms)
 	ms->img2->img = NULL;
 	ms->angle = 0.955323;
 	crosswise_matrix(ms->matrix, 30, 0);
-	angle_matrix(ms, Z, 0.785398);
-	angle_matrix(ms, X, 0.955323);
+	angle_matrix(ms, Z, -0.523599);
+	angle_matrix(ms, Y, -0.615473);
+	/*angle_matrix(ms, Z, 0.785398);
+	angle_matrix(ms, X, 0.955323);*/
+	//angle_matrix(ms, Z, 0.785398);
 }
 
 void	draw_map(t_mlxs *ms)
@@ -74,10 +77,13 @@ void	draw_map(t_mlxs *ms)
 
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	l->x0 = ini.xyz[X];
-	l->x1 = fin.xyz[X];
-	l->y0 = ini.xyz[Y];
-	l->y1 = fin.xyz[Y];
+	int	offset;
+
+	offset = 100;
+	l->x0 = ini.xyz[X] + offset;
+	l->x1 = fin.xyz[X] + offset;
+	l->y0 = ini.xyz[Y] + offset;
+	l->y1 = fin.xyz[Y] + offset;
 	put_line(ms, l);
 }
 
@@ -93,6 +99,6 @@ void	mlx_setup(t_mlxs *ms)
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / 3, WIN_H /3);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
 	mlx_loop(ms->mlx);
 }
