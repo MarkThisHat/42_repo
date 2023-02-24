@@ -59,6 +59,7 @@ typedef struct	s_line {
 	int		x1;
 	int		y0;
 	int		y1;
+	int		d;
 	int		dx;
 	int		dy;
 	double	angl;
@@ -77,6 +78,8 @@ typedef struct	s_mlxs {
 	int		color;
 	int		toggle;
 	int		scale;
+	int		higher;
+	int		lower;
 	double	angle;
 }			t_mlxs;
 
@@ -112,6 +115,9 @@ int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 int		see_color(t_mlxs *ms, int color);
+//tempinfdf.c
+void	position_img(t_mlxs *ms);
+void	put_dot(t_mlxs *ms, double matrix[4][4]);
 
 #endif
 

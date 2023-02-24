@@ -118,5 +118,9 @@ void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
 	cart->xyz[0] = i;
 	cart->xyz[1] = j;
 	cart->xyz[2] = cart->z;
-	dot_product(cart, ms->matrix);
+	if (ms->higher < cart->z)
+		ms->higher = cart->z;
+	if (ms->lower > cart->z)
+		ms->lower = cart->z;
+	//dot_product(cart, ms->matrix);
 }

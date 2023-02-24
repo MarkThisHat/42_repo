@@ -31,7 +31,6 @@ void	put_pixel(t_img *img, int x, int y)
 
 void	low_slope(t_mlxs *ms, t_line *l, int n)
 {
-	int	d;
 	int	x;
 	int	y;
 	
@@ -42,26 +41,25 @@ void	low_slope(t_mlxs *ms, t_line *l, int n)
 		n = -1;
 		l->dy *= -1;
 	}
-	d = (2 * l->dy) - l->dx;
+	l->d = (2 * l->dy) - l->dx;
 	y = l->y0;
 	x = l->x0;
 	while (x < l->x1)
 	{
 		put_pixel(*ms->fad, x, y);
-		if (d > 0)
+		if (l->d > 0)
 		{
 			y = y + n;
-			d = d + (2 * (l->dy - l->dx));
+			l->d = l->d + (2 * (l->dy - l->dx));
 		}
 		else
-			d = d + 2 * l->dy;
+			l->d = l->d + 2 * l->dy;
 		x++;
 	}
 }
 
 void	high_slope(t_mlxs *ms, t_line *l, int n)
 {
-	int d;
 	int x;
 	int y;
 
@@ -72,19 +70,19 @@ void	high_slope(t_mlxs *ms, t_line *l, int n)
 		n = -1;
 		l->dx *= -1;
 	}
-	d = (2 * l->dx) - l->dy;
+	l->d = (2 * l->dx) - l->dy;
 	x = l->x0;
 	y = l->y0;
 	while (y < l->y1)
 	{
 		put_pixel(*ms->fad, x, y);
-		if (d > 0)
+		if (l->d > 0)
 		{
 			x = x + n;
-			d = d + (2 * (l->dx - l->dy));
+			l->d = l->d + (2 * (l->dx - l->dy));
 		}
 		else
-			d = d + 2 * l->dx;
+			l->d = l->d + 2 * l->dx;
 		y++;
 	}
 }

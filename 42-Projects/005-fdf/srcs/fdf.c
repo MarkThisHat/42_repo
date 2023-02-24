@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/22 18:05:14 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>
 #include "../incl/fdf.h"
 
 int	main(int argc, char **argv)
@@ -23,12 +23,51 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	int ratiow = WIN_W / main_struct.col;
-	int ratioh = WIN_H / main_struct.row;
-	main_struct.scale = ratioh / 3;
-	if (ratiow < ratioh)
-		main_struct.scale = ratiow / 3;
+	position_img(&main_struct);
 	mlx_setup(&main_struct);
+}
+
+void	position_img(t_mlxs *ms)
+{
+	int		average;
+	int		ratiow;
+	int		ratioh;
+	double	matrix[4][4];
+
+	average = (ms->higher + ms->lower) / 2;
+	ratiow = WIN_W / ms->col;
+	ratioh = WIN_H / ms->row;
+	ms->scale = ratioh / 3;
+	if (ratiow < ratioh)
+		ms->scale = ratiow / 3;
+	ft_printf("avg: %i scl: %i\n", average, ms->scale);
+	if (!average)
+		average = ms->scale;
+	crosswise_matrix(matrix, ms->scale, 0);
+	matrix[3][3] = 1;
+	matrix[4][4] = 1;
+	meld_matrix(ms, ms->matrix, matrix);
+	angle_matrix(ms, Z, -0.523599);
+	angle_matrix(ms, Y, -0.615473);
+	put_dot(ms, ms->matrix);
+}
+
+void	put_dot(t_mlxs *ms, double matrix[4][4])
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ms->row)
+	{
+		j = 0;
+		while (j < ms->col)
+		{
+			dot_product(&ms->cart[i][j], matrix);
+			j++;
+		}
+	i++;
+	}
 }
 
 void	set_struct(t_mlxs *ms)
@@ -40,9 +79,11 @@ void	set_struct(t_mlxs *ms)
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
 	ms->angle = 0.955323;
-	crosswise_matrix(ms->matrix, 30, 0);
-	angle_matrix(ms, Z, -0.523599);
-	angle_matrix(ms, Y, -0.615473);
+	ms->higher = 0;
+	ms->lower = 0;
+	crosswise_matrix(ms->matrix, 1, 0);
+//	angle_matrix(ms, Z, -0.523599);
+//	angle_matrix(ms, Y, -0.615473);
 	/*angle_matrix(ms, Z, 0.785398);
 	angle_matrix(ms, X, 0.955323);*/
 	//angle_matrix(ms, Z, 0.785398);
