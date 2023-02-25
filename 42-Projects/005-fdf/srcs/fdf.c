@@ -45,7 +45,7 @@ void	position_img(t_mlxs *ms)
 	ft_printf("avg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
 	if (!average)
 		average = 1;
-	crosswise_matrix(matrix, ms->scale, 0);
+	crosswise_matrix(matrix, ms->scale * 2, 0);
 	//matrix[3][3] = 1;
 	matrix[4][4] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
@@ -120,13 +120,13 @@ void	draw_map(t_mlxs *ms)
 
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	int	offset;
+	//int	offset;
 
-	offset = 100;
-	l->x0 = ini.xyz[X] + offset;
-	l->x1 = fin.xyz[X] + offset;
-	l->y0 = ini.xyz[Y] + offset;
-	l->y1 = fin.xyz[Y] + offset;
+	//offset = 200;
+	l->x0 = ini.xyz[X] + WIN_H / 13;
+	l->x1 = fin.xyz[X] + WIN_H / 13;
+	l->y0 = ini.xyz[Y] + WIN_W / 2;
+	l->y1 = fin.xyz[Y] + WIN_W / 2;
 	put_line(ms, l);
 }
 
