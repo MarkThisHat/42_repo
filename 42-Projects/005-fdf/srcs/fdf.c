@@ -6,10 +6,10 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/22 18:05:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/24 12:45:25 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include "../incl/fdf.h"
 
 int	main(int argc, char **argv)
@@ -40,11 +40,13 @@ void	position_img(t_mlxs *ms)
 	ms->scale = ratioh / 3;
 	if (ratiow < ratioh)
 		ms->scale = ratiow / 3;
-	ft_printf("avg: %i scl: %i\n", average, ms->scale);
+	if (!ms->scale)
+		ms->scale = 1;
+	ft_printf("avg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
 	if (!average)
-		average = ms->scale;
+		average = 1;
 	crosswise_matrix(matrix, ms->scale, 0);
-	matrix[3][3] = 1;
+	//matrix[3][3] = 1;
 	matrix[4][4] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, Z, -0.523599);

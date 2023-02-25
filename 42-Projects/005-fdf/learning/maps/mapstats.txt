@@ -1,0 +1,255 @@
+100-6.fdf        20-60.fdf        basictest.fdf    elem.fdf         mars.fdf         pnp_flat.fdf     pyramide.fdf     
+10-2.fdf         42.fdf           elem2.fdf        elem-fract.fdf   pentenegpos.fdf  pylone.fdf       t1.fdf           
+10-70.fdf        50-4.fdf         elem-col.fdf     julia.fdf        plat.fdf         pyra.fdf         t2.fdf         
+
+
+./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf
+14 row
+10 col
+avg: 0
+scale: 25
+ratio w: 192
+ratio h: 77
+higher: 0
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x: 8 y 260~ went to x 1900 y 290~ AND x 8 y 320~ went to x 1900 y: 325
+
+
+./fdf ~/fdfmaps/100-6.fdf&& cat ~/fdfmaps/100-6.fdf
+100 row
+100 col
+avg: 0
+scale: 3
+ratio w: 19
+ratio h: 10
+higher: 5
+lower: -5
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:8 y:248 went to x:1899 y:288 and x:8 y:339 went to x:1901 y:321
+
+./fdf ~/fdfmaps/20-60.fdf&& cat ~/fdfmaps/20-60.fdf
+20 row
+20 col
+avg: 0
+scale: 18
+ratio w: 96
+ratio h: 54
+higher: 59
+lower: -59
+
+how it went: everything is blurry and takes 1/6 of screen width, full height
+
+./fdf ~/fdfmaps/basictest.fdf&& cat ~/fdfmaps/basictest.fdf
+9 rows
+11 col
+avg: 4
+scale: 40
+ratio w: 174
+ratio h: 120
+higher: 9
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:9 y:248 went to x:1900 y:293 and x:8 y:354 went to x:1897 y: 344
+
+./fdf ~/fdfmaps/elem.fdf&& cat ~/fdfmaps/elem.fdf
+10 row
+10 col
+avg: 10 
+scale: 36 
+ratio w: 192
+ratio h: 108
+higher: 20
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant, lacks space to top), parts x:8 y:246 went to x:1897 y:293 and x:8 y:360 went to x:1897 y:342
+
+./fdf ~/fdfmaps/mars.fdf&& cat ~/fdfmaps/mars.fdf
+avg: 7
+scale: 3
+ratio w: 9
+ratio h: 9
+higher: 15
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:10 y:235 went to x:1898 y:277 and x:8 y:367 went to x:1898 y:349
+
+./fdf ~/fdfmaps/pnp_flat.fdf&& cat ~/fdfmaps/pnp_flat.fdf
+9 row
+21 col
+avg: 0
+scale: 30
+ratio w: 91
+ratio h: 120
+higher: 0
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:8 y:270 doesn't draw enough to show up on the other side
+
+./fdf ~/fdfmaps/pyramide.fdf&& cat ~/fdfmaps/pyramide.fdf
+34 row
+27 col
+avg: 4
+scale: 10
+ratio w: 71
+ratio h: 31
+higher: 9
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:9 y:253 went to x:1899 y:292 and x:8 y:367 went to x:1898 y:351
+
+./fdf ~/fdfmaps/10-2.fdf&& cat ~/fdfmaps/10-2.fdf
+10 row
+10 col
+avg: 0
+scale: 36
+ratio w: 192
+ratio h: 108
+higher: 1
+lower: -1
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:8 y:250 went to x:1916 y:269 and x:8 y:344 went to x:1915 y:344
+
+./fdf ~/fdfmaps/42.fdf&& cat ~/fdfmaps/42.fdf
+11 row
+19 col
+avg: 5
+scale: 32
+ratio w: 101
+ratio h: 98
+higher: 10
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant, misses top part), parts x:25 y:220 went to x:1915 y:274 and x:8 y:371 went to x:1915 y:352
+
+./fdf ~/fdfmaps/elem2.fdf&& cat ~/fdfmaps/elem2.fdf
+20 row
+20 col
+avg: 25
+scale: 18
+ratio w: 96
+ratio h: 54
+higher: 50
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant, misses a lot of top), parts x:8 y:254 went to x:1915 y:273 AND x:8 y:384 went to x:1914 y:372
+
+./fdf ~/fdfmaps/elem-fract.fdf&& cat ~/fdfmaps/elem-fract.fdf
+500 row
+500 col
+avg: 50
+scale: 0 (added if !scale because of this)
+ratio w: 3
+ratio h: 2
+higher: 100
+lower: 0
+
+how it went: small (roughly 2/3 of 1/6 of screen), parts x:8 y:238 went to x:1916 y:246 AND x:8 y:535 went to x:1917 y: 527
+
+./fdf ~/fdfmaps/pentenegpos.fdf&& cat ~/fdfmaps/pentenegpos.fdf
+9 row
+21 col
+avg: 0
+scale: 30
+ratio w: 91
+ratio h: 120
+higher: 10
+lower: -10
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:8 y: 422 and x:8 y:438 doesn't come to other side
+
+./fdf ~/fdfmaps/pylone.fdf&& cat ~/fdfmaps/pylone.fdf
+47 row
+48 col
+avg: 0
+scale: 7
+ratio w: 40
+ratio h: 22
+higher: 7
+lower: -7
+
+how it went: small (less than 1/12 of screen's first quadrant), parts x:8 y:256 to x:1917 y:265 and x:25 y:375 to x:1915 y:358
+
+./fdf ~/fdfmaps/t1.fdf&& cat ~/fdfmaps/t1.fdf
+200 row
+200 col
+avg: 126
+scale: 1
+ratio w: 9
+ratio h: 5
+higher: 252
+lower: 0
+
+how it went: small (roughly 1/18 of screen's first quadrant), fits perfectly
+
+./fdf ~/fdfmaps/t2.fdf&& cat ~/fdfmaps/t2.fdf
+100 row
+100 col
+avg: 81
+scale: 3 
+ratio w: 19
+ratio h: 10
+higher: 162
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts x:9 y:250 to x:1916 y:250 and x:8 y:335 to x:1916 y:323
+
+./fdf ~/fdfmaps/10-70.fdf&& cat ~/fdfmaps/10-70.fdf
+10 row
+10 col
+avg: 1
+scale: 36
+ratio w: 192
+ratio h: 108
+higher: 69
+lower: -67
+
+how it went: small (roughly 1/6 of screen), doesn't fit upside or downside, escapes all over the right side
+
+./fdf ~/fdfmaps/50-4.fdf&& cat ~/fdfmaps/50-4.fdf
+50 row
+50 col
+avg: 0
+scale: 7
+ratio w: 38
+ratio h: 21
+higher: 3
+lower: -3
+
+how it went: small (roughly 1/12 of screen's first quadrant), parts at x:25 y:214 to x:1916 y:251 and x:25 y:388 to x:1915 y:381
+
+./fdf ~/fdfmaps/elem-col.fdf&& cat ~/fdfmaps/elem-col.fdf
+10 row
+10 col
+avg: 10
+scale: 36
+ratio w: 192
+ratio h: 108
+higher: 20
+lower: 0
+
+how it went: small(roughly 1/12 of screen's first quadrant), parts at x:8 y:252 to x:1912 y:262 and x:8 y:361 to x:1918 y:353
+
+./fdf ~/fdfmaps/julia.fdf&& cat ~/fdfmaps/julia.fdf
+500 row
+500 col
+avg: 50
+scale: 1
+ratio w: 3
+ratio h: 2
+higher: 100
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant) parts at x:8 y:249 to x:1918 y:256 AND x:8 y:536 to x:1914 y:526
+
+./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf
+14 row
+10 col
+avg: 0
+scale: 25
+ratio w: 192
+ratio h: 77
+higher: 0
+lower: 0
+
+how it went: small (roughly 1/12 of screen's first quadrant) parts at x:8 y:250 to x:1915 y:268 AND x:8 y:363 to x:1918 y:353
