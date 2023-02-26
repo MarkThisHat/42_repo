@@ -44,5 +44,7 @@ int		keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)
 		close_win(ms);
+	else
+		keybonus(keycode, ms);
 	return (keycode);
 }

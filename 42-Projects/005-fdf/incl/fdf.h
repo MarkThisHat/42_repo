@@ -21,23 +21,26 @@
 #  define WIN_H 1080 // 2
 #  define WIN_W 1920 // 2
 #  define ESC_K 65307
-#  define N_PLU_K 65453
-#  define N_MIN_K 65451
 #  define ARW_U_K 65362
 #  define ARW_D_K 65364
 #  define ARW_L_K 65361
 #  define ARW_R_K 65363
-#  define O_KEY 111
 #  define P_KEY 112
-#  define K_KEY 107
-#  define L_KEY 108
-#  define R_KEY 114
 #  define G_KEY 103
 #  define B_KEY 98
 #  define QUEST_K 47
 #  define X 0
 #  define Y 1
 #  define Z 2
+#  define U_KEY 117
+#  define J_KEY 106
+#  define I_KEY 105
+#  define K_KEY 107
+#  define O_KEY 111
+#  define L_KEY 108
+#  define R_KEY 114
+#  define N_PLU_K 65453
+#  define N_MIN_K 65451
 
 typedef struct	s_img {
 	void	*img;
@@ -80,6 +83,8 @@ typedef struct	s_mlxs {
 	int		scale;
 	int		higher;
 	int		lower;
+	int		height_adj;
+	int		width_adj;
 	double	angle;
 }			t_mlxs;
 
@@ -118,6 +123,13 @@ int		see_color(t_mlxs *ms, int color);
 //tempinfdf.c
 void	position_img(t_mlxs *ms);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
+//bonus
+int		keybonus(int keycode, t_mlxs *ms);
+void	fad_toggle(t_mlxs *ms);
+void	clear_img(t_img *img);
+void	bonus_roll(t_mlxs *ms, int axis, double amount);
+void	bonus_scale(t_mlxs *ms, int negative);
+void	reset_placement(t_mlxs *ms);
 
 #endif
 

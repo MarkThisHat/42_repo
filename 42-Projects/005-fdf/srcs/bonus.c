@@ -9,12 +9,167 @@
 /*   Updated: 2023/02/23 12:44:42 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdio.h>//remove
 #include "fdf.h"
 
 int		keybonus(int keycode, t_mlxs *ms)
 {
-	if (keycode == P_KEY)
+	if (keycode == U_KEY)
+	{
+		ms->angle += 0.166666667;
+		bonus_roll(ms, X, 0.166666667);
+		printf("axis +X: %f\n", ms->angle);
+	}
+	if (keycode == J_KEY)
+	{
+		ms->angle -= 0.166666667;
+		bonus_roll(ms, X, -0.166666667);
+		printf("axis -X: %f\n", ms->angle);
+	}
+	if (keycode == I_KEY)
+	{
+		ms->angle += 0.166666667;
+		bonus_roll(ms, Y, 0.166666667);
+		printf("axis +Y: %f\n", ms->angle);
+	}
+	if (keycode == K_KEY)
+	{
+		ms->angle -= 0.166666667;
+		bonus_roll(ms, Y, -0.166666667);
+		printf("axis -Y: %f\n", ms->angle);
+	}
+	if (keycode == O_KEY)
+	{
+		ms->angle += 0.166666667;
+		bonus_roll(ms, Z, 0.166666667);
+		printf("axis +Z: %f\n", ms->angle);
+	}
+	if (keycode == L_KEY)
+	{
+		ms->angle -= 0.166666667;
+		bonus_roll(ms, Z, -0.166666667);
+		printf("axis -Z: %f\n", ms->angle);
+	}
+	if (keycode == N_PLU_K)
+	{
+		bonus_scale(ms, 1);
+	}
+	if (keycode == N_MIN_K)
+	{
+		bonus_scale(ms, 0);
+	}
+	if (keycode == R_KEY)
+	{
+		reset_placement(ms);
+	}
+	if (keycode == ARW_U_K)
+	{
+		ms->height_adj -= 20;
+	}
+	if (keycode == ARW_D_K)
+	{
+		ms->height_adj += 20;
+	}
+	if (keycode == ARW_L_K)
+	{
+		ms->width_adj -= 20;
+	}
+	if (keycode == ARW_R_K)
+	{
+		ms->width_adj += 20;
+	}
+	ft_printf("%i\n", keycode);
+	mlx_clear_window(ms->mlx, ms->win);
+	clear_img(*ms->fad);
+	fad_toggle(ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+	return (keycode);
+}
+
+void	fad_toggle(t_mlxs *ms)
+{
+	if (ms->toggle == 42)
+	{
+		ms->fad = &ms->img2;
+		(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+		(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
+		ms->toggle = 0;
+		return ;
+	}
+	if (!ms->toggle)
+	{
+		ms->fad = &ms->img1;
+		ms->toggle = 1;
+	}
+	else
+	{
+		ms->fad = &ms->img2;
+		ms->toggle = 0;
+	}
+}
+
+void	clear_img(t_img *img)
+{
+	char			*painter;
+	char			*target;
+
+	target = img->addr + (WIN_H * img->line_length);
+	painter = img->addr;
+	while(painter < target + 1)
+	{
+		*(unsigned int*)painter = 0;
+		painter++;
+	}
+}
+
+void	bonus_roll(t_mlxs *ms, int axis, double amount)
+{
+	double	matrix[4][4];
+
+	crosswise_matrix(matrix, 1, 0);
+	rotation_matrix(matrix, axis, amount);
+	put_dot(ms, matrix);
+}
+
+void	bonus_scale(t_mlxs *ms, int negative)
+{
+	double	scale;
+	double	matrix[4][4];
+
+	scale = 1.1;
+	if (negative)
+		scale = 0.9;
+	crosswise_matrix(matrix, scale, 0);
+	put_dot(ms, matrix);
+}
+
+void	reset_placement(t_mlxs *ms)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < ms->row)
+	{
+		j = 0;
+		while (j < ms->col)
+		{
+			ms->cart[i][j].xyz[0] = i;
+			ms->cart[i][j].xyz[1] = j;
+			ms->cart[i][j].xyz[2] = ms->cart[i][j].z;
+			j++;
+		}
+		i++;
+	}
+	crosswise_matrix(ms->matrix, ms->scale * 2, 0);
+	angle_matrix(ms, Z, -0.523599);
+	angle_matrix(ms, Y, -0.615473);
+	put_dot(ms, ms->matrix);
+}
+
+/***\
+if (keycode == P_KEY)
 	{
 		ms->angle += 0.1;
 		//printf("%f\n", ms->angle);
@@ -58,47 +213,4 @@ int		keybonus(int keycode, t_mlxs *ms)
 		ms->color = 0xFF00FF00;
 	if(keycode == B_KEY)
 		ms->color = 0xFF0000FF;
-	ft_printf("%i\n", keycode);
-	mlx_clear_window(ms->mlx, ms->win);
-	clear_img(*ms->fad);
-	fad_toggle(ms);
-	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);*/
-	return (keycode);
-}
-
-void	fad_toggle(t_mlxs *ms)
-{
-	if (ms->toggle == 42)
-	{
-		ms->fad = &ms->img2;
-		(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
-		(*ms->fad)->addr = mlx_get_data_addr((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, &(*ms->fad)->line_length, &(*ms->fad)->endian);
-		ms->toggle = 0;
-		return ;
-	}
-	if (!ms->toggle)
-	{
-		ms->fad = &ms->img1;
-		ms->toggle = 1;
-	}
-	else
-	{
-		ms->fad = &ms->img2;
-		ms->toggle = 0;
-	}
-}
-
-void	clear_img(t_img *img)
-{
-	char			*painter;
-	char			*target;
-
-	target = img->addr + (WIN_H * img->line_length);
-	painter = img->addr;
-	while(painter < target + 1)
-	{
-		*(unsigned int*)painter = 0;
-		painter++;
-	}
-}
+\***/

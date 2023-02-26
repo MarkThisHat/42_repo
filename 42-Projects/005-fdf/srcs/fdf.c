@@ -50,7 +50,8 @@ void	position_img(t_mlxs *ms)
 	matrix[4][4] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, Z, -0.523599);
-	angle_matrix(ms, Y, -0.615473);
+	angle_matrix(ms, Y, -1.047198);
+	//angle_matrix(ms, Y, -0.615473);
 	put_dot(ms, ms->matrix);
 }
 
@@ -80,9 +81,11 @@ void	set_struct(t_mlxs *ms)
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
-	ms->angle = 0.955323;
+	ms->angle = -0.615473;
 	ms->higher = 0;
 	ms->lower = 0;
+	ms->height_adj =  WIN_H / 13;
+	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, 1, 0);
 //	angle_matrix(ms, Z, -0.523599);
 //	angle_matrix(ms, Y, -0.615473);
@@ -120,13 +123,10 @@ void	draw_map(t_mlxs *ms)
 
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	//int	offset;
-
-	//offset = 200;
-	l->x0 = ini.xyz[X] + WIN_H / 13;
-	l->x1 = fin.xyz[X] + WIN_H / 13;
-	l->y0 = ini.xyz[Y] + WIN_W / 2;
-	l->y1 = fin.xyz[Y] + WIN_W / 2;
+	l->x0 = ini.xyz[X] + ms->height_adj;
+	l->x1 = fin.xyz[X] + ms->height_adj;
+	l->y0 = ini.xyz[Y] + ms->width_adj;
+	l->y1 = fin.xyz[Y] + ms->width_adj;
 	put_line(ms, l);
 }
 
