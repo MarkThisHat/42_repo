@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/24 12:45:25 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 10:22:00 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	position_img(t_mlxs *ms)
 	ft_printf("avg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
 	if (!average)
 		average = 1;
-	crosswise_matrix(matrix, ms->scale * 2, 0);
+	crosswise_matrix(matrix, ms->scale * 3, 0);
+	//matrix[2][2] = 5;
 	//matrix[3][3] = 1;
-	matrix[4][4] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, Z, -0.523599);
 	angle_matrix(ms, Y, -1.047198);
@@ -99,6 +99,7 @@ void	draw_map(t_mlxs *ms)
 	t_line	line;
 	int		x;
 	int		y;
+	int		color;
 
 	x = 0;
 	while (x < ms->row)
@@ -106,11 +107,11 @@ void	draw_map(t_mlxs *ms)
 		y = 0;
 		while (y < ms->col)
 		{
-			if (ms->cart[x][y].color)
-				(*ms->fad)->color = ms->cart[x][y].color;
+			color = ms->cart[x][y].color;
+		/*		(*ms->fad)->color = ms->cart[x][y].color;
 			else
-				(*ms->fad)->color = 0xFFFFFFFF;
-			(*ms->fad)->color = see_color(ms, (*ms->fad)->color);
+				(*ms->fad)->color = 0xFFFFFFFF;*/
+			(*ms->fad)->color = see_color(ms, color);
 			if ((x + 1) != ms->row)
 				draw_line(ms, ms->cart[x][y], ms->cart[x + 1][y], &line);
 			if ((y + 1) != ms->col)

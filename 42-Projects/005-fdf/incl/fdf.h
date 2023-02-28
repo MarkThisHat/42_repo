@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/22 18:04:43 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 09:59:50 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct	s_line {
 	int		d;
 	int		dx;
 	int		dy;
-	double	angl;
 }		t_line;
 
 typedef struct	s_mlxs {

@@ -6,11 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:44:21 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/23 12:44:42 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:31:39 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>//remove
+
 #include "fdf.h"
+#include <stdio.h>
 
 int		keybonus(int keycode, t_mlxs *ms)
 {
@@ -78,6 +79,8 @@ int		keybonus(int keycode, t_mlxs *ms)
 	{
 		ms->width_adj += 20;
 	}
+	if(keycode == B_KEY)
+		ms->color = 0xFF0000FF;
 	ft_printf("%i\n", keycode);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);

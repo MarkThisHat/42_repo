@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:49:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/01 20:50:05 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 10:00:48 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	leave_program(char *str, int fd, int return_code)
 
 int		see_color(t_mlxs *ms, int color)
 {
-	if (ms->toggle == 42)
+	if (color)
 		return (color);
 	return (ms->color);
 }
