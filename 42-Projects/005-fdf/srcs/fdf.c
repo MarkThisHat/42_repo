@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 12:13:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:01:31 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	position_img(t_mlxs *ms)
 	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
 	if (!average)
 		average = 1;
-	crosswise_matrix(matrix, ms->scale * 3, 0);
-	matrix[2][2] = ms->scale / 5.5;
+	crosswise_matrix(matrix, ms->scale * 6, 0);
+	matrix[2][2] = ms->scale;
 	//matrix[3][3] = 1;
-//	ms->height_adj += 270;
+//	ms->height_adj += 200;
 //	ms->width_adj -=450;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, Z, -0.680678);
@@ -109,9 +109,6 @@ void	draw_map(t_mlxs *ms)
 		while (y < ms->col)
 		{
 			color = ms->cart[x][y].color;
-		/*		(*ms->fad)->color = ms->cart[x][y].color;
-			else
-				(*ms->fad)->color = 0xFFFFFFFF;*/
 			(*ms->fad)->color = see_color(ms, color);
 			if ((x + 1) != ms->row)
 				draw_line(ms, ms->cart[x][y], ms->cart[x + 1][y], &line);
@@ -136,7 +133,8 @@ void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
-	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
 	(*ms->fad)->addr = mlx_get_data_addr\
 	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);

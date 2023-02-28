@@ -6,10 +6,10 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/08 22:02:55 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:00:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include "../incl/fdf.h"
 
 int		validate_usage(int	argc, char **argv, t_mlxs *ms)
@@ -34,10 +34,19 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 {
-	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
-	if (keycode == 7)
-		ms->scale++;
-	return (keycode);
+	//ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	if (keycode == 4)
+		bonus_scale(ms, 1);
+	if (keycode == 5)
+		bonus_scale(ms, 0);
+	mlx_clear_window(ms->mlx, ms->win);
+	clear_img(*ms->fad);
+	fad_toggle(ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+//	int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+//	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
+	return (keycode + x + y);
 }
 
 int		keypress(int keycode, t_mlxs *ms)
