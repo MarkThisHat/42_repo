@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 20:00:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:53:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 {
 	//ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	int	xm;
+	int	ym;
+
+	xm = 0;
+	ym = 0;
 	if (keycode == 4)
 		bonus_scale(ms, 1);
 	if (keycode == 5)
@@ -44,9 +49,27 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 	fad_toggle(ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
-//	int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
+	ft_printf("x:%i\ny:%i\n", xm, ym);
 //	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
+//	https://codebrowser.dev/qt5/include/X11/X.h.html
+//	https://github.com/D-Programming-Deimos/libX11/blob/master/c/X11/keysymdef.h
 	return (keycode + x + y);
+}
+
+int		mousemove(int x, int y, t_mlxs *ms)
+{
+	ft_printf("moooving x: %i y: %i\n", x, y);
+	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
+	mlx_loop(ms->win);
+	return (ms->row);
+}
+
+int		mouserelease(int keycode, int x, int y, t_mlxs *ms)
+{
+	ft_printf("bass dropped:");
+	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	return (ms->col);
 }
 
 int		keypress(int keycode, t_mlxs *ms)

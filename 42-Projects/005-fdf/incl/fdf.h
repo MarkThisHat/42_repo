@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 19:49:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:46:22 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,9 @@ int		see_color(t_mlxs *ms, int color);
 //tempinfdf.c
 void	position_img(t_mlxs *ms);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
+int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
+int		mousemove(int x, int y, t_mlxs *ms);
+
 //bonus
 int		keybonus(int keycode, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
@@ -129,6 +132,7 @@ void	clear_img(t_img *img);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
 void	reset_placement(t_mlxs *ms);
+
 
 #endif
 

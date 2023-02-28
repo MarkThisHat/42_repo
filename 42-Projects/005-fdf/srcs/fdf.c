@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 20:01:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:48:56 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
+//	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
+	mlx_hook(ms->win, 6, 1L<<6, mousemove, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
