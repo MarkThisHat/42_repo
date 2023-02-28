@@ -165,9 +165,12 @@ void	reset_placement(t_mlxs *ms)
 		}
 		i++;
 	}
-	crosswise_matrix(ms->matrix, ms->scale * 2, 0);
-	angle_matrix(ms, Z, -0.523599);
-	angle_matrix(ms, Y, -0.615473);
+	crosswise_matrix(ms->matrix, ms->scale * 3, 0);
+	ms->matrix[2][2] = ms->scale / 5.5;
+//	angle_matrix(ms, Z, -0.523599);
+//	angle_matrix(ms, Y, -0.615473);
+	angle_matrix(ms, Z, -0.680678);//39 graus
+	angle_matrix(ms, Y, -1.239184);//71 graus
 	put_dot(ms, ms->matrix);
 }
 

@@ -42,18 +42,17 @@ void	position_img(t_mlxs *ms)
 		ms->scale = ratiow / 3;
 	if (!ms->scale)
 		ms->scale = 1;
-	ft_printf("avg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
+	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
 	if (!average)
 		average = 1;
 	crosswise_matrix(matrix, ms->scale * 3, 0);
-	matrix[2][2] = ms->scale / 1.5;
+	matrix[2][2] = ms->scale / 5.5;
 	//matrix[3][3] = 1;
 //	ms->height_adj += 270;
 //	ms->width_adj -=450;
 	meld_matrix(ms, ms->matrix, matrix);
-	angle_matrix(ms, Z, -0.523599);
-	angle_matrix(ms, Y, -1.047198);
-	//angle_matrix(ms, Y, -0.615473);
+	angle_matrix(ms, Z, -0.680678);
+	angle_matrix(ms, Y, -1.239184);
 	put_dot(ms, ms->matrix);
 }
 

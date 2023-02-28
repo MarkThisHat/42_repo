@@ -1,0 +1,65 @@
+100-6.fdf        20-60.fdf        basictest.fdf    elem.fdf         mars.fdf         pnp_flat.fdf     pyramide.fdf     
+10-2.fdf         42.fdf           elem2.fdf        elem-fract.fdf   pentenegpos.fdf  pylone.fdf       t1.fdf           
+10-70.fdf        50-4.fdf         elem-col.fdf     julia.fdf        plat.fdf         pyra.fdf         t2.fdf         
+
+
+./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf
+
+
+./fdf ~/fdfmaps/100-6.fdf&& cat ~/fdfmaps/100-6.fdf
+
+
+./fdf ~/fdfmaps/20-60.fdf&& cat ~/fdfmaps/20-60.fdf
+
+
+./fdf ~/fdfmaps/basictest.fdf&& cat ~/fdfmaps/basictest.fdf
+
+
+./fdf ~/fdfmaps/elem.fdf&& cat ~/fdfmaps/elem.fdf
+
+
+./fdf ~/fdfmaps/mars.fdf&& cat ~/fdfmaps/mars.fdf
+
+
+./fdf ~/fdfmaps/pnp_flat.fdf&& cat ~/fdfmaps/pnp_flat.fdf
+
+
+./fdf ~/fdfmaps/pyramide.fdf&& cat ~/fdfmaps/pyramide.fdf
+
+
+./fdf ~/fdfmaps/10-2.fdf&& cat ~/fdfmaps/10-2.fdf
+
+
+./fdf ~/fdfmaps/42.fdf&& cat ~/fdfmaps/42.fdf
+
+
+./fdf ~/fdfmaps/elem2.fdf&& cat ~/fdfmaps/elem2.fdf
+
+
+./fdf ~/fdfmaps/elem-fract.fdf&& cat ~/fdfmaps/elem-fract.fdf
+
+
+./fdf ~/fdfmaps/pentenegpos.fdf&& cat ~/fdfmaps/pentenegpos.fdf
+
+
+./fdf ~/fdfmaps/pylone.fdf&& cat ~/fdfmaps/pylone.fdf
+
+
+./fdf ~/fdfmaps/t1.fdf&& cat ~/fdfmaps/t1.fdf
+
+
+./fdf ~/fdfmaps/t2.fdf&& cat ~/fdfmaps/t2.fdf
+
+
+./fdf ~/fdfmaps/10-70.fdf&& cat ~/fdfmaps/10-70.fdf
+
+
+./fdf ~/fdfmaps/50-4.fdf&& cat ~/fdfmaps/50-4.fdf
+
+
+./fdf ~/fdfmaps/elem-col.fdf&& cat ~/fdfmaps/elem-col.fdf
+
+
+./fdf ~/fdfmaps/julia.fdf&& cat ~/fdfmaps/julia.fdf
+
+

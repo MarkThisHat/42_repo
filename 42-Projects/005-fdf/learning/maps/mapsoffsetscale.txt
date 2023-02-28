@@ -1,0 +1,225 @@
+100-6.fdf        20-60.fdf        basictest.fdf    elem.fdf         mars.fdf         pnp_flat.fdf     pyramide.fdf     
+10-2.fdf         42.fdf           elem2.fdf        elem-fract.fdf   pentenegpos.fdf  pylone.fdf       t1.fdf           
+10-70.fdf        50-4.fdf         elem-col.fdf     julia.fdf        plat.fdf         pyra.fdf         t2.fdf         
+
+
+./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf
+row: 14
+col: 10
+avg: 0
+scale: 25
+ratiow: 192
+ratioh: 77
+higher: 0
+lower: 0
+went: too much topspace too few lower space
+
+
+./fdf ~/fdfmaps/100-6.fdf&& cat ~/fdfmaps/100-6.fdf
+row: 100
+col: 100
+avg: 0
+scale: 3
+ratiow: 19
+ratioh: 10
+higher: 5
+lower: -5
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/20-60.fdf&& cat ~/fdfmaps/20-60.fdf
+row: 20
+col: 20
+avg: 0
+scale: 18
+ratiow: 96
+ratioh: 54
+higher: 59
+lower: -59
+went: not enough topspace and not enough lower space
+
+./fdf ~/fdfmaps/basictest.fdf&& cat ~/fdfmaps/basictest.fdf
+row: 9
+col: 11
+avg: 4
+scale: 40
+ratiow: 174
+ratioh: 120
+higher: 9
+lower: 0
+went: too much topspace not enough lower space
+
+./fdf ~/fdfmaps/elem.fdf&& cat ~/fdfmaps/elem.fdf
+row: 10
+col: 10
+avg: 10
+scale: 36
+ratiow: 192
+ratioh: 108
+higher: 20
+lower: 0
+went: not enough topspace, grazes bottom
+
+./fdf ~/fdfmaps/mars.fdf&& cat ~/fdfmaps/mars.fdf
+row: 116
+col: 200
+avg: 7
+scale: 3
+ratiow: 9
+ratioh: 9
+higher: 15
+lower: 0
+went: too much topspace, not nearly enough bottom
+
+./fdf ~/fdfmaps/pnp_flat.fdf&& cat ~/fdfmaps/pnp_flat.fdf
+row: 9
+col: 21
+avg: 0
+scale: 30
+ratiow: 91
+ratioh: 120
+higher: 0
+lower: 0
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/pyramide.fdf&& cat ~/fdfmaps/pyramide.fdf
+row: 34
+col: 27
+avg: 4
+scale: 10
+ratiow: 71
+ratioh: 31
+higher: 9
+lower: 0
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/10-2.fdf&& cat ~/fdfmaps/10-2.fdf
+row: 10
+col: 10
+avg: 0
+scale: 36
+ratiow: 192
+ratioh: 108
+higher: 1
+lower: -1
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/42.fdf&& cat ~/fdfmaps/42.fdf
+row: 11
+col: 19
+avg: 5
+scale: 32
+ratiow: 101
+ratioh: 98
+higher: 10
+lower: 0
+went: too few lower space, almost ideal highspace
+
+./fdf ~/fdfmaps/elem2.fdf&& cat ~/fdfmaps/elem2.fdf
+row: 20
+col: 20
+avg: 25
+scale: 18
+ratiow: 96
+ratioh: 54
+higher: 50
+lower: 0
+went: doesn't fit lower space, explodes topspace
+
+./fdf ~/fdfmaps/elem-fract.fdf&& cat ~/fdfmaps/elem-fract.fdf
+row: 500
+col: 500
+avg: 50
+scale: 1
+ratiow: 3
+ratioh: 2
+higher: 100
+lower: 0
+went: too much topspace eats 1/3 of map lower space
+
+./fdf ~/fdfmaps/pentenegpos.fdf&& cat ~/fdfmaps/pentenegpos.fdf
+row: 9
+col: 21
+avg: 0
+scale: 30
+ratiow: 91
+ratioh: 120
+higher: 10
+lower: -10
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/pylone.fdf&& cat ~/fdfmaps/pylone.fdf
+row: 47
+col: 48
+avg: 0
+scale: 7
+ratiow: 40
+ratioh: 22
+higher: 7
+lower: -7
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/t1.fdf&& cat ~/fdfmaps/t1.fdf
+row: 200
+col: 200
+avg: 126
+scale: 1
+ratiow: 9
+ratioh: 5
+higher: 252
+lower: 0
+went: perfect fit, could even scale more
+
+./fdf ~/fdfmaps/t2.fdf&& cat ~/fdfmaps/t2.fdf
+row: 100
+col: 100
+avg: 81
+scale: 3
+ratiow: 19
+ratioh: 10
+higher: 162
+lower: 0
+went: almost perfect fit, a bit too much topspace too few lower space
+
+./fdf ~/fdfmaps/10-70.fdf&& cat ~/fdfmaps/10-70.fdf
+row: 10
+col: 10
+avg: 1
+scale: 36
+ratiow: 192
+ratioh: 108
+higher: 69
+lower: -67
+went: nicely centered, not nearly enough topspace and lowerspace
+
+./fdf ~/fdfmaps/50-4.fdf&& cat ~/fdfmaps/50-4.fdf
+row: 50
+col: 50
+avg: 0
+scale: 7
+ratiow: 38
+ratioh: 21
+higher: 3
+lower: -3
+went: too much topspace too few lower space
+
+./fdf ~/fdfmaps/elem-col.fdf&& cat ~/fdfmaps/elem-col.fdf
+row: 10
+col: 10
+avg: 10
+scale: 36
+ratiow: 192
+ratioh: 108
+higher: 20
+lower: 0
+went: perfectly centered, doesn't fit top and bottom by little
+
+./fdf ~/fdfmaps/julia.fdf&& cat ~/fdfmaps/julia.fdf
+row: 500
+col: 500
+avg: 50
+scale: 1
+ratiow: 3
+ratioh: 2
+higher: 100
+lower: 0
+went: too much topspace lower space eats almost 1/4 of map
