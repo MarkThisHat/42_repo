@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:58:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/22 18:02:55 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:28:11 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	dot_product(t_coord *c, double m[4][4])
 {
-	int	temp[3];
+	double	temp[3];
 
 	temp[0] = c->xyz[0];
 	temp[1] = c->xyz[1];

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/27 09:59:50 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 11:30:28 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_img {
 }			t_img;
 
 typedef struct	s_coord {
-	int		xyz[3];
+	double	xyz[3];
 	int		z;
 	int		color;
 }			t_coord;

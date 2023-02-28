@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 10:22:00 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/02/28 12:13:22 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	position_img(t_mlxs *ms)
 	if (!average)
 		average = 1;
 	crosswise_matrix(matrix, ms->scale * 3, 0);
-	//matrix[2][2] = 5;
+	matrix[2][2] = ms->scale / 1.5;
 	//matrix[3][3] = 1;
+//	ms->height_adj += 270;
+//	ms->width_adj -=450;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, Z, -0.523599);
 	angle_matrix(ms, Y, -1.047198);
