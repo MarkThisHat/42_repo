@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 20:48:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:51:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	position_img(t_mlxs *ms)
 //	ms->height_adj += 200;
 //	ms->width_adj -=450;
 	meld_matrix(ms, ms->matrix, matrix);
-	angle_matrix(ms, Z, -0.680678);
-	angle_matrix(ms, Y, -1.239184);
+	angle_matrix(ms, Z, 0.680678);
+	angle_matrix(ms, Y, 1.239184);
 	put_dot(ms, ms->matrix);
 }
 
@@ -122,10 +122,10 @@ void	draw_map(t_mlxs *ms)
 
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 {
-	l->x0 = ini.xyz[X] + ms->height_adj;
-	l->x1 = fin.xyz[X] + ms->height_adj;
-	l->y0 = ini.xyz[Y] + ms->width_adj;
-	l->y1 = fin.xyz[Y] + ms->width_adj;
+	l->x0 = ini.xyz[X] + ms->width_adj;
+	l->x1 = fin.xyz[X] + ms->width_adj;
+	l->y0 = ini.xyz[Y] + ms->height_adj;
+	l->y1 = fin.xyz[Y] + ms->height_adj;
 	put_line(ms, l);
 }
 
@@ -134,14 +134,12 @@ void	mlx_setup(t_mlxs *ms)
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
 	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
-int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
 	(*ms->fad)->addr = mlx_get_data_addr\
 	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
-//	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
-	mlx_hook(ms->win, 6, 1L<<6, mousemove, ms);
+	mlx_mouse_hook(ms->win, my_mouse_hook, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 20:46:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:19:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 #  define P_KEY 112
 #  define G_KEY 103
 #  define B_KEY 98
-#  define QUEST_K 47
 #  define X 0
 #  define Y 1
 #  define Z 2
@@ -39,6 +38,8 @@
 #  define O_KEY 111
 #  define L_KEY 108
 #  define R_KEY 114
+#  define Z_KEY 122
+#  define X_KEY 120
 #  define N_PLU_K 65453
 #  define N_MIN_K 65451
 
@@ -124,6 +125,7 @@ void	position_img(t_mlxs *ms);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
 int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
 int		mousemove(int x, int y, t_mlxs *ms);
+void	change_height(t_mlxs *ms, int change);
 
 //bonus
 int		keybonus(int keycode, t_mlxs *ms);
@@ -132,6 +134,12 @@ void	clear_img(t_img *img);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
 void	reset_placement(t_mlxs *ms);
+//mousebonus
+int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
+int		my_loop_function(t_mlxs *ms);
+//gpt
+void	keep_bound(t_line *l);
+
 
 
 #endif

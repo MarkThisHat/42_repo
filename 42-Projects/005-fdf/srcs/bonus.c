@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:44:21 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/27 10:31:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 11:20:54 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,12 @@ int		keybonus(int keycode, t_mlxs *ms)
 	{
 		ms->width_adj += 20;
 	}
-	if(keycode == B_KEY)
+	if (keycode == B_KEY)
 		ms->color = 0xFF0000FF;
+/*	if (keycode == Z_KEY)
+		change_height(ms, 1);
+	if (keycode == X_KEY)
+		change_height(ms, -1);*/
 	ft_printf("%i\n", keycode);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);
@@ -173,6 +177,32 @@ void	reset_placement(t_mlxs *ms)
 	angle_matrix(ms, Y, -1.239184);//71 graus
 	put_dot(ms, ms->matrix);
 }
+
+/*
+void	change_height(t_mlxs *ms, int change)
+{
+	static int	new_z;
+	int			i;
+	int			j;
+
+	i = 0;
+	new_z += change;
+	while (i < ms->row)
+	{
+		j = 0;
+		while (j < ms->col)
+		{
+			ms->cart[i][j].xyz[0] = i;
+			ms->cart[i][j].xyz[1] = j;
+			ms->cart[i][j].xyz[2] = ms->cart[i][j].z + new_z;
+			j++;
+		}
+		i++;
+	}
+	put_dot(ms, ms->matrix);
+}
+*/
+
 
 /***\
 if (keycode == P_KEY)

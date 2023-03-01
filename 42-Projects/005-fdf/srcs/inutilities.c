@@ -36,6 +36,30 @@ void	printmap(t_mlxs *ms)
 	}
 }
 
+
+//trying mouse functions
+
+
+int		mousemove(int x, int y, t_mlxs *ms)
+{
+	ft_printf("moooving x: %i y: %i\n", x, y);
+	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
+	mlx_loop(ms->win);
+	return (ms->row);
+}
+
+int		mouserelease(int keycode, int x, int y, t_mlxs *ms)
+{
+	ft_printf("bass dropped:");
+	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	return (ms->col);
+}
+
+
+	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
+	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
+	mlx_hook(ms->win, 6, 1L<<6, mousemove, ms);
+
 	/*
 	*	35,264°
 	*	0.6154729

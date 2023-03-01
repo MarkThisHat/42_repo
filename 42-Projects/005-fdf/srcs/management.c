@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 20:53:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/01 10:12:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,21 +55,6 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 //	https://codebrowser.dev/qt5/include/X11/X.h.html
 //	https://github.com/D-Programming-Deimos/libX11/blob/master/c/X11/keysymdef.h
 	return (keycode + x + y);
-}
-
-int		mousemove(int x, int y, t_mlxs *ms)
-{
-	ft_printf("moooving x: %i y: %i\n", x, y);
-	mlx_hook(ms->win, 5, 1L<<3, mouserelease, ms);
-	mlx_loop(ms->win);
-	return (ms->row);
-}
-
-int		mouserelease(int keycode, int x, int y, t_mlxs *ms)
-{
-	ft_printf("bass dropped:");
-	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
-	return (ms->col);
 }
 
 int		keypress(int keycode, t_mlxs *ms)
