@@ -25,12 +25,10 @@
 #  define ARW_D_K 65364
 #  define ARW_L_K 65361
 #  define ARW_R_K 65363
+#  define BCKSPC 65288
 #  define P_KEY 112
 #  define G_KEY 103
 #  define B_KEY 98
-#  define X 0
-#  define Y 1
-#  define Z 2
 #  define U_KEY 117
 #  define J_KEY 106
 #  define I_KEY 105
@@ -66,6 +64,7 @@ typedef struct	s_line {
 	int		d;
 	int		dx;
 	int		dy;
+	int		factor;
 }		t_line;
 
 typedef struct	s_mlxs {
@@ -79,6 +78,7 @@ typedef struct	s_mlxs {
 	int		col;
 	int		row;
 	int		color;
+	int		dye;
 	int		toggle;
 	int		scale;
 	int		higher;
@@ -94,7 +94,7 @@ void	draw_map(t_mlxs *ms);
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
 void	mlx_setup(t_mlxs *ms);
 //bresenham.c
-void	put_pixel(t_img *img, int x, int y);
+void	put_pixel(t_img *img, int x, int y, int factor);
 void	low_slope(t_mlxs *ms, t_line *l, int n);
 void	high_slope(t_mlxs *ms, t_line *l, int n);
 void 	put_line(t_mlxs *ms, t_line *l);
@@ -119,7 +119,7 @@ int		invert_endian(int color);
 int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
-int		see_color(t_mlxs *ms, int color);
+int		see_color(t_mlxs *ms, int color, int z);
 //tempinfdf.c
 void	position_img(t_mlxs *ms);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
@@ -139,6 +139,9 @@ int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);
 //gpt
 void	keep_bound(t_line *l);
+int		add_factor(int color, int factor);
+int		put_colors(int color, int factor);
+void	add_color(int *color, int *dye, int bitshift);
 
 
 

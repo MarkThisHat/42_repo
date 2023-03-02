@@ -20,26 +20,21 @@ void	dot_product(t_coord *c, double m[4][4])
 	temp[1] = c->xyz[1];
 	temp[2] = c->xyz[2];
 
-	temp[X] = c->xyz[X] * m[0][0] + c->xyz[Y] * m[1][0] + c->xyz[Z] * m[2][0];
-	temp[Y] = c->xyz[X] * m[0][1] + c->xyz[Y] * m[1][1] + c->xyz[Z] * m[2][1];
-	temp[Z] = c->xyz[X] * m[0][2] + c->xyz[Y] * m[1][2] + c->xyz[Z] * m[2][2];
+	temp[0] = c->xyz[0] * m[0][0] + c->xyz[1] * m[1][0] + c->xyz[2] * m[2][0];
+	temp[1] = c->xyz[0] * m[0][1] + c->xyz[1] * m[1][1] + c->xyz[2] * m[2][1];
+	temp[2] = c->xyz[0] * m[0][2] + c->xyz[1] * m[1][2] + c->xyz[2] * m[2][2];
 
-	c->xyz[X] = temp[0];
-	c->xyz[Y] = temp[1];
-	c->xyz[Z] = temp[2];
+	c->xyz[0] = temp[0];
+	c->xyz[1] = temp[1];
+	c->xyz[2] = temp[2];
 }
 
 void	angle_matrix(t_mlxs *ms, int axis, double angle)
 {
-	double	rife;
 	double	matrix[4][4];
 
-	if (angle)
-		rife = angle;
-	else
-		rife = ms->angle;
 	crosswise_matrix(matrix, 1, 0);
-	rotation_matrix(matrix, axis, rife);
+	rotation_matrix(matrix, axis, angle);
 	meld_matrix(ms, ms->matrix, matrix);
 }
 
@@ -47,16 +42,16 @@ void	rotation_matrix(double matrix[4][4], int axis, double angle)
 {
 	if (axis == 0)
 	{
-		matrix[1][1] = cos(angle);
-		matrix[1][2] = sin(angle);
-		matrix[2][1] = -sin(angle);
+		matrix[0][0] = cos(angle);
+		matrix[0][2] = -sin(angle);
+		matrix[2][0] = sin(angle);
 		matrix[2][2] = cos(angle);
 	}
 	if (axis == 1)
 	{
-		matrix[0][0] = cos(angle);
-		matrix[0][2] = -sin(angle);
-		matrix[2][0] = sin(angle);
+		matrix[1][1] = cos(angle);
+		matrix[1][2] = sin(angle);
+		matrix[2][1] = -sin(angle);
 		matrix[2][2] = cos(angle);
 	}
 	if (axis == 2)

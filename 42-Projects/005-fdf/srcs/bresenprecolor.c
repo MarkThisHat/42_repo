@@ -12,7 +12,7 @@
 
 #include "../incl/fdf.h"
 
-void	put_pixel(t_img *img, int x, int y, int factor)
+void	put_pixel(t_img *img, int x, int y)
 {
 	char			*painter;
 	unsigned int	color;
@@ -24,8 +24,6 @@ void	put_pixel(t_img *img, int x, int y, int factor)
 	painter = img->addr + target;
 	color = img->color - (img->color << 24);
 	color += 0xFF000000;
-	if (factor)
-		color += add_factor(color, factor);
 	if (img->endian)
 		color = invert_endian(color);
 	*(unsigned int*)painter = color;
@@ -48,7 +46,7 @@ void	low_slope(t_mlxs *ms, t_line *l, int n)
 	x = l->x0;
 	while (x < l->x1)
 	{
-		put_pixel(*ms->fad, x, y, l->factor);
+		put_pixel(*ms->fad, x, y);
 		if (l->d > 0)
 		{
 			y = y + n;
@@ -77,7 +75,7 @@ void	high_slope(t_mlxs *ms, t_line *l, int n)
 	y = l->y0;
 	while (y < l->y1)
 	{
-		put_pixel(*ms->fad, x, y, l->factor);
+		put_pixel(*ms->fad, x, y);
 		if (l->d > 0)
 		{
 			x = x + n;
@@ -94,13 +92,11 @@ void put_line(t_mlxs *ms, t_line *l)
 	t_line p;
 
 	keep_bound(l);
+	//find color variance, add parameter to slope and put pixel
 	p.x1 = l->x0;
 	p.y1 = l->y0;
 	p.x0 = l->x1;
 	p.y0 = l->y1;
-	p.factor = l->factor;
-	if (l->factor)
-		(*ms->fad)->color = ms->dye;
 	if (abs(l->y1 - l->y0) < abs(l->x1 - l->x0))
 	{
 		if (l->x0 > l->x1)

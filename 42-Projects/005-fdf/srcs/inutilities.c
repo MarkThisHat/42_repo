@@ -162,3 +162,142 @@ void    mult_matrix(int m1[4][4], int m2[4][4], int size)
 }
 
 */
+
+
+//colorrz
+
+/*
+#include <stdio.h>
+
+
+void increase_color(int *red, int *green, int *blue, int factor)
+{
+	if (*red)
+		*red += factor;
+	if (*red > 255)
+		*red = 255;
+	if (*green)
+		*green += factor;
+	if (*green > 255)
+		*green = 255;
+	if (*blue)
+		*blue += factor;
+	if (*blue > 255)
+		*blue = 255;
+}
+
+void decrease_color(int *red, int *green, int *blue, int factor)
+{
+	if (*red)
+		*red -= factor;
+	if (*red < 0)
+		*red = 0;
+	if (*green)
+		*green -= factor;
+	if (*green < 0)
+		*green = 0;
+	if (*blue)
+		*blue -= factor;
+	if (*blue < 0)
+		*blue = 0;
+}
+
+int		change_color(int color, int factor, int sign)
+{
+	int red;
+	int green;
+	int blue;
+
+	red = color & 0x00FF0000 >> 16;
+	green = color & 0x0000FF00 >> 8;
+	blue = color & 0x000000FF;
+	if (sign < 0)
+		decrease_color(&red, &green, &blue, factor);
+	else
+		increase_color(&red, &green, &blue, factor);
+	printf("red: %i\ngreen: %i\nblue: %i\n", red, green, blue);
+	return ((red << 16) + (green << 8) + blue);
+}
+
+int	badatoi(char *str)
+{
+	int i;
+	int recoil;
+	int	base;
+
+	i = 0;
+	base = 1;
+	recoil = 0;
+	while (str[i])
+		i++;
+	while (--i >= 0)
+	{
+		recoil += (str[i] - '0') * base;
+		base *= 10;
+	}
+	return (recoil);
+}
+
+int main(int argc, char **argv)
+{
+	int	n;
+	int	color;
+
+	color = 0x00FFFFFF;
+	if (argc != 2)
+		return (1);
+	n = badatoi(argv[1]);
+	printf("%i\n0x%X\n", n, change_color(color, 3, 1));
+}
+
+
+// not used
+void increase_color(int *red, int *green, int *blue, int factor)
+{
+	if (*red)
+		*red += factor;
+	if (*red > 255)
+		*red = 255;
+	if (*green)
+		*green += factor;
+	if (*green > 255)
+		*green = 255;
+	if (*blue)
+		*blue += factor;
+	if (*blue > 255)
+		*blue = 255;
+}
+
+void	decrease_color(int *red, int *green, int *blue, int factor)
+{
+	if (*red)
+		*red -= factor;
+	if (*red < 0)
+		*red = 0;
+	if (*green)
+		*green -= factor;
+	if (*green < 0)
+		*green = 0;
+	if (*blue)
+		*blue -= factor;
+	if (*blue < 0)
+		*blue = 0;
+}
+
+void	change_color(t_mlxs *ms, int factor, int sign)
+{
+	int red;
+	int green;
+	int blue;
+
+	red = ms->dye & 0x00FF0000 >> 16;
+	green = ms->dye & 0x0000FF00 >> 8;
+	blue = ms->dye & 0x000000FF;
+	if (sign < 0)
+		decrease_color(&red, &green, &blue, factor);
+	else
+		increase_color(&red, &green, &blue, factor);
+	ms->dye = (red << 16) + (green << 8) + blue;
+}
+*/
+

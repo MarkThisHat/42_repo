@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../incl/fdf.h"
 #include <stdio.h>
 
 int		keybonus(int keycode, t_mlxs *ms)
@@ -18,37 +18,37 @@ int		keybonus(int keycode, t_mlxs *ms)
 	if (keycode == U_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, X, 0.166666667);
+		bonus_roll(ms, 0, 0.166666667);
 		printf("axis +X: %f\n", ms->angle);
 	}
 	if (keycode == J_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, X, -0.166666667);
+		bonus_roll(ms, 0, -0.166666667);
 		printf("axis -X: %f\n", ms->angle);
 	}
 	if (keycode == I_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, Y, 0.166666667);
+		bonus_roll(ms, 1, 0.166666667);
 		printf("axis +Y: %f\n", ms->angle);
 	}
 	if (keycode == K_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, Y, -0.166666667);
+		bonus_roll(ms, 1, -0.166666667);
 		printf("axis -Y: %f\n", ms->angle);
 	}
 	if (keycode == O_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, Z, 0.166666667);
+		bonus_roll(ms, 2, 0.166666667);
 		printf("axis +Z: %f\n", ms->angle);
 	}
 	if (keycode == L_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, Z, -0.166666667);
+		bonus_roll(ms, 2, -0.166666667);
 		printf("axis -Z: %f\n", ms->angle);
 	}
 	if (keycode == N_PLU_K)
@@ -59,7 +59,7 @@ int		keybonus(int keycode, t_mlxs *ms)
 	{
 		bonus_scale(ms, 0);
 	}
-	if (keycode == R_KEY)
+	if (keycode == BCKSPC)
 	{
 		reset_placement(ms);
 	}
@@ -79,8 +79,18 @@ int		keybonus(int keycode, t_mlxs *ms)
 	{
 		ms->width_adj += 20;
 	}
+	if (keycode == R_KEY)
+	{
+		add_color(&ms->color, &ms->dye, 16);
+	}
+	if (keycode == G_KEY)
+	{
+		add_color(&ms->color, &ms->dye, 8);
+	}
 	if (keycode == B_KEY)
-		ms->color = 0xFF0000FF;
+	{
+		add_color(&ms->color, &ms->dye, 0);
+	}
 /*	if (keycode == Z_KEY)
 		change_height(ms, 1);
 	if (keycode == X_KEY)
@@ -169,12 +179,12 @@ void	reset_placement(t_mlxs *ms)
 		}
 		i++;
 	}
+	ms->dye = 0;
+	ms->color = 0xFFFFFFFF;
 	crosswise_matrix(ms->matrix, ms->scale * 3, 0);
 	ms->matrix[2][2] = ms->scale / 5.5;
-//	angle_matrix(ms, Z, -0.523599);
-//	angle_matrix(ms, Y, -0.615473);
-	angle_matrix(ms, Z, -0.680678);//39 graus
-	angle_matrix(ms, Y, -1.239184);//71 graus
+	angle_matrix(ms, 2, -0.680678);//39 graus
+	angle_matrix(ms, 0, -1.239184);//71 graus
 	put_dot(ms, ms->matrix);
 }
 

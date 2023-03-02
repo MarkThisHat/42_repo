@@ -65,9 +65,11 @@ void	leave_program(char *str, int fd, int return_code)
 	exit (return_code);
 }
 
-int		see_color(t_mlxs *ms, int color)
+int		see_color(t_mlxs *ms, int color, int z)
 {
 	if (color)
 		return (color);
+	if (ms->dye && z)
+		return (ms->dye);
 	return (ms->color);
 }
