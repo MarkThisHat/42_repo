@@ -42,11 +42,14 @@ void	position_img(t_mlxs *ms)
 		ms->scale = ratiow / 3;
 	if (!ms->scale)
 		ms->scale = 1;
-	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower);
+	ms->mapspot = (ratiow + ratioh) / 1.75;
+	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\nmapspot: %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower, ms->mapspot);
 	if (!average)
 		average = 1;
-	crosswise_matrix(matrix, ms->scale * 6, 0);
+	crosswise_matrix(matrix, ms->mapspot, 0);
 	matrix[2][2] = ms->scale;
+	if (ms->scale == 1 && average < 100)
+		matrix[2][2] = 0.1;
 	//matrix[3][3] = 1;
 //	ms->height_adj += 200;
 //	ms->width_adj -=450;

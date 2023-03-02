@@ -1,0 +1,226 @@
+-plat.fdf
+
+14x10
+avg: 0
+oscale: 25
+rw: 192
+rh: 77
+avr: 134
+deltaZ: 0
+nscale: 150 (*6)
+
+-100-6
+
+100x100
+
+avg: 0
+oscale: 3
+rw: 19
+rh: 10
+avr: 14.5
+deltaZ: 10
+nscale: 18 (*6)
+nz: 3
+
+-20-60
+20x20
+
+avg: 0
+oscale: 18
+rw: 96
+rh: 54
+avr: 70
+deltaZ: 118
+nice_scale: 90
+nice_z: 1
+
+-basictest
+
+9x11
+avg: 4
+oscale: 40
+rw: 174
+rh: 120
+avr: 147
+deltaZ: 9
+nice_scale: 240 (*6)
+nice_z: 40
+
+-elem
+
+10x10
+avg: 10
+oscale: 36
+rw: 192
+rh: 108
+avr: 150
+deltaZ: 20
+nice_scale: 216
+nice_z: 12 (/3)
+
+-mars
+avg: 7
+oscale: 3
+rw: 9
+rh: 9
+avr: 9
+deltaZ: 15
+nice_scale: 12 (*4)
+nice_z: 3
+
+-pnp_flat
+9x21
+avg: 0
+oscale: 30
+rw: 91
+rh: 120
+avr: 105
+deltaZ: 0
+nice_scale: 120
+nice_z: 30
+
+-pyramide
+34x27
+avg: 4
+oscale: 10
+rw: 71
+rh: 31
+avr: 51
+deltaZ: 9
+nice_scale: 40 (*4)
+nice_z: 80
+*height + 300
+
+-10-2
+10x10
+avg: 0
+oscale: 36
+rw: 192
+rh: 108
+avr: 150
+deltaZ: 2
+nice_scale: 216 (*6)
+nice_z: 36
+
+-42-
+11x19
+avg: 5
+oscale: 32
+rw: 101
+rh: 98
+avr: 99
+deltaZ: 10
+nice_scale: 128 (*4)
+nice_z: 5 (/6)
+
+-elem2
+20x20
+avg: 25
+oscale: 18
+rw: 96
+rh: 54
+avr: 75
+deltaZ: 50
+nice_scale: 72
+nice_z: 3 (/6)
+
+
+-elem-fract
+500x500
+avg: 50
+oscale: 0 
+rw: 3
+rh: 2
+avr: 2.5
+deltaZ: 100
+nice_scale: 4
+nice_z: 1
+
+-pentegpos
+9x21
+avg: 0
+oscale: 30
+rw: 91
+rh: 120
+avr: 105
+deltaZ: 20
+nice_scale: 120 (*4)
+nice_z: 30
+
+-pylone
+47x48
+avg: 0
+oscale: 7
+rw: 40
+rh: 22
+avr: 31
+deltaZ: 14
+nice_scale: 28
+nice_z: 56
+*height + 200
+
+-t1
+200x200
+avg: 126
+oscale: 1
+rw: 9
+rh: 5
+avr: 7
+deltaZ: 252
+nice_scale: 8 (*8)
+nice_z: 1
+
+-t2
+100x100
+avg: 81
+oscale: 3
+rw: 19
+rh: 10
+avr: 14.5
+deltaZ: 162
+nice_scale: 114
+nice_z: 3
+
+-10-70
+10x10
+avg: 1
+oscale: 36
+rw: 192
+rh: 108
+avr: 150
+deltaZ: 136
+nice_scale: 180
+nice_z: 1.8
+
+-50-4
+50x50
+avg: 0
+oscale: 7
+rw: 38
+rh: 21
+avr: 29
+deltaZ: 6
+nice_scale: 35
+nice_z: 7
+
+-elem-col
+10x10
+avg: 10
+oscale: 36
+rw: 192
+rh: 108
+avr: 150
+deltaZ: 20
+nice_scale: 180
+nice_z: 7
+
+-julia
+100x100
+avg: 50
+oscale: 1
+rw: 3
+rh: 2
+avr: 2.5
+deltaZ: 100
+nice_scale: 3.8
+nice_z: 0.05

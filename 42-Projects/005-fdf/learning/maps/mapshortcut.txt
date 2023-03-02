@@ -3,27 +3,23 @@
 10-70.fdf        50-4.fdf         elem-col.fdf     julia.fdf        plat.fdf         pyra.fdf         t2.fdf         
 
 
-./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf | wc -l
-Map /home/marcodin/fdfmaps/plat.fdf has 13 rows and 10 columns
-13
-
-./fdf ~/fdfmaps/100-6.fdf&& cat ~/fdfmaps/100-6.fdf | wc -l
-./fdf ~/fdfmaps/20-60.fdf&& cat ~/fdfmaps/20-60.fdf | wc -l
-./fdf ~/fdfmaps/basictest.fdf&& cat ~/fdfmaps/basictest.fdf | wc -l
-./fdf ~/fdfmaps/elem.fdf&& cat ~/fdfmaps/elem.fdf | wc -l
-./fdf ~/fdfmaps/mars.fdf&& cat ~/fdfmaps/mars.fdf | wc -l
-./fdf ~/fdfmaps/pnp_flat.fdf&& cat ~/fdfmaps/pnp_flat.fdf | wc -l
-./fdf ~/fdfmaps/pyramide.fdf&& cat ~/fdfmaps/pyramide.fdf | wc -l
-./fdf ~/fdfmaps/10-2.fdf&& cat ~/fdfmaps/10-2.fdf | wc -l
-./fdf ~/fdfmaps/42.fdf&& cat ~/fdfmaps/42.fdf | wc -l
-./fdf ~/fdfmaps/elem2.fdf&& cat ~/fdfmaps/elem2.fdf | wc -l
-./fdf ~/fdfmaps/elem-fract.fdf&& cat ~/fdfmaps/elem-fract.fdf | wc -l
-./fdf ~/fdfmaps/pentenegpos.fdf&& cat ~/fdfmaps/pentenegpos.fdf | wc -l
-./fdf ~/fdfmaps/pylone.fdf&& cat ~/fdfmaps/pylone.fdf | wc -l
-./fdf ~/fdfmaps/t1.fdf&& cat ~/fdfmaps/t1.fdf | wc -l
-./fdf ~/fdfmaps/t2.fdf&& cat ~/fdfmaps/t2.fdf | wc -l
-./fdf ~/fdfmaps/10-70.fdf&& cat ~/fdfmaps/10-70.fdf | wc -l
-./fdf ~/fdfmaps/50-4.fdf&& cat ~/fdfmaps/50-4.fdf | wc -l
-./fdf ~/fdfmaps/elem-col.fdf&& cat ~/fdfmaps/elem-col.fdf | wc -l
-./fdf ~/fdfmaps/julia.fdf&& cat ~/fdfmaps/julia.fdf | wc -l
-./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf | wc -l
+./fdf ~/fdfmaps/plat.fdf&& cat ~/fdfmaps/plat.fdf OK
+./fdf ~/fdfmaps/100-6.fdf&& cat ~/fdfmaps/100-6.fdf OK
+./fdf ~/fdfmaps/mars.fdf&& cat ~/fdfmaps/mars.fdf OK
+./fdf ~/fdfmaps/pnp_flat.fdf&& cat ~/fdfmaps/pnp_flat.fdf OK
+./fdf ~/fdfmaps/basictest.fdf&& cat ~/fdfmaps/basictest.fdf OK
+./fdf ~/fdfmaps/10-2.fdf&& cat ~/fdfmaps/10-2.fdf OK
+./fdf ~/fdfmaps/pentenegpos.fdf&& cat ~/fdfmaps/pentenegpos.fdf OK
+./fdf ~/fdfmaps/t1.fdf&& cat ~/fdfmaps/t1.fdf OK
+./fdf ~/fdfmaps/50-4.fdf&& cat ~/fdfmaps/50-4.fdf OK
+./fdf ~/fdfmaps/elem.fdf&& cat ~/fdfmaps/elem.fdf bad (lessen Z)
+./fdf ~/fdfmaps/20-60.fdf&& cat ~/fdfmaps/20-60.fdf bad (lessen Z)
+./fdf ~/fdfmaps/42.fdf&& cat ~/fdfmaps/42.fdf bad (lessen Z)
+./fdf ~/fdfmaps/elem2.fdf&& cat ~/fdfmaps/elem2.fdf bad (lessen Z)
+./fdf ~/fdfmaps/t2.fdf&& cat ~/fdfmaps/t2.fdf OK (could go down a tiny bit)
+./fdf ~/fdfmaps/10-70.fdf&& cat ~/fdfmaps/10-70.fdf bad (lessen Z)
+./fdf ~/fdfmaps/elem-col.fdf&& cat ~/fdfmaps/elem-col.fdf bad (lessen Z)
+./fdf ~/fdfmaps/elem-fract.fdf&& cat ~/fdfmaps/elem-fract.fdf passable (could increase size)
+./fdf ~/fdfmaps/julia.fdf&& cat ~/fdfmaps/julia.fdf passable (could increase size and decrease Z)
+./fdf ~/fdfmaps/pylone.fdf&& cat ~/fdfmaps/pylone.fdf passable (could highten Z and make img go down)
+./fdf ~/fdfmaps/pyramide.fdf&& cat ~/fdfmaps/pyramide.fdf passable (could highten Z and make img go down)

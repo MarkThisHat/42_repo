@@ -183,8 +183,8 @@ void	reset_placement(t_mlxs *ms)
 	ms->color = 0xFFFFFFFF;
 	ms->height_adj =  WIN_H / 13;
 	ms->width_adj = WIN_W / 2;
-	crosswise_matrix(ms->matrix, ms->scale * 3, 0);
-	ms->matrix[2][2] = ms->scale / 5.5;
+	crosswise_matrix(ms->matrix, ms->mapspot, 0);
+	ms->matrix[2][2] = ms->scale;
 	angle_matrix(ms, 2, -0.680678);//39 graus
 	angle_matrix(ms, 0, -1.239184);//71 graus
 	put_dot(ms, ms->matrix);
