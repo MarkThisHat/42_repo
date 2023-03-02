@@ -157,7 +157,7 @@ void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
-	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);//int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
 	(*ms->fad)->addr = mlx_get_data_addr\
 	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);

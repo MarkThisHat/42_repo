@@ -34,12 +34,14 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 {
-	//ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
 	int	xm;
 	int	ym;
 
 	xm = 0;
 	ym = 0;
+	if (keycode == 1)
+		adjust_ambit(ms, y, x);
 	if (keycode == 4)
 		bonus_scale(ms, 1);
 	if (keycode == 5)

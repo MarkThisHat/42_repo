@@ -139,9 +139,13 @@ int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);
 //gpt
 void	keep_bound(t_line *l);
+
+//colors
 int		add_factor(int color, int factor);
 int		put_colors(int color, int factor);
 void	add_color(int *color, int *dye, int bitshift);
+int	adjust_ambit(t_mlxs *ms, int height, int width);
+
 
 
 

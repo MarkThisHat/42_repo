@@ -65,19 +65,19 @@ int		keybonus(int keycode, t_mlxs *ms)
 	}
 	if (keycode == ARW_U_K)
 	{
-		ms->height_adj -= 20;
+		ms->height_adj -= adjust_ambit(ms, 20, 0);
 	}
 	if (keycode == ARW_D_K)
 	{
-		ms->height_adj += 20;
+		ms->height_adj += adjust_ambit(ms, 20, 0);
 	}
 	if (keycode == ARW_L_K)
 	{
-		ms->width_adj -= 20;
+		ms->width_adj -= adjust_ambit(ms, 0, 20);
 	}
 	if (keycode == ARW_R_K)
 	{
-		ms->width_adj += 20;
+		ms->width_adj += adjust_ambit(ms, 0, 20);
 	}
 	if (keycode == R_KEY)
 	{
@@ -181,11 +181,33 @@ void	reset_placement(t_mlxs *ms)
 	}
 	ms->dye = 0;
 	ms->color = 0xFFFFFFFF;
+	ms->height_adj =  WIN_H / 13;
+	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, ms->scale * 3, 0);
 	ms->matrix[2][2] = ms->scale / 5.5;
 	angle_matrix(ms, 2, -0.680678);//39 graus
 	angle_matrix(ms, 0, -1.239184);//71 graus
 	put_dot(ms, ms->matrix);
+}
+
+int		adjust_ambit(t_mlxs *ms, int height, int width)
+{
+	int	h;
+	int	w;
+
+	h = ms->height_adj;
+	w = ms->width_adj;
+	if (w > WIN_W + 500 || w < -(WIN_W / 2))
+		return (width * (-10));
+	if (h > WIN_H + 50 || h < -(WIN_H / 2))
+		return(height * (-10));
+	if (!width)
+		return(height);
+	if (!height)
+		return (width);
+	ms->height_adj = height - 500;
+	ms->width_adj = width - 200;
+	return (0);
 }
 
 /*
