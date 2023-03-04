@@ -1,200 +1,211 @@
-avg: 
-oscale: 
-rw: 
-rh: 
-deltaZ: 
-nice_scale: 
-nice_z: 
-
-
 -plat.fdf
-14x10
+size: 14x10
 avg: 0
 oscale: 25
 rw: 192
 rh: 77
-deltaZ: 0
+rw+rh: 269
+deltaZ: 0 (< row + col)
 nscale: 150 (*6)
 -100-6
-100x100
+size: 100x100
 avg: 0
 oscale: 3
 rw: 19
 rh: 10
-deltaZ: 10
+rw+rh: 29
+deltaZ: 10 (< row + col)
 nscale: 18 (*6)
 nz: 3
 -mars
+size: 116x200
 avg: 7
 oscale: 3
 rw: 9
 rh: 9
-deltaZ: 15
+rw+rh: 18
+deltaZ: 15 (< row + col)
 nice_scale: 12 (*4)
 nice_z: 3
 -pnp_flat
-9x21
+size: 9x21
 avg: 0
 oscale: 30
 rw: 91
 rh: 120
-deltaZ: 0
+rw+rh: 211
+deltaZ: 0 (< row + col)
 nice_scale: 120
 nice_z: 30
 -basictest
-9x11
+size: 9x11
 avg: 4
 oscale: 40
 rw: 174
 rh: 120
-deltaZ: 9
+rw+rh: 294
+deltaZ: 9 (< row + col)
 nice_scale: 240 (*6)
 nice_z: 40
 -10-2
-10x10
+size: 10x10
 avg: 0
 oscale: 36
 rw: 192
 rh: 108
-deltaZ: 2
+rw+rh: 300
+deltaZ: 2 (< row + col)
 nice_scale: 216 (*6)
 nice_z: 36
 -pentegpos
-9x21
+size: 9x21
 avg: 0
 oscale: 30
 rw: 91
 rh: 120
-deltaZ: 20
+rw+rh: 211
+deltaZ: 20 (< row + col)
 nice_scale: 120 (*4)
 nice_z: 30
 -t1
-200x200
+size: 200x200
 avg: 126
 oscale: 1
 rw: 9
 rh: 5
-deltaZ: 252
+rw+rh: 14
+deltaZ: 252 (< row + col)
 nice_scale: 8 (*8)
 nice_z: 1
 -50-4
-50x50
+size: 50x50
 avg: 0
 oscale: 7
 rw: 38
 rh: 21
-deltaZ: 6
+deltaZ: 6 (< row + col)
 nice_scale: 35
 nice_z: 7
 #could adjust size or go down:
 -t2
-100x100
+size: 100x100
 avg: 81
 oscale: 3
 rw: 19
 rh: 10
-deltaZ: 162
+rw+rh: 29
+deltaZ: 162 (< row+col)
 nice_scale: 114
 nice_z: 3
 #passable but could be tweaked:
 # has to increase size and could decrease Z
 -elem-fract
-500x500
+size: 500x500
 avg: 50
 oscale: 0 
 rw: 3
 rh: 2
-deltaZ: 100
+rw+rh: 5
+deltaZ: 100 (< row+col)
 nice_scale: 4
 nice_z: 1
 # has to increase size and could decrease Z
 -julia
-100x100
+size: 100x100
 avg: 50
 oscale: 1
 rw: 3
 rh: 2
-deltaZ: 100
+rw+rh: 5
+deltaZ: 100 (< row+col)
 nice_scale: 3.8
 nice_z: 0.05
 
 #just bad (needs to aburptly cut z)
 -20-60
-20x20
+size: 20x20
 avg: 0
 oscale: 18
 rw: 96
 rh: 54
-deltaZ: 118
+rw+rh: 150
+deltaZ: 118 (> row+col)
 nice_scale: 90
 nice_z: 1
 -elem
-10x10
+size: 10x10
 avg: 10
 oscale: 36
 rw: 192
 rh: 108
-deltaZ: 20
+rw+rh: 300
+deltaZ: 20 (>= row+col)
 nice_scale: 216
 nice_z: 12 (/3)
 -42-
-11x19
+size: 11x19
 avg: 5
 oscale: 32
 rw: 101
 rh: 98
-deltaZ: 10
+rw+rh: 199
+deltaZ: 10 (<row+col)
 nice_scale: 128 (*4)
 nice_z: 5 (/6)
--elem2
-20x20
-avg: 25
-oscale: 18
-rw: 96
-rh: 54
-deltaZ: 50
-nice_scale: 72
-nice_z: 3 (/6)
 -10-70
-10x10
+size: 10x10
 avg: 1
 oscale: 36
 rw: 192
 rh: 108
-deltaZ: 136
+rw+rh: 300
+deltaZ: 136 (>= row+col)
 nice_scale: 180
 nice_z: 1.8
 -elem-col
-10x10
+size: 10x10
 avg: 10
 oscale: 36
 rw: 192
 rh: 108
-deltaZ: 20
+rw+rh: 300
+deltaZ: 20 (>=row+col)
 nice_scale: 180
 nice_z: 7
-
+#still same groupa s above, but niceZ shouldn't be the average
+-elem2
+size: 20x20
+avg: 25
+oscale: 18
+rw: 96
+rh: 54
+rw+rh: 150
+deltaZ: 50 (>=row+col)
+nice_scale: 72
+nice_z: 3 (/6)
 
 
 #special cases:
 -pyramide
-34x27
+size: 34x27
 avg: 4
 oscale: 10
 rw: 71
 rh: 31
-deltaZ: 9
+rw+rh: 102
+deltaZ: 9 (<= row+col)
 nice_scale: 40 (*4)
 nice_z: 80
 *height + 300
 
 -pylone
-47x48
+size: 47x48
 avg: 0
 oscale: 7
 rw: 40
 rh: 22
-deltaZ: 14
+rw+rh: 62
+deltaZ: 14 (<=row+col)
 nice_scale: 28
 nice_z: 56
 *height + 200

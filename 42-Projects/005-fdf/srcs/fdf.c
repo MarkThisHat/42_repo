@@ -46,10 +46,12 @@ void	position_img(t_mlxs *ms)
 	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\nmapspot: %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower, ms->mapspot);
 	if (!average)
 		average = 1;
-	crosswise_matrix(matrix, ms->mapspot, 0);
+	crosswise_matrix(matrix, ms->mapspot / 2, 0);
 	matrix[2][2] = ms->scale;
 	if (ms->scale == 1 && average < 100)
 		matrix[2][2] = 0.1;
+	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
+		matrix[2][2] = average;
 	//matrix[3][3] = 1;
 //	ms->height_adj += 200;
 //	ms->width_adj -=450;
