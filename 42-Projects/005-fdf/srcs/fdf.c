@@ -35,8 +35,8 @@ void	position_img(t_mlxs *ms)
 	double	matrix[4][4];
 
 	average = (ms->higher + ms->lower) / 2;
-	ratiow = WIN_W / ms->col;
-	ratioh = WIN_H / ms->row;
+	ratiow = WIN_W / ms->row;
+	ratioh = WIN_H / ms->col;
 	ms->scale = ratioh / 3;
 	if (ratiow < ratioh)
 		ms->scale = ratiow / 3;
@@ -69,10 +69,10 @@ void	put_dot(t_mlxs *ms, double matrix[4][4])
 	int	j;
 
 	i = 0;
-	while (i < ms->row)
+	while (i < ms->col)
 	{
 		j = 0;
-		while (j < ms->col)
+		while (j < ms->row)
 		{
 			dot_product(&ms->cart[i][j], matrix);
 			j++;
@@ -112,16 +112,16 @@ void	draw_map(t_mlxs *ms)
 
 	i = 0;
 	line.factor = 0;
-	while (i < ms->row)
+	while (i < ms->col)
 	{
 		j = 0;
-		while (j < ms->col)
+		while (j < ms->row)
 		{
 			color = ms->cart[i][j].color;
 			(*ms->fad)->color = see_color(ms, color, ms->cart[i][j].z);
-			if ((i + 1) != ms->row)
+			if ((i + 1) != ms->col)
 				draw_line(ms, ms->cart[i][j], ms->cart[i + 1][j], &line);
-			if ((j + 1) != ms->col)
+			if ((j + 1) != ms->row)
 				draw_line(ms, ms->cart[i][j], ms->cart[i][j + 1], &line);
 			j++;
 		}

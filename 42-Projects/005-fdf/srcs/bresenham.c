@@ -18,7 +18,7 @@ void	put_pixel(t_img *img, int x, int y, int factor)
 	unsigned int	color;
 	int				target;
 
-	target = (x * img->line_length) + (y * (img->bits_per_pixel / 8));
+	target = (y * img->line_length) + (x * (img->bits_per_pixel / 8));
 	if (target < 0 || target > (WIN_H * img->line_length))
 		return ;
 	painter = img->addr + target;

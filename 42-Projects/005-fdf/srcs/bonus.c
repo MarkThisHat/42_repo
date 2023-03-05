@@ -167,10 +167,10 @@ void	reset_placement(t_mlxs *ms)
 	int	j;
 
 	i = 0;
-	while (i < ms->row)
+	while (i < ms->col)
 	{
 		j = 0;
-		while (j < ms->col)
+		while (j < ms->row)
 		{
 			ms->cart[i][j].xyz[0] = i;
 			ms->cart[i][j].xyz[1] = j;

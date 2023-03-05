@@ -109,6 +109,7 @@ int		fill_col(t_mlxs *ms, char *line, int row);
 int		count_col(int fd, t_mlxs *ms);
 int		count_row(int fd, t_mlxs *ms);
 void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
+t_coord	**allocate_map(t_mlxs *ms);
 //matrix.c
 void	dot_product(t_coord *c, double m[4][4]);
 void	angle_matrix(t_mlxs *ms, int axis, double angle);

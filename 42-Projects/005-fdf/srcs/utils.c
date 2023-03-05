@@ -43,12 +43,12 @@ int		close_win(t_mlxs *ms)
 	return (1);	
 }
 
-void	free_close(t_mlxs *ms, char *str, int rows)
+void	free_close(t_mlxs *ms, char *str, int row)
 {
-	while(rows)
+	while(row)
 	{
-		rows--;
-		free(ms->cart[rows]);
+		row--;
+		free(ms->cart[row]);
 	}
 	if(ms->cart)
 		free(ms->cart);

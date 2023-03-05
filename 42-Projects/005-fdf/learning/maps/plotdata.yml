@@ -142,16 +142,6 @@ rw+rh: 300
 deltaZ: 20 (>= row+col)
 nice_scale: 216
 nice_z: 12 (/3)
--42-
-size: 11x19
-avg: 5
-oscale: 32
-rw: 101
-rh: 98
-rw+rh: 199
-deltaZ: 10 (<row+col)
-nice_scale: 128 (*4)
-nice_z: 5 (/6)
 -10-70
 size: 10x10
 avg: 1
@@ -172,6 +162,16 @@ rw+rh: 300
 deltaZ: 20 (>=row+col)
 nice_scale: 180
 nice_z: 7
+-42-
+size: 11x19
+avg: 5
+oscale: 32
+rw: 101
+rh: 98
+rw+rh: 199
+deltaZ: 10 (<row+col)
+nice_scale: 128 (*4)
+nice_z: 5 (/6)
 #still same groupa s above, but niceZ shouldn't be the average
 -elem2
 size: 20x20
