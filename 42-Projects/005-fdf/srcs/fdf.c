@@ -90,17 +90,11 @@ void	set_struct(t_mlxs *ms)
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
-	ms->angle = 0.785398;
 	ms->higher = 0;
 	ms->lower = 0;
 	ms->height_adj =  WIN_H / 13;
 	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, 1, 0);
-//	angle_matrix(ms, Z, -0.523599);
-//	angle_matrix(ms, Y, -0.615473);
-	/*angle_matrix(ms, Z, 0.785398);
-	angle_matrix(ms, X, 0.955323);*/
-	//angle_matrix(ms, Z, 0.785398);
 }
 
 void	draw_map(t_mlxs *ms)

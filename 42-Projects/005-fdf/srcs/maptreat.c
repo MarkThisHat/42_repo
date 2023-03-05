@@ -46,7 +46,6 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 		while(*line == ' ')
 			line++;
 		ms->cart[col][row].z = ft_atoi(line);
-//		ft_printf("cart[%i][%i]\n", col, row);
 		coord_calibrate(ms, &ms->cart[col][row], col, row);
 		ms->cart[col][row].color = 0;
 		while(*line != '\n' && *line != ' ' && *line != ',')

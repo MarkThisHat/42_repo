@@ -46,17 +46,22 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 		bonus_scale(ms, 0);
 	if (keycode == 5)
 		bonus_scale(ms, 1);
-	mlx_clear_window(ms->mlx, ms->win);
-	clear_img(*ms->fad);
-	fad_toggle(ms);
-	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+	redraw_map(ms);
 	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
 	ft_printf("x:%i\ny:%i\n", xm, ym);
 //	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
 //	https://codebrowser.dev/qt5/include/X11/X.h.html
 //	https://github.com/D-Programming-Deimos/libX11/blob/master/c/X11/keysymdef.h
 	return (keycode + x + y);
+}
+
+void	redraw_map(t_mlxs *ms)
+{
+	mlx_clear_window(ms->mlx, ms->win);
+	clear_img(*ms->fad);
+	fad_toggle(ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
 }
 
 int		keypress(int keycode, t_mlxs *ms)
@@ -66,4 +71,16 @@ int		keypress(int keycode, t_mlxs *ms)
 	else
 		keybonus(keycode, ms);
 	return (keycode);
+}
+
+void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
+{
+	cart->xyz[0] = i;
+	cart->xyz[1] = j;
+	cart->xyz[2] = cart->z;
+	if (ms->higher < cart->z)
+		ms->higher = cart->z;
+	if (ms->lower > cart->z)
+		ms->lower = cart->z;
+	//dot_product(cart, ms->matrix);
 }

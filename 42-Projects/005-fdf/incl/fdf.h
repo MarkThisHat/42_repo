@@ -86,7 +86,6 @@ typedef struct	s_mlxs {
 	int		height_adj;
 	int		width_adj;
 	double	mapspot;
-	double	angle;
 }			t_mlxs;
 
 //fdf.c
@@ -103,6 +102,7 @@ void 	put_line(t_mlxs *ms, t_line *l);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
+void	redraw_map(t_mlxs *ms);
 //maptreat.c
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
