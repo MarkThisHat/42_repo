@@ -20,9 +20,9 @@ void	dot_product(t_coord *c, double m[4][4])
 	temp[1] = c->xyz[1];
 	temp[2] = c->xyz[2];
 
-	temp[0] = c->xyz[0] * m[0][0] + c->xyz[1] * m[1][0] + c->xyz[2] * m[2][0];
-	temp[1] = c->xyz[0] * m[0][1] + c->xyz[1] * m[1][1] + c->xyz[2] * m[2][1];
-	temp[2] = c->xyz[0] * m[0][2] + c->xyz[1] * m[1][2] + c->xyz[2] * m[2][2];
+	temp[0] = c->xyz[0] * m[0][0] + c->xyz[1] * m[1][0] + c->xyz[2] * m[2][0] + 1 * m[3][0];
+	temp[1] = c->xyz[0] * m[0][1] + c->xyz[1] * m[1][1] + c->xyz[2] * m[2][1] + 1 * m[3][1];
+	temp[2] = c->xyz[0] * m[0][2] + c->xyz[1] * m[1][2] + c->xyz[2] * m[2][2] + 1 * m[3][2];
 
 	c->xyz[0] = temp[0];
 	c->xyz[1] = temp[1];

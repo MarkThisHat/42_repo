@@ -23,17 +23,20 @@ int	main(int argc, char **argv)
 	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	position_img(&main_struct);
+	position_img(&main_struct, 0, 0, 0);
 	mlx_setup(&main_struct);
 }
 
-void	position_img(t_mlxs *ms)
+void	position_img(t_mlxs *ms, int tx, int ty, int tz)
 {
 	int		average;
 	int		ratiow;
 	int		ratioh;
-	double	matrix[4][4];
-
+	int		translate[3];
+	
+	translate[0] = tx;
+	translate[1] = ty;
+	translate[2] = tz;
 	average = (ms->higher + ms->lower) / 2;
 	ratiow = WIN_W / ms->col;
 	ratioh = WIN_H / ms->row;
@@ -43,23 +46,28 @@ void	position_img(t_mlxs *ms)
 	if (!ms->scale)
 		ms->scale = 1;
 	ms->mapspot = (ratiow + ratioh) / 1.75;
-	ft_printf("row: %i\ncol: %i\navg: %i\nscl: %i\nratiow:%i\nratioh:%i\nhigher:%i\nlower %i\nmapspot: %i\n", ms->row, ms->col, average, ms->scale, ratiow, ratioh, ms->higher, ms->lower, ms->mapspot);
 	if (!average)
 		average = 1;
+	set_matrixes(ms, average, translate);
+}
+
+void	set_matrixes(t_mlxs *ms, int average, int translate[3])
+{
+	double	matrix[4][4];
+
 	crosswise_matrix(matrix, ms->mapspot / 2, 0);
 	matrix[2][2] = ms->scale;
 	if (ms->scale == 1 && average < 100)
 		matrix[2][2] = 0.1;
 	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
 		matrix[2][2] = average;
-	//matrix[3][3] = 1;
-//	ms->height_adj += 200;
-//	ms->width_adj -=450;
+	matrix[3][0] = translate[0];//translation point X
+	matrix[3][1] = translate[1];//translation point Y
+	matrix[3][2] = translate[2];//translation point Z
+	matrix[3][3] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, 2, 0.658513);
 	angle_matrix(ms, 0, 0.620115);
-//	angle_matrix(ms, 2, -0.680678);
-//	angle_matrix(ms, 0, -1.239184);
 	put_dot(ms, ms->matrix);
 }
 

@@ -93,6 +93,7 @@ void	set_struct(t_mlxs *ms);
 void	draw_map(t_mlxs *ms);
 void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
 void	mlx_setup(t_mlxs *ms);
+void	set_matrixes(t_mlxs *ms, int average, int translate[3]);
 //bresenham.c
 void	put_pixel(t_img *img, int x, int y, int factor);
 void	low_slope(t_mlxs *ms, t_line *l, int n);
@@ -103,6 +104,7 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
 void	redraw_map(t_mlxs *ms);
+void	translate_point(t_mlxs *ms, int x, int y);
 //maptreat.c
 int		parse_map(t_mlxs *ms, char *filename);
 int		fill_col(t_mlxs *ms, char *line, int row);
@@ -123,7 +125,7 @@ void	free_close(t_mlxs *ms, char *str, int rows);
 void	leave_program(char *str, int fd, int return_code);
 int		see_color(t_mlxs *ms, int color, int z);
 //tempinfdf.c
-void	position_img(t_mlxs *ms);
+void	position_img(t_mlxs *ms, int tx, int ty, int tz);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
 int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
 int		mousemove(int x, int y, t_mlxs *ms);
@@ -134,11 +136,12 @@ void	fad_toggle(t_mlxs *ms);
 void	clear_img(t_img *img);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
-void	reset_placement(t_mlxs *ms);
+void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
 //mousebonus
 int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);
 //gpt
+void	change_height(t_mlxs *ms, int change);
 void	keep_bound(t_line *l);
 
 //colors

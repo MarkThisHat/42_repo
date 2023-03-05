@@ -46,6 +46,8 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 		bonus_scale(ms, 0);
 	if (keycode == 5)
 		bonus_scale(ms, 1);
+	if (keycode == 3)
+		translate_point(ms, x, y);
 	redraw_map(ms);
 	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
 	ft_printf("x:%i\ny:%i\n", xm, ym);
@@ -83,4 +85,15 @@ void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
 	if (ms->lower > cart->z)
 		ms->lower = cart->z;
 	//dot_product(cart, ms->matrix);
+}
+
+void	translate_point(t_mlxs *ms, int x, int y)
+{
+	double	matrix[4][4];
+
+	crosswise_matrix(matrix, 1, 0);
+	matrix[3][1] = x / 500;
+	matrix[3][2] = y / 500;
+//	meld_matrix(ms, ms->matrix, matrix);
+	put_dot(ms, matrix);
 }

@@ -32,7 +32,7 @@ int		keybonus(int keycode, t_mlxs *ms)
 	if (keycode == N_MIN_K)
 		bonus_scale(ms, 0);
 	if (keycode == BCKSPC)
-		reset_placement(ms);
+		reset_placement(ms, 0, 0, 0, 0);
 	if (keycode == ARW_U_K)
 		ms->height_adj -= adjust_ambit(ms, 20, 0);
 	if (keycode == ARW_D_K)
@@ -47,6 +47,10 @@ int		keybonus(int keycode, t_mlxs *ms)
 		add_color(&ms->color, &ms->dye, 8);
 	if (keycode == B_KEY)
 		add_color(&ms->color, &ms->dye, 0);
+	if (keycode == Z_KEY)
+		change_height(ms, 1);
+	if (keycode == X_KEY)
+		change_height(ms, -1);
 	redraw_map(ms);
 	return (keycode);
 }
@@ -108,7 +112,15 @@ void	bonus_scale(t_mlxs *ms, int negative)
 	put_dot(ms, matrix);
 }
 
-void	reset_placement(t_mlxs *ms)
+void	change_height(t_mlxs *ms, int change)
+{
+	static int new_z;
+
+	new_z += change;
+	reset_placement(ms, new_z, 0, 0, 0);
+}
+
+void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz)
 {
 	int	i;
 	int	j;
@@ -126,15 +138,13 @@ void	reset_placement(t_mlxs *ms)
 		}
 		i++;
 	}
-	ms->dye = 0;
-	ms->color = 0xFFFFFFFF;
 	ms->height_adj =  WIN_H / 13;
 	ms->width_adj = WIN_W / 2;
-	crosswise_matrix(ms->matrix, ms->mapspot, 0);
-	ms->matrix[2][2] = ms->scale;
-	angle_matrix(ms, 2, 0.658513);//37,73
-	angle_matrix(ms, 0, 0.620115);//35,53
-	put_dot(ms, ms->matrix);
+	ms->dye = 0;
+	ms->color = 0xFFFFFFFF;
+	crosswise_matrix(ms->matrix, 1, 0);
+	ms->matrix[2][2] += change;
+	position_img(ms, tx, ty, tz);
 }
 
 int		adjust_ambit(t_mlxs *ms, int height, int width)

@@ -39,16 +39,16 @@ int		close_win(t_mlxs *ms)
 	mlx_destroy_window(ms->mlx, ms->win);
 	mlx_destroy_display(ms->mlx);
 	free(ms->mlx);
-	free_close(ms, 0, ms->row);
+	free_close(ms, 0, ms->col);
 	return (1);	
 }
 
-void	free_close(t_mlxs *ms, char *str, int row)
+void	free_close(t_mlxs *ms, char *str, int col)
 {
-	while(row)
+	while(col)
 	{
-		row--;
-		free(ms->cart[row]);
+		col--;
+		free(ms->cart[col]);
 	}
 	if(ms->cart)
 		free(ms->cart);
