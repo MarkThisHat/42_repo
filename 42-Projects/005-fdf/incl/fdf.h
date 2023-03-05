@@ -127,7 +127,6 @@ void	position_img(t_mlxs *ms);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
 int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
 int		mousemove(int x, int y, t_mlxs *ms);
-void	change_height(t_mlxs *ms, int change);
 
 //bonus
 int		keybonus(int keycode, t_mlxs *ms);
@@ -146,7 +145,7 @@ void	keep_bound(t_line *l);
 int		add_factor(int color, int factor);
 int		put_colors(int color, int factor);
 void	add_color(int *color, int *dye, int bitshift);
-int	adjust_ambit(t_mlxs *ms, int height, int width);
+int		adjust_ambit(t_mlxs *ms, int height, int width);
 
 
 

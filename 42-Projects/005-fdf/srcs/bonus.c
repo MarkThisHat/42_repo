@@ -47,10 +47,6 @@ int		keybonus(int keycode, t_mlxs *ms)
 		add_color(&ms->color, &ms->dye, 8);
 	if (keycode == B_KEY)
 		add_color(&ms->color, &ms->dye, 0);
-	if (keycode == Z_KEY)
-		change_height(ms, 70.7);
-	if (keycode == X_KEY)
-		change_height(ms, -70.7);
 	redraw_map(ms);
 	return (keycode);
 }
