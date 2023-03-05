@@ -42,16 +42,17 @@ void	rotation_matrix(double matrix[4][4], int axis, double angle)
 {
 	if (axis == 0)
 	{
-		matrix[0][0] = cos(angle);
-		matrix[0][2] = -sin(angle);
-		matrix[2][0] = sin(angle);
+		matrix[1][1] = cos(angle);
+		matrix[1][2] = sin(angle);
+		matrix[2][1] = -sin(angle);
 		matrix[2][2] = cos(angle);
 	}
 	if (axis == 1)
 	{
-		matrix[1][1] = cos(angle);
-		matrix[1][2] = sin(angle);
-		matrix[2][1] = -sin(angle);
+		
+		matrix[0][0] = cos(angle);
+		matrix[0][2] = -sin(angle);
+		matrix[2][0] = sin(angle);
 		matrix[2][2] = cos(angle);
 	}
 	if (axis == 2)

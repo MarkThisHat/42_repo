@@ -35,8 +35,8 @@ void	position_img(t_mlxs *ms)
 	double	matrix[4][4];
 
 	average = (ms->higher + ms->lower) / 2;
-	ratiow = WIN_W / ms->row;
-	ratioh = WIN_H / ms->col;
+	ratiow = WIN_W / ms->col;
+	ratioh = WIN_H / ms->row;
 	ms->scale = ratioh / 3;
 	if (ratiow < ratioh)
 		ms->scale = ratiow / 3;
@@ -56,10 +56,10 @@ void	position_img(t_mlxs *ms)
 //	ms->height_adj += 200;
 //	ms->width_adj -=450;
 	meld_matrix(ms, ms->matrix, matrix);
-//	angle_matrix(ms, Z, 0.785398);
-//	angle_matrix(ms, X, 1.055323);
-	angle_matrix(ms, 2, -0.680678);
-	angle_matrix(ms, 0, -1.239184);
+	angle_matrix(ms, 2, 0.658513);
+	angle_matrix(ms, 0, 0.620115);
+//	angle_matrix(ms, 2, -0.680678);
+//	angle_matrix(ms, 0, -1.239184);
 	put_dot(ms, ms->matrix);
 }
 
@@ -90,7 +90,7 @@ void	set_struct(t_mlxs *ms)
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
 	ms->img2->img = NULL;
-	ms->angle = -0.615473;
+	ms->angle = 0.785398;
 	ms->higher = 0;
 	ms->lower = 0;
 	ms->height_adj =  WIN_H / 13;
@@ -135,10 +135,10 @@ void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
 	int	average;
 	int	temp;
 
-	l->x0 = ini.xyz[0] + ms->height_adj;
-	l->x1 = fin.xyz[0] + ms->height_adj;
-	l->y0 = ini.xyz[1] + ms->width_adj;
-	l->y1 = fin.xyz[1] + ms->width_adj;
+	l->x0 = ini.xyz[0] + ms->width_adj;
+	l->x1 = fin.xyz[0] + ms->width_adj;
+	l->y0 = ini.xyz[1] + ms->height_adj;
+	l->y1 = fin.xyz[1] + ms->height_adj;
 	if (ms->dye && (ini.z || fin.z))
 	{
 		average = (ms->higher + ms->lower) / 2;

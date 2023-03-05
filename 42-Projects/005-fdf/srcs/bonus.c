@@ -18,37 +18,37 @@ int		keybonus(int keycode, t_mlxs *ms)
 	if (keycode == U_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, 0, 0.166666667);
+		bonus_roll(ms, 0, M_PI / 16);
 		printf("axis +X: %f\n", ms->angle);
 	}
 	if (keycode == J_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, 0, -0.166666667);
+		bonus_roll(ms, 0, -M_PI / 16);
 		printf("axis -X: %f\n", ms->angle);
 	}
 	if (keycode == I_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, 1, 0.166666667);
+		bonus_roll(ms, 1, M_PI / 16);
 		printf("axis +Y: %f\n", ms->angle);
 	}
 	if (keycode == K_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, 1, -0.166666667);
+		bonus_roll(ms, 1, -M_PI / 16);
 		printf("axis -Y: %f\n", ms->angle);
 	}
 	if (keycode == O_KEY)
 	{
 		ms->angle += 0.166666667;
-		bonus_roll(ms, 2, 0.166666667);
+		bonus_roll(ms, 2, M_PI / 16);
 		printf("axis +Z: %f\n", ms->angle);
 	}
 	if (keycode == L_KEY)
 	{
 		ms->angle -= 0.166666667;
-		bonus_roll(ms, 2, -0.166666667);
+		bonus_roll(ms, 2, -M_PI / 16);
 		printf("axis -Z: %f\n", ms->angle);
 	}
 	if (keycode == N_PLU_K)
@@ -91,10 +91,10 @@ int		keybonus(int keycode, t_mlxs *ms)
 	{
 		add_color(&ms->color, &ms->dye, 0);
 	}
-/*	if (keycode == Z_KEY)
+	if (keycode == Z_KEY)
 		change_height(ms, 1);
 	if (keycode == X_KEY)
-		change_height(ms, -1);*/
+		change_height(ms, -1);
 	ft_printf("%i\n", keycode);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);
@@ -185,8 +185,8 @@ void	reset_placement(t_mlxs *ms)
 	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, ms->mapspot, 0);
 	ms->matrix[2][2] = ms->scale;
-	angle_matrix(ms, 2, -0.680678);//39 graus
-	angle_matrix(ms, 0, -1.239184);//71 graus
+	angle_matrix(ms, 2, 0.658513);//37,73
+	angle_matrix(ms, 0, 0.620115);//35,53
 	put_dot(ms, ms->matrix);
 }
 
@@ -205,12 +205,12 @@ int		adjust_ambit(t_mlxs *ms, int height, int width)
 		return(height);
 	if (!height)
 		return (width);
-	ms->height_adj = height - 500;
-	ms->width_adj = width - 200;
+	ms->height_adj = height - 400;
+	ms->width_adj = width - 300;
 	return (0);
 }
 
-/*
+
 void	change_height(t_mlxs *ms, int change)
 {
 	static int	new_z;
@@ -219,10 +219,10 @@ void	change_height(t_mlxs *ms, int change)
 
 	i = 0;
 	new_z += change;
-	while (i < ms->row)
+	while (i < ms->col)
 	{
 		j = 0;
-		while (j < ms->col)
+		while (j < ms->row)
 		{
 			ms->cart[i][j].xyz[0] = i;
 			ms->cart[i][j].xyz[1] = j;
@@ -233,7 +233,7 @@ void	change_height(t_mlxs *ms, int change)
 	}
 	put_dot(ms, ms->matrix);
 }
-*/
+
 
 
 /***\

@@ -43,9 +43,9 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 	if (keycode == 1)
 		adjust_ambit(ms, y, x);
 	if (keycode == 4)
-		bonus_scale(ms, 1);
-	if (keycode == 5)
 		bonus_scale(ms, 0);
+	if (keycode == 5)
+		bonus_scale(ms, 1);
 	mlx_clear_window(ms->mlx, ms->win);
 	clear_img(*ms->fad);
 	fad_toggle(ms);

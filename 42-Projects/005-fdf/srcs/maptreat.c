@@ -126,13 +126,13 @@ t_coord	**allocate_map(t_mlxs *ms)
 	t_coord **carthesian;
 	int		i;
 
-	carthesian = malloc(sizeof(t_coord *) * ms->row);
+	carthesian = malloc(sizeof(t_coord *) * ms->col);
 	if (!carthesian)
 		free_close(ms, "Not enough memory to store map\n", 0);
 	i = 0;
-	while (i < ms->row)
+	while (i < ms->col)
 	{
-		carthesian[i] = malloc(sizeof(t_coord) * ms->col);
+		carthesian[i] = malloc(sizeof(t_coord) * ms->row);
 		if (!carthesian[i])
 			free_close(ms, "Not enough memory to fill map\n", i);
 		i++;
