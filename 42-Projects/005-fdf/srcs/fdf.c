@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/01 11:51:43 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:13:16 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,139 +27,6 @@ int	main(int argc, char **argv)
 	mlx_setup(&main_struct);
 }
 
-void	position_img(t_mlxs *ms, int tx, int ty, int tz)
-{
-	int		average;
-	int		ratiow;
-	int		ratioh;
-	int		translate[3];
-	
-	translate[0] = tx;
-	translate[1] = ty;
-	translate[2] = tz;
-	average = (ms->higher + ms->lower) / 2;
-	ratiow = WIN_W / ms->col;
-	ratioh = WIN_H / ms->row;
-	ms->scale = ratioh / 3;
-	if (ratiow < ratioh)
-		ms->scale = ratiow / 3;
-	if (!ms->scale)
-		ms->scale = 1;
-	ms->mapspot = (ratiow + ratioh) / 1.75;
-	if (!average)
-		average = 1;
-	set_matrixes(ms, average, translate);
-}
-
-void	set_matrixes(t_mlxs *ms, int average, int translate[3])
-{
-	double	matrix[4][4];
-
-	crosswise_matrix(matrix, ms->mapspot / 2, 0);
-	matrix[2][2] = ms->scale;
-	if (ms->scale == 1 && average < 100)
-		matrix[2][2] = 0.1;
-	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
-		matrix[2][2] = average;
-	matrix[3][0] = translate[0];//translation point X
-	matrix[3][1] = translate[1];//translation point Y
-	matrix[3][2] = translate[2];//translation point Z
-	matrix[3][3] = 1;
-	meld_matrix(ms, ms->matrix, matrix);
-	angle_matrix(ms, 2, 0.658513);
-	angle_matrix(ms, 0, 0.620115);
-	put_dot(ms, ms->matrix);
-}
-
-void	put_dot(t_mlxs *ms, double matrix[4][4])
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < ms->col)
-	{
-		j = 0;
-		while (j < ms->row)
-		{
-			dot_product(&ms->cart[i][j], matrix);
-			j++;
-		}
-	i++;
-	}
-}
-
-void	set_struct(t_mlxs *ms)
-{
-	ms->col = 0;
-	ms->row = 0;
-	ms->color = 0xFFFFFFFF;
-	ms->dye = 0;
-	ms->toggle = 42;
-	ms->fad = &ms->img1;
-	ms->img2->img = NULL;
-	ms->higher = 0;
-	ms->lower = 0;
-	ms->height_adj =  WIN_H / 13;
-	ms->width_adj = WIN_W / 2;
-	crosswise_matrix(ms->matrix, 1, 0);
-}
-
-void	draw_map(t_mlxs *ms)
-{
-	t_line	line;
-	int		i;
-	int		j;
-	int		color;
-
-	i = 0;
-	line.factor = 0;
-	while (i < ms->col)
-	{
-		j = 0;
-		while (j < ms->row)
-		{
-			color = ms->cart[i][j].color;
-			(*ms->fad)->color = see_color(ms, color, ms->cart[i][j].z);
-			if ((i + 1) != ms->col)
-				draw_line(ms, ms->cart[i][j], ms->cart[i + 1][j], &line);
-			if ((j + 1) != ms->row)
-				draw_line(ms, ms->cart[i][j], ms->cart[i][j + 1], &line);
-			j++;
-		}
-		i++;
-	}
-	ms->dye = 0;
-}
-
-void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l)
-{
-	int	average;
-	int	temp;
-
-	l->x0 = ini.xyz[0] + ms->width_adj;
-	l->x1 = fin.xyz[0] + ms->width_adj;
-	l->y0 = ini.xyz[1] + ms->height_adj;
-	l->y1 = fin.xyz[1] + ms->height_adj;
-	if (ms->dye && (ini.z || fin.z))
-	{
-		average = (ms->higher + ms->lower) / 2;
-		if (!average)
-			average = 1;
-		l->factor = (ms->higher - ms->lower) / average;
-		if (!l->factor)
-			l->factor = 1;
-		if (l->factor < 0)
-			l->factor *= -1;
-		temp = ms->dye;
-		ms->dye += put_colors(ms->color, l->factor);
-	}
-	put_line(ms, l);
-	if (ms->dye)
-		ms->dye = temp;
-	l->factor = 0;
-}
-
 void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
@@ -175,4 +42,88 @@ void	mlx_setup(t_mlxs *ms)
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
 	mlx_loop(ms->mlx);
+}
+
+int		close_win(t_mlxs *ms)
+{
+	if (ms->toggle == 42)
+		mlx_destroy_image(ms->mlx, (*ms->fad)->img);
+	else
+	{
+		mlx_destroy_image(ms->mlx, ms->img1->img);
+		mlx_destroy_image(ms->mlx, ms->img2->img);
+	}
+	mlx_destroy_window(ms->mlx, ms->win);
+	mlx_destroy_display(ms->mlx);
+	free(ms->mlx);
+	free_close(ms, 0, ms->col);
+	return (1);	
+}
+
+void	free_close(t_mlxs *ms, char *str, int col)
+{
+	while(col)
+	{
+		col--;
+		free(ms->cart[col]);
+	}
+	if(ms->cart)
+		free(ms->cart);
+	if (!str)
+		leave_program(0, 0, 0);
+	leave_program(str, 2, 5);
+}
+
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
+{
+	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
+	int	xm;
+	int	ym;
+
+	xm = 0;
+	ym = 0;
+	if (keycode == 1)
+		adjust_ambit(ms, y, x);
+	if (keycode == 4)
+		bonus_scale(ms, 0);
+	if (keycode == 5)
+		bonus_scale(ms, 1);
+	if (keycode == 3)
+		translate_point(ms, x, y);
+	redraw_map(ms);
+	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
+	ft_printf("x:%i\ny:%i\n", xm, ym);
+//	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
+//	https://codebrowser.dev/qt5/include/X11/X.h.html
+//	https://github.com/D-Programming-Deimos/libX11/blob/master/c/X11/keysymdef.h
+	return (keycode + x + y);
+}
+
+void	redraw_map(t_mlxs *ms)
+{
+	mlx_clear_window(ms->mlx, ms->win);
+	clear_img(*ms->fad);
+	fad_toggle(ms);
+	draw_map(ms);
+	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
+}
+
+int		keypress(int keycode, t_mlxs *ms)
+{
+	if (keycode == ESC_K)
+		close_win(ms);
+	else
+		keybonus(keycode, ms);
+	return (keycode);
+}
+
+void	translate_point(t_mlxs *ms, int x, int y)
+{
+	double	matrix[4][4];
+
+	crosswise_matrix(matrix, 1, 0);
+	matrix[3][1] = x / 500;
+	matrix[3][2] = y / 500;
+//	meld_matrix(ms, ms->matrix, matrix);
+	put_dot(ms, matrix);
 }

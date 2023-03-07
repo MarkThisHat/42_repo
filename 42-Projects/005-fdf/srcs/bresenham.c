@@ -6,30 +6,11 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/01 11:47:30 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:35:58 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
-
-void	put_pixel(t_img *img, int x, int y, int factor)
-{
-	char			*painter;
-	unsigned int	color;
-	int				target;
-
-	target = (y * img->line_length) + (x * (img->bits_per_pixel / 8));
-	if (target < 0 || target > (WIN_H * img->line_length))
-		return ;
-	painter = img->addr + target;
-	color = img->color - (img->color << 24);
-	color += 0xFF000000;
-	if (factor)
-		color += add_factor(color, factor);
-	if (img->endian)
-		color = invert_endian(color);
-	*(unsigned int*)painter = color;
-}
 
 void	low_slope(t_mlxs *ms, t_line *l, int n)
 {

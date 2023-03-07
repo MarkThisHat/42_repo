@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:44:21 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/01 11:20:54 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:03:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,6 @@ void	fad_toggle(t_mlxs *ms)
 	{
 		ms->fad = &ms->img2;
 		ms->toggle = 0;
-	}
-}
-
-void	clear_img(t_img *img)
-{
-	char			*painter;
-	char			*target;
-
-	target = img->addr + (WIN_H * img->line_length);
-	painter = img->addr;
-	while(painter < target + 1)
-	{
-		*(unsigned int*)painter = 0;
-		painter++;
 	}
 }
 

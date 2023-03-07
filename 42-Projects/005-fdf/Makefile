@@ -6,14 +6,14 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/03/01 10:22:23 by maalexan         ###   ########.fr        #
+#    Updated: 2023/03/07 11:03:02 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 SRC = ./srcs/
 HDR = -I ./incl/
-FUN = fdf.c management.c maptreat.c bresenham.c utils.c matrix.c bonus.c mouse_bonus.c color.c
+FUN = fdf.c bonus.c  bresenham.c  color.c  image.c  management.c  maptreat.c  matrix_core.c  matrix_op.c  mouse_bonus.c  translate.c  utils.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm

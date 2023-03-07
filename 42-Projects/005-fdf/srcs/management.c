@@ -6,11 +6,35 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/01 10:12:46 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:11:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
+
+void	leave_program(char *str, int fd, int return_code)
+{
+	if (return_code == 0)
+		exit (0);
+	ft_putstr_fd(str, fd);
+	exit (return_code);
+}
+
+void	set_struct(t_mlxs *ms)
+{
+	ms->col = 0;
+	ms->row = 0;
+	ms->color = 0xFFFFFFFF;
+	ms->dye = 0;
+	ms->toggle = 42;
+	ms->fad = &ms->img1;
+	ms->img2->img = NULL;
+	ms->higher = 0;
+	ms->lower = 0;
+	ms->height_adj =  WIN_H / 13;
+	ms->width_adj = WIN_W / 2;
+	crosswise_matrix(ms->matrix, 1, 0);
+}
 
 int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 {
@@ -27,52 +51,29 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 		leave_program("Error opening file\n", 2, 3);
 	if (!count_col(fd, ms))
 		leave_program("Can't parse this map\n", 2, 4);
-	ft_printf("Map %s has %i rows and %i columns\n", argv[1], ms->row, ms->col);
+	ft_printf("Map %s has %i rows and %i columns\n", argv[1], ms->row, ms->col);//REMOVE
 	close(fd);
 	return (1);
 }
 
-int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
+void	set_matrixes(t_mlxs *ms, int average, int translate[3])
 {
-	ft_printf("k: %i x: %i y: %i\n", keycode, x, y);
-	int	xm;
-	int	ym;
+	double	matrix[4][4];
 
-	xm = 0;
-	ym = 0;
-	if (keycode == 1)
-		adjust_ambit(ms, y, x);
-	if (keycode == 4)
-		bonus_scale(ms, 0);
-	if (keycode == 5)
-		bonus_scale(ms, 1);
-	if (keycode == 3)
-		translate_point(ms, x, y);
-	redraw_map(ms);
-	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
-	ft_printf("x:%i\ny:%i\n", xm, ym);
-//	int	mlx_mouse_move(void *mlx_ptr, void *win_ptr, int x, int y);
-//	https://codebrowser.dev/qt5/include/X11/X.h.html
-//	https://github.com/D-Programming-Deimos/libX11/blob/master/c/X11/keysymdef.h
-	return (keycode + x + y);
-}
-
-void	redraw_map(t_mlxs *ms)
-{
-	mlx_clear_window(ms->mlx, ms->win);
-	clear_img(*ms->fad);
-	fad_toggle(ms);
-	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
-}
-
-int		keypress(int keycode, t_mlxs *ms)
-{
-	if (keycode == ESC_K)
-		close_win(ms);
-	else
-		keybonus(keycode, ms);
-	return (keycode);
+	crosswise_matrix(matrix, ms->mapspot / 2, 0);
+	matrix[2][2] = ms->scale;
+	if (ms->scale == 1 && average < 100)
+		matrix[2][2] = 0.1;
+	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
+		matrix[2][2] = average;
+	matrix[3][0] = translate[0];//translation point X
+	matrix[3][1] = translate[1];//translation point Y
+	matrix[3][2] = translate[2];//translation point Z
+	matrix[3][3] = 1;
+	meld_matrix(ms, ms->matrix, matrix);
+	angle_matrix(ms, 2, 0.658513);
+	angle_matrix(ms, 0, 0.620115);
+	put_dot(ms, ms->matrix);
 }
 
 void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
@@ -85,15 +86,4 @@ void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
 	if (ms->lower > cart->z)
 		ms->lower = cart->z;
 	//dot_product(cart, ms->matrix);
-}
-
-void	translate_point(t_mlxs *ms, int x, int y)
-{
-	double	matrix[4][4];
-
-	crosswise_matrix(matrix, 1, 0);
-	matrix[3][1] = x / 500;
-	matrix[3][2] = y / 500;
-//	meld_matrix(ms, ms->matrix, matrix);
-	put_dot(ms, matrix);
 }

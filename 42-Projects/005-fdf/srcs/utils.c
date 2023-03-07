@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:49:16 by maalexan          #+#    #+#             */
-/*   Updated: 2023/02/28 10:00:48 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:13:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,6 @@ int		invert_endian(int color)
 	alpha = color & 0x000000FF;
 	color = (alpha << 24) + (red << 8) + (green >> 8) + (blue >> 24);
 	return (color);
-}
-
-int		close_win(t_mlxs *ms)
-{
-	if (ms->toggle == 42)
-		mlx_destroy_image(ms->mlx, (*ms->fad)->img);
-	else
-	{
-		mlx_destroy_image(ms->mlx, ms->img1->img);
-		mlx_destroy_image(ms->mlx, ms->img2->img);
-	}
-	mlx_destroy_window(ms->mlx, ms->win);
-	mlx_destroy_display(ms->mlx);
-	free(ms->mlx);
-	free_close(ms, 0, ms->col);
-	return (1);	
-}
-
-void	free_close(t_mlxs *ms, char *str, int col)
-{
-	while(col)
-	{
-		col--;
-		free(ms->cart[col]);
-	}
-	if(ms->cart)
-		free(ms->cart);
-	if (!str)
-		leave_program(0, 0, 0);
-	leave_program(str, 2, 5);
-}
-
-void	leave_program(char *str, int fd, int return_code)
-{
-	if (return_code == 0)
-		exit (0);
-	ft_putstr_fd(str, fd);
-	exit (return_code);
 }
 
 int		see_color(t_mlxs *ms, int color, int z)

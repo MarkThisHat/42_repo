@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/01 11:19:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:11:03 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,51 +89,57 @@ typedef struct	s_mlxs {
 }			t_mlxs;
 
 //fdf.c
-void	set_struct(t_mlxs *ms);
-void	draw_map(t_mlxs *ms);
-void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
 void	mlx_setup(t_mlxs *ms);
-void	set_matrixes(t_mlxs *ms, int average, int translate[3]);
 //bresenham.c
-void	put_pixel(t_img *img, int x, int y, int factor);
 void	low_slope(t_mlxs *ms, t_line *l, int n);
 void	high_slope(t_mlxs *ms, t_line *l, int n);
 void 	put_line(t_mlxs *ms, t_line *l);
-//management.c
+//management.c OK
+void	leave_program(char *str, int fd, int return_code);
+void	set_struct(t_mlxs *ms);
+void	set_matrixes(t_mlxs *ms, int average, int translate[3]);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
+void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
+
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
 void	redraw_map(t_mlxs *ms);
 void	translate_point(t_mlxs *ms, int x, int y);
-//maptreat.c
-int		parse_map(t_mlxs *ms, char *filename);
-int		fill_col(t_mlxs *ms, char *line, int row);
+//maptreat.c OK
 int		count_col(int fd, t_mlxs *ms);
 int		count_row(int fd, t_mlxs *ms);
-void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
+int		parse_map(t_mlxs *ms, char *filename);
 t_coord	**allocate_map(t_mlxs *ms);
-//matrix.c
-void	dot_product(t_coord *c, double m[4][4]);
+int		fill_col(t_mlxs *ms, char *line, int row);
+//matrix_core.c OK
 void	angle_matrix(t_mlxs *ms, int axis, double angle);
 void	rotation_matrix(double matrix[4][4], int axis, double angle);
 void	crosswise_matrix(double matrix[4][4], double diag, double fill);
+void	copy_matrix(double src[4][4], double dest[4][4]);
 void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
+//matrix_op.c
+void	dot_product(t_coord *c, double m[4][4]);
+void	put_dot(t_mlxs *ms, double matrix[4][4]);
+
 //utils.c
 int		invert_endian(int color);
 int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
-void	leave_program(char *str, int fd, int return_code);
 int		see_color(t_mlxs *ms, int color, int z);
 //tempinfdf.c
-void	position_img(t_mlxs *ms, int tx, int ty, int tz);
-void	put_dot(t_mlxs *ms, double matrix[4][4]);
 int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
 int		mousemove(int x, int y, t_mlxs *ms);
+//image.c OK
+void	position_img(t_mlxs *ms, int tx, int ty, int tz);
+void	put_pixel(t_img *img, int x, int y, int factor);
+void	clear_img(t_img *img);
+void	draw_map(t_mlxs *ms);
+void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
+
 
 //bonus
 int		keybonus(int keycode, t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
-void	clear_img(t_img *img);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
 void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
