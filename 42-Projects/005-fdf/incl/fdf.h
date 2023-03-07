@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 12:39:59 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:11:03 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:31:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_mlxs {
 
 //fdf.c
 void	mlx_setup(t_mlxs *ms);
+int		close_win(t_mlxs *ms);
 //bresenham.c
 void	low_slope(t_mlxs *ms, t_line *l, int n);
 void	high_slope(t_mlxs *ms, t_line *l, int n);
@@ -101,10 +102,8 @@ void	set_matrixes(t_mlxs *ms, int average, int translate[3]);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
 
-int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
 void	redraw_map(t_mlxs *ms);
-void	translate_point(t_mlxs *ms, int x, int y);
 //maptreat.c OK
 int		count_col(int fd, t_mlxs *ms);
 int		count_row(int fd, t_mlxs *ms);
@@ -120,15 +119,13 @@ void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
 //matrix_op.c
 void	dot_product(t_coord *c, double m[4][4]);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
+void	translate_point(t_mlxs *ms, int x, int y);
 
 //utils.c
 int		invert_endian(int color);
-int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
 int		see_color(t_mlxs *ms, int color, int z);
-//tempinfdf.c
-int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
-int		mousemove(int x, int y, t_mlxs *ms);
+
 //image.c OK
 void	position_img(t_mlxs *ms, int tx, int ty, int tz);
 void	put_pixel(t_img *img, int x, int y, int factor);
@@ -146,6 +143,7 @@ void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
 //mousebonus
 int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);
+int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 //gpt
 void	change_height(t_mlxs *ms, int change);
 void	keep_bound(t_line *l);
@@ -162,6 +160,10 @@ int		adjust_ambit(t_mlxs *ms, int height, int width);
 #endif
 
 /****\
+tempinfdf.c
+int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
+int		mousemove(int x, int y, t_mlxs *ms);
+
 void	mlx_setup(t_mlxs *ms);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 int		count_col(int fd, t_mlxs *ms);

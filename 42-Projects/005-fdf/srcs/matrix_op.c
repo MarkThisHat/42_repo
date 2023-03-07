@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:25:45 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:03:18 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:28:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,15 @@ void	put_dot(t_mlxs *ms, double matrix[4][4])
 		}
 	i++;
 	}
+}
+
+void	translate_point(t_mlxs *ms, int x, int y)
+{
+	double	matrix[4][4];
+
+	crosswise_matrix(matrix, 1, 0);
+	matrix[3][1] = x / 500;
+	matrix[3][2] = y / 500;
+//	meld_matrix(ms, ms->matrix, matrix);
+	put_dot(ms, matrix);
 }
