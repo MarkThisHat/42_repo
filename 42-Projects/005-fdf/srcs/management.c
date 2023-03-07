@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:11:35 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:29:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,23 @@ void	leave_program(char *str, int fd, int return_code)
 	exit (return_code);
 }
 
-void	set_struct(t_mlxs *ms)
+//void	set_struct(t_mlxs *ms)
+void	set_struct(t_mlxs *ms, t_img *img1, t_img *img2)
 {
-	ms->col = 0;
+	*ms = (t_mlxs) {0};
+	*img1 = (t_img) {0};
+	*img2 = (t_img) {0};
+	/*ms->col = 0;
 	ms->row = 0;
-	ms->color = 0xFFFFFFFF;
 	ms->dye = 0;
-	ms->toggle = 42;
-	ms->fad = &ms->img1;
-	ms->img2->img = NULL;
 	ms->higher = 0;
 	ms->lower = 0;
-	ms->height_adj =  WIN_H / 13;
+	*/
+//	ms->img2->img = NULL;
+	ms->color = 0xFFFFFFFF;
+	ms->toggle = 42;
+	ms->fad = &ms->img1;
+	ms->height_adj =  WIN_H / 10;
 	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, 1, 0);
 }

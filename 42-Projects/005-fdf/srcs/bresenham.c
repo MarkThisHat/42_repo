@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 10:35:58 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:03:33 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,26 @@ void	high_slope(t_mlxs *ms, t_line *l, int n)
 	}
 }
 
+void	keep_bound(t_line *l)
+{
+	if (l->x0 < 0)
+		l->x0 = 0;
+	if (l->x0 >= WIN_W)
+		l->x0 = WIN_W - 1;
+	if (l->y0 < 0)
+		l->y0 = 0;
+	if (l->y0 >= WIN_H)
+		l->y0 = WIN_H - 1;
+	if (l->x1 < 0)
+		l->x1 = 0;
+	if (l->x1 >= WIN_W)
+		l->x1 = WIN_W - 1;
+	if (l->y1 < 0)
+		l->y1 = 0;
+	if (l->y1 >= WIN_H)
+		l->y1 = WIN_H - 1;
+}
+
 void put_line(t_mlxs *ms, t_line *l)
 {
 	t_line p;
@@ -96,24 +116,4 @@ void put_line(t_mlxs *ms, t_line *l)
 		else
 			high_slope(ms, l, 1);
 	}
-}
-
-void	keep_bound(t_line *l)
-{
-	if (l->x0 < 0)
-		l->x0 = 0;
-	if (l->x0 >= WIN_W)
-		l->x0 = WIN_W - 1;
-	if (l->y0 < 0)
-		l->y0 = 0;
-	if (l->y0 >= WIN_H)
-		l->y0 = WIN_H - 1;
-	if (l->x1 < 0)
-		l->x1 = 0;
-	if (l->x1 >= WIN_W)
-		l->x1 = WIN_W - 1;
-	if (l->y1 < 0)
-		l->y1 = 0;
-	if (l->y1 >= WIN_H)
-		l->y1 = WIN_H - 1;
 }

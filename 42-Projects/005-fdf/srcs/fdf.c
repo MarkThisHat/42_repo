@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:30:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:26:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	main(int argc, char **argv)
 	t_img	image;
 	t_img	image2;
 
+	set_struct(&main_struct, &image, &image2);
 	main_struct.img1 = &image;
 	main_struct.img2 = &image2;
-	set_struct(&main_struct);
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	position_img(&main_struct, 0, 0, 0);
+	position_img(&main_struct, 100, 100, 100);
 	mlx_setup(&main_struct);
 }
 
