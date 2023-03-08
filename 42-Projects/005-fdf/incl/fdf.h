@@ -123,7 +123,6 @@ int		put_colors(int color, int factor);
 void	add_color(int *color, int *dye, int bitshift);
 int		invert_endian(int color);
 int		see_color(t_mlxs *ms, int color, int z);
-int		adjust_ambit(t_mlxs *ms, int height, int width);
 //matrix_core.c OK
 void	angle_matrix(t_mlxs *ms, int axis, double angle);
 void	rotation_matrix(double matrix[4][4], int axis, double angle);
@@ -134,58 +133,18 @@ void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
 void	dot_product(t_coord *c, double m[4][4]);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
 void	translate_point(t_mlxs *ms, int x, int y);
-//bonus
-int		keybonus(int keycode, t_mlxs *ms);
+//movebonus OK
+void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
+int		adjust_ambit(t_mlxs *ms, int height, int width);
 void	change_height(t_mlxs *ms, int change);
-void	fad_toggle(t_mlxs *ms);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
-void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
+//bonus
+int		keybonus(int keycode, t_mlxs *ms);
+void	fad_toggle(t_mlxs *ms);
 //mousebonus
 int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 
 #endif
-
-/****\
-tempinfdf.c
-int		mouserelease(int keycode, int x, int y, t_mlxs *ms);
-int		mousemove(int x, int y, t_mlxs *ms);
-
-void	mlx_setup(t_mlxs *ms);
-int		validate_usage(int	argc, char **argv, t_mlxs *ms);
-int		count_col(int fd, t_mlxs *ms);
-int		count_row(int fd, t_mlxs *ms);
-void	set_struct(t_mlxs *ms);
-int		parse_map(t_mlxs *ms, char *filename);
-int		fill_col(t_mlxs *ms, char *line, int row);
-int		keypress(int keycode, t_mlxs *ms);
-int		close_win(t_mlxs *ms);
-void	free_close(t_mlxs *ms, char *str, int rows);
-void	leave_program(char *str, int fd, int return_code);
-int 	invert_endian(int color);
-int		set_points(t_line *l);
-void	put_line(t_mlxs *ms, t_line *l);
-void	draw_map(t_mlxs *ms);
-void	put_pixel(t_img *img, int x, int y);
-void	high(t_mlxs *ms, t_line *l);
-void	low(t_mlxs *ms, t_line *l);
-void	printmap(t_mlxs *ms);
-void	scale_matrix(t_mlxs *ms, int diag, int fill);
-
-int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
-void	fad_toggle(t_mlxs *ms);
-void	clear_img(t_img *img);
-int		see_color(t_mlxs *ms, int color);
-void	draw_line(t_mlxs *ms, t_coord ini, t_coord fin, t_line *l);
-void	dot_product(t_coord *c, double m[4][4]);
-void	angle_matrix(t_mlxs *ms, int axis, double angle);
-void	rotation_matrix(double matrix[4][4], int axis, double angle);
-void	crosswise_matrix(double matrix[4][4], double diag, double fill);
-void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
-void	calibration(t_mlxs *ms, t_coord *cart, int i, int j);
-
-
-void	x_angle_matrix(t_mlxs *ms);
-\*****/

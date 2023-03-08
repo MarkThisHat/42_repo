@@ -20,23 +20,15 @@ void	leave_program(char *str, int fd, int return_code)
 	exit (return_code);
 }
 
-//void	set_struct(t_mlxs *ms)
 void	set_struct(t_mlxs *ms, t_img *img1, t_img *img2)
 {
 	*ms = (t_mlxs) {0};
 	*img1 = (t_img) {0};
 	*img2 = (t_img) {0};
-	/*ms->col = 0;
-	ms->row = 0;
-	ms->dye = 0;
-	ms->higher = 0;
-	ms->lower = 0;
-	*/
-//	ms->img2->img = NULL;
 	ms->color = 0xFFFFFFFF;
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
-	ms->height_adj =  WIN_H / 10;
+	ms->height_adj =  WIN_H / 6;
 	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, 1, 0);
 }
@@ -66,9 +58,9 @@ void	set_matrixes(t_mlxs *ms, int average, int translate[3])
 	double	matrix[4][4];
 
 	crosswise_matrix(matrix, 1, 0);
-	matrix[3][0] = translate[0];//translation point X
-	matrix[3][1] = translate[1];//translation point Y
-	matrix[3][2] = translate[2];//translation point Z
+	matrix[3][0] = translate[0];
+	matrix[3][1] = translate[1];
+	matrix[3][2] = translate[2];
 	meld_matrix(ms, ms->matrix, matrix);
 	crosswise_matrix(matrix, ms->mapspot / 2, 0);
 	matrix[2][2] = ms->scale;
@@ -78,8 +70,8 @@ void	set_matrixes(t_mlxs *ms, int average, int translate[3])
 	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
 		matrix[2][2] = average;
 	meld_matrix(ms, ms->matrix, matrix);
-	angle_matrix(ms, 2, 0.658513);
-	angle_matrix(ms, 0, 0.620115);
+	angle_matrix(ms, 2, M_PI * 0.25);
+	angle_matrix(ms, 0, M_PI * 0.3040);
 	put_dot(ms, ms->matrix);
 }
 
@@ -92,5 +84,4 @@ void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
 		ms->higher = cart->z;
 	if (ms->lower > cart->z)
 		ms->lower = cart->z;
-	//dot_product(cart, ms->matrix);
 }
