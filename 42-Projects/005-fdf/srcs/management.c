@@ -65,16 +65,18 @@ void	set_matrixes(t_mlxs *ms, int average, int translate[3])
 {
 	double	matrix[4][4];
 
+	crosswise_matrix(matrix, 1, 0);
+	matrix[3][0] = translate[0];//translation point X
+	matrix[3][1] = translate[1];//translation point Y
+	matrix[3][2] = translate[2];//translation point Z
+	meld_matrix(ms, ms->matrix, matrix);
 	crosswise_matrix(matrix, ms->mapspot / 2, 0);
 	matrix[2][2] = ms->scale;
+	matrix[3][3] = 1;
 	if (ms->scale == 1 && average < 100)
 		matrix[2][2] = 0.1;
 	if ((ms->higher - ms->lower) >= (ms->row + ms->col))
 		matrix[2][2] = average;
-	matrix[3][0] = translate[0];//translation point X
-	matrix[3][1] = translate[1];//translation point Y
-	matrix[3][2] = translate[2];//translation point Z
-	matrix[3][3] = 1;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, 2, 0.658513);
 	angle_matrix(ms, 0, 0.620115);

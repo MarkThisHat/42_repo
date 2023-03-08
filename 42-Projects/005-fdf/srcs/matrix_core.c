@@ -11,6 +11,14 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
+
+void	printmatrix(double matrix[4][4])
+{
+	for (int i = 0;i < 4;i++)
+		for (int j = 0;j < 4;j++)
+			printf("matrix[%i][%i]: %2.f\n", i, j, matrix[i][j]);
+}
 
 void	angle_matrix(t_mlxs *ms, int axis, double angle)
 {
@@ -73,6 +81,8 @@ void	copy_matrix(double src[4][4], double dest[4][4])
 	int	i;
 	int	j;
 
+	ft_printf("copy matrix src:\n");
+	printmatrix(src);
 	i = 0;
 	while (i < 4)
 	{
@@ -84,20 +94,27 @@ void	copy_matrix(double src[4][4], double dest[4][4])
 		}
 	i++;
 	}
+	ft_printf("copy matrix dst:\n");
+	printmatrix(dest);
 }
 
 void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4])
 {
 	int	i;
 	int	j;
+	double temp[4][4];
 
+	ft_printf("meld m1:\n");
+	printmatrix(m1);
+	ft_printf("meld m2:\n");
+	printmatrix(m2);
 	i = 0;
 	while (i < 4)
 	{
 		j = 0;
 		while (j < 4)
 		{
-			ms->matrix[i][j] = m1[i][0] * m2[0][j] + \
+			temp[i][j] = m1[i][0] * m2[0][j] + \
 						m1[i][1] * m2[1][j] + \
 						m1[i][2] * m2[2][j] + \
 						m1[i][3] * m2[3][j];
@@ -105,4 +122,11 @@ void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4])
 		}
 	i++;
 	}
+	ft_printf("meld temp:\n");
+	printmatrix(temp);
+	ft_printf("meld ms-pre:\n");
+	printmatrix(ms->matrix);
+	copy_matrix(temp, ms->matrix);
+	ft_printf("meld ms-post:\n");
+	printmatrix(ms->matrix);
 }
