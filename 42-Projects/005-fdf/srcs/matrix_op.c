@@ -60,9 +60,18 @@ void	translate_point(t_mlxs *ms, int x, int y, int z)
 	tx += x;
 	ty += y;
 	tz += z;
+	if(!x && !y && !z)
+	{
+		tx = 0;
+		ty = 0;
+		tz = 0;
+	}
 	crosswise_matrix(matrix, 1, 0);
 	matrix[3][0] = tx;
 	matrix[3][1] = ty;
 	matrix[3][2] = tz;
+	ms->translations[0] = tx;
+	ms->translations[1] = ty;
+	ms->translations[2] = tz;
 	put_dot(ms, matrix);
 }

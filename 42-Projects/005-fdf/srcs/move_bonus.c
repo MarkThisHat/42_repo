@@ -17,6 +17,7 @@ void	reset_placement(t_mlxs *ms, int change)
 	int	i;
 	int	j;
 
+	translate_point(ms, 0, 0, 0);
 	i = 0;
 	while (i < ms->col)
 	{

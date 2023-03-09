@@ -92,6 +92,7 @@ typedef struct	s_mlxs {
 	int		lower;
 	int		height_adj;
 	int		width_adj;
+	int		translations[3];
 	double	mapspot;
 }			t_mlxs;
 
@@ -99,7 +100,6 @@ typedef struct	s_mlxs {
 void	mlx_setup(t_mlxs *ms);
 int		close_win(t_mlxs *ms);
 void	free_close(t_mlxs *ms, char *str, int rows);
-void	redraw_map(t_mlxs *ms);
 int		keypress(int keycode, t_mlxs *ms);
 //bresenham.c
 void	low_slope(t_mlxs *ms, t_line *l, int n);
@@ -146,9 +146,15 @@ int		adjust_ambit(t_mlxs *ms, int height, int width);
 void	change_height(t_mlxs *ms, int change);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
-//bonus
-int		keybonus(int keycode, t_mlxs *ms);
+//bonusfdf
+int		key_rotation(int keycode, t_mlxs *ms);
+int		key_shift(t_mlxs *ms, int keycode);
+int		key_anchor(t_mlxs *ms, int keycode);
+void	redraw_map(t_mlxs *ms);
 void	fad_toggle(t_mlxs *ms);
+void	top_menu(t_mlxs *ms);
+void 	bottom_menu(t_mlxs *ms);
+char	*ft_itoa(int n);
 //mousebonus
 int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
 int		my_loop_function(t_mlxs *ms);

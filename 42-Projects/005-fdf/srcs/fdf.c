@@ -74,20 +74,11 @@ void	free_close(t_mlxs *ms, char *str, int col)
 	leave_program(str, 2, 5);
 }
 
-void	redraw_map(t_mlxs *ms)
-{
-	mlx_clear_window(ms->mlx, ms->win);
-	clear_img(*ms->fad);
-	fad_toggle(ms);
-	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, 0, 0);
-}
-
 int		keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)
 		close_win(ms);
 	else
-		keybonus(keycode, ms);
+		key_rotation(keycode, ms);
 	return (keycode);
 }

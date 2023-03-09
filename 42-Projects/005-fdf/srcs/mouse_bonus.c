@@ -55,7 +55,7 @@ int		mouse_group(int keycode, int x, int y, t_mlxs *ms)
 	if (keycode == 5)
 		bonus_scale(ms, 1);
 //	if (keycode == 3)
-//		translate_point(ms, x, y);
+//qweasd		translate_point(ms, x, y);
 	redraw_map(ms);
 	mlx_mouse_get_pos(ms->mlx, ms->win, &xm, &ym);
 	ft_printf("x:%i\ny:%i\n", xm, ym);
