@@ -12,16 +12,12 @@
 
 #include "fdf.h"
 
-void	position_img(t_mlxs *ms, int tx, int ty, int tz)
+void	position_img(t_mlxs *ms)
 {
 	int		average;
 	int		ratiow;
 	int		ratioh;
-	int		translate[3];
 
-	translate[0] = tx;
-	translate[1] = ty;
-	translate[2] = tz;
 	average = (ms->higher + ms->lower) / 2;
 	ratiow = WIN_W / ms->col;
 	ratioh = WIN_H / ms->row;
@@ -33,7 +29,7 @@ void	position_img(t_mlxs *ms, int tx, int ty, int tz)
 	ms->mapspot = (ratiow + ratioh) / 1.75;
 	if (!average)
 		average = 1;
-	set_matrixes(ms, average, translate);
+	set_matrixes(ms, average);
 }
 
 void	draw_map(t_mlxs *ms)

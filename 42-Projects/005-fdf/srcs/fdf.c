@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	main_struct.img2 = &image2;
 	validate_usage(argc, argv, &main_struct);
 	parse_map(&main_struct, argv[1]);
-	position_img(&main_struct, 0, 0, 0);
+	position_img(&main_struct);
 	mlx_setup(&main_struct);
 }
 

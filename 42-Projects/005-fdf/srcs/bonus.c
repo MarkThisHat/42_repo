@@ -31,7 +31,7 @@ int		keybonus(int keycode, t_mlxs *ms)
 	if (keycode == N_MIN_K)
 		bonus_scale(ms, 0);
 	if (keycode == BCKSPC)
-		reset_placement(ms, 0, 0, 0, 0);
+		reset_placement(ms, 0);
 	if (keycode == ARW_U_K)
 		ms->height_adj -= adjust_ambit(ms, 20, 0);
 	if (keycode == ARW_D_K)
@@ -50,6 +50,18 @@ int		keybonus(int keycode, t_mlxs *ms)
 		change_height(ms, 1);
 	if (keycode == X_KEY)
 		change_height(ms, -1);
+	if (keycode == Q_KEY)
+		translate_point(ms, 1, 0, 0);
+	if (keycode == W_KEY)
+		translate_point(ms, 0, 1, 0);
+	if (keycode == E_KEY)
+		translate_point(ms, 0, 0, 1);
+	if (keycode == A_KEY)
+		translate_point(ms, -1, 0, 0);
+	if (keycode == S_KEY)
+		translate_point(ms, 0, -1, 0);
+	if (keycode == D_KEY)
+		translate_point(ms, 0, 0, -1);				
 	redraw_map(ms);
 	return (keycode);
 }

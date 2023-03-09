@@ -38,8 +38,15 @@
 #  define R_KEY 114
 #  define Z_KEY 122
 #  define X_KEY 120
+#  define Q_KEY 113
+#  define W_KEY 119
+#  define E_KEY 101
+#  define A_KEY 97
+#  define S_KEY 115
+#  define D_KEY 100
 #  define N_PLU_K 65453
 #  define N_MIN_K 65451
+
 
 typedef struct	s_img {
 	void	*img;
@@ -102,7 +109,7 @@ void 	put_line(t_mlxs *ms, t_line *l);
 //management.c OK
 void	leave_program(char *str, int fd, int return_code);
 void	set_struct(t_mlxs *ms, t_img *img1, t_img *img2);
-void	set_matrixes(t_mlxs *ms, int average, int translate[3]);
+void	set_matrixes(t_mlxs *ms, int average);
 int		validate_usage(int	argc, char **argv, t_mlxs *ms);
 void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j);
 //maptreat.c OK
@@ -112,7 +119,7 @@ int		parse_map(t_mlxs *ms, char *filename);
 t_coord	**allocate_map(t_mlxs *ms);
 int		fill_col(t_mlxs *ms, char *line, int row);
 //image.c OK
-void	position_img(t_mlxs *ms, int tx, int ty, int tz);
+void	position_img(t_mlxs *ms);
 void	put_pixel(t_img *img, int x, int y, int factor);
 void	clear_img(t_img *img);
 void	draw_map(t_mlxs *ms);
@@ -132,9 +139,9 @@ void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4]);
 //matrix_op.c
 void	dot_product(t_coord *c, double m[4][4]);
 void	put_dot(t_mlxs *ms, double matrix[4][4]);
-void	translate_point(t_mlxs *ms, int x, int y);
+void	translate_point(t_mlxs *ms, int x, int y, int z);
 //movebonus OK
-void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz);
+void	reset_placement(t_mlxs *ms, int change);
 int		adjust_ambit(t_mlxs *ms, int height, int width);
 void	change_height(t_mlxs *ms, int change);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);

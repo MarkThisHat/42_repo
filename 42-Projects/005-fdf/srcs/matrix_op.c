@@ -50,13 +50,19 @@ void	put_dot(t_mlxs *ms, double matrix[4][4])
 	}
 }
 
-void	translate_point(t_mlxs *ms, int x, int y)
+void	translate_point(t_mlxs *ms, int x, int y, int z)
 {
-	double	matrix[4][4];
+	double		matrix[4][4];
+	static int	tx;
+	static int	ty;
+	static int	tz;
 
+	tx += x;
+	ty += y;
+	tz += z;
 	crosswise_matrix(matrix, 1, 0);
-	matrix[3][1] = x / 500;
-	matrix[3][2] = y / 500;
-//	meld_matrix(ms, ms->matrix, matrix);
+	matrix[3][0] = tx;
+	matrix[3][1] = ty;
+	matrix[3][2] = tz;
 	put_dot(ms, matrix);
 }

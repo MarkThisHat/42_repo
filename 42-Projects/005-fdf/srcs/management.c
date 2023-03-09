@@ -53,14 +53,11 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 	return (1);
 }
 
-void	set_matrixes(t_mlxs *ms, int average, int translate[3])
+void	set_matrixes(t_mlxs *ms, int average)
 {
 	double	matrix[4][4];
 
 	crosswise_matrix(matrix, 1, 0);
-	matrix[3][0] = translate[0];
-	matrix[3][1] = translate[1];
-	matrix[3][2] = translate[2];
 	meld_matrix(ms, ms->matrix, matrix);
 	crosswise_matrix(matrix, ms->mapspot / 2, 0);
 	matrix[2][2] = ms->scale;
@@ -71,7 +68,7 @@ void	set_matrixes(t_mlxs *ms, int average, int translate[3])
 		matrix[2][2] = average;
 	meld_matrix(ms, ms->matrix, matrix);
 	angle_matrix(ms, 2, M_PI * 0.25);
-	angle_matrix(ms, 0, M_PI * 0.3040);
+	angle_matrix(ms, 0, M_PI * 0.304);
 	put_dot(ms, ms->matrix);
 }
 

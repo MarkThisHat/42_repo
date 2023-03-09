@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz)
+void	reset_placement(t_mlxs *ms, int change)
 {
 	int	i;
 	int	j;
@@ -36,7 +36,7 @@ void	reset_placement(t_mlxs *ms, int change, int tx, int ty, int tz)
 	ms->color = 0xFFFFFFFF;
 	crosswise_matrix(ms->matrix, 1, 0);
 	ms->matrix[2][2] += change;
-	position_img(ms, tx, ty, tz);
+	position_img(ms);
 }
 
 int		adjust_ambit(t_mlxs *ms, int height, int width)
@@ -76,5 +76,5 @@ void	change_height(t_mlxs *ms, int change)
 	static int new_z;
 
 	new_z += change;
-	reset_placement(ms, new_z, 0, 0, 0);
+	reset_placement(ms, new_z);
 }
