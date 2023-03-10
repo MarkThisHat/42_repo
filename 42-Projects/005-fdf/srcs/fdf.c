@@ -31,16 +31,16 @@ void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
-	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);//int	mlx_mouse_get_pos(void *mlx_ptr, void *win_ptr, int *x, int *y);
+	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
 	(*ms->fad)->addr = mlx_get_data_addr\
 	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
 	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
-	mlx_mouse_hook(ms->win, my_mouse_hook, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
-	mlx_put_image_to_window(ms->mlx, ms->win, (*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
+	mlx_put_image_to_window(ms->mlx, ms->win, \
+	(*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
 	mlx_loop(ms->mlx);
 }
 

@@ -38,13 +38,13 @@ int		key_rotation(int keycode, t_mlxs *ms)
 int		key_shift(t_mlxs *ms, int keycode)
 {
 	if (keycode == ARW_U_K)
-		ms->height_adj -= adjust_ambit(ms, 20, 0);
+		ms->height_adj -= adjust_ambit(ms, 50, 0);
 	if (keycode == ARW_D_K)
-		ms->height_adj += adjust_ambit(ms, 20, 0);
+		ms->height_adj += adjust_ambit(ms, 50, 0);
 	if (keycode == ARW_L_K)
-		ms->width_adj -= adjust_ambit(ms, 0, 20);
+		ms->width_adj -= adjust_ambit(ms, 0, 50);
 	if (keycode == ARW_R_K)
-		ms->width_adj += adjust_ambit(ms, 0, 20);
+		ms->width_adj += adjust_ambit(ms, 0, 50);
 	if (keycode == R_KEY)
 		add_color(&ms->color, &ms->dye, 16);
 	if (keycode == G_KEY)
@@ -125,10 +125,12 @@ void	top_menu(t_mlxs *ms)
 	mlx_string_put(ms->mlx, ms->win, 150, 130, 0xFF, "Modify Z scale");
 	mlx_string_put(ms->mlx, ms->win, 42, 150, 0xFF00FF, "Left click:");
 	mlx_string_put(ms->mlx, ms->win, 150, 150, 0xFF, "Position Map");
-	mlx_string_put(ms->mlx, ms->win, 42, 170, 0xFF00FF, "Scroll or + - :");
-	mlx_string_put(ms->mlx, ms->win, 150, 170, 0xFF, "Zoom in/out");
-	mlx_string_put(ms->mlx, ms->win, 42, 190, 0xFF00FF, "R, G and B keys:");
-	mlx_string_put(ms->mlx, ms->win, 150, 190, 0xFF, "Add respective color");
+	mlx_string_put(ms->mlx, ms->win, 42, 170, 0xFF00FF, "Right click:");
+	mlx_string_put(ms->mlx, ms->win, 150, 170, 0xFF, "Conic project");
+	mlx_string_put(ms->mlx, ms->win, 42, 190, 0xFF00FF, "Scroll or + - :");
+	mlx_string_put(ms->mlx, ms->win, 150, 190, 0xFF, "Zoom in/out");
+	mlx_string_put(ms->mlx, ms->win, 42, 210, 0xFF00FF, "R, G and B keys:");
+	mlx_string_put(ms->mlx, ms->win, 150, 210, 0xFF, "Add respective color");
 	bottom_menu(ms);
 }
 

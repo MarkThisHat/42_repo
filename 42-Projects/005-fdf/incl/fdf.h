@@ -155,9 +155,8 @@ void	fad_toggle(t_mlxs *ms);
 void	top_menu(t_mlxs *ms);
 void 	bottom_menu(t_mlxs *ms);
 char	*ft_itoa(int n);
+void	conic_sans(t_mlxs *ms, double cx, double cy, double cz);
 //mousebonus
-int		my_mouse_hook(int button, int x, int y, t_mlxs *ms);
-int		my_loop_function(t_mlxs *ms);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 
 #endif

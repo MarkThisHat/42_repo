@@ -13,7 +13,7 @@
 NAME = fdf
 SRC = ./srcs/
 HDR = -I ./incl/
-FUN = fdf.c fdf_bonus.c bresenham.c image.c management.c maptreat.c matrix_core.c matrix_op.c mouse_bonus.c move_bonus.c color.c
+FUN = fdf.c fdf_bonus.c bresenham.c image.c management.c maptreat.c matrix_core.c matrix_op.c mouse_bonus.c move_bonus.c color.c conic_bonus.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm
