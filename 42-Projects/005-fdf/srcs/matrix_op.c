@@ -68,8 +68,19 @@ void	translate_point(t_mlxs *ms, int x, int y, int z)
 	matrix[3][0] = tx;
 	matrix[3][1] = ty;
 	matrix[3][2] = tz;
-	ms->translations[0] = tx;
-	ms->translations[1] = ty;
-	ms->translations[2] = tz;
+	ms->remodel[0] = tx;
+	ms->remodel[1] = ty;
+	ms->remodel[2] = tz;
 	put_dot(ms, matrix);
+}
+
+void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
+{
+	cart->xyz[0] = i;
+	cart->xyz[1] = j;
+	cart->xyz[2] = cart->z;
+	if (ms->higher < cart->z)
+		ms->higher = cart->z;
+	if (ms->lower > cart->z)
+		ms->lower = cart->z;
 }

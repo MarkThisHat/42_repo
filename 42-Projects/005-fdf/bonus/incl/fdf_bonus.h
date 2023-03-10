@@ -49,6 +49,7 @@ int		adjust_ambit(t_mlxs *ms, int height, int width);
 void	change_height(t_mlxs *ms, int change);
 void	bonus_roll(t_mlxs *ms, int axis, double amount);
 void	bonus_scale(t_mlxs *ms, int negative);
+void	mlx_fail(t_mlxs *ms, char *error, int mode);
 void	fad_toggle(t_mlxs *ms);
 void	redraw_map(t_mlxs *ms);
 void	top_menu(t_mlxs *ms);

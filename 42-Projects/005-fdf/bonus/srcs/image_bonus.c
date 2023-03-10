@@ -19,6 +19,8 @@ void	fad_toggle(t_mlxs *ms)
 	{
 		ms->fad = &ms->img2;
 		(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+		if (!(*ms->fad))
+			mlx_fail(ms, "Couldn't make a mlx image\n", 2);
 		(*ms->fad)->addr = mlx_get_data_addr(\
 		(*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 		&(*ms->fad)->line_length, &(*ms->fad)->endian);
@@ -82,19 +84,19 @@ void	bottom_menu(t_mlxs *ms)
 	mlx_string_put(ms->mlx, ms->win, 42, WIN_H - 160, 0xFF00FF, \
 	"Q and A keys:");
 	mlx_string_put(ms->mlx, ms->win, 150, WIN_H - 160, 0x22FF, "Add/rem X -> ");
-	str = ft_itoa(ms->translations[0]);
+	str = ft_itoa(ms->remodel[0]);
 	mlx_string_put(ms->mlx, ms->win, 250, WIN_H - 160, 0xFFF04D, str);
 	free(str);
 	mlx_string_put(ms->mlx, ms->win, 42, WIN_H - 140, 0xFF00FF, \
 	"W and S keys:");
 	mlx_string_put(ms->mlx, ms->win, 150, WIN_H - 140, 0x22FF, "Add/rem Y -> ");
-	str = ft_itoa(ms->translations[1]);
+	str = ft_itoa(ms->remodel[1]);
 	mlx_string_put(ms->mlx, ms->win, 250, WIN_H - 140, 0xFFF04D, str);
 	free(str);
 	mlx_string_put(ms->mlx, ms->win, 42, WIN_H - 120, 0xFF00FF, \
 	"E and D keys:");
 	mlx_string_put(ms->mlx, ms->win, 150, WIN_H - 120, 0x22FF, "Add/rem Z -> ");
-	str = ft_itoa(ms->translations[2]);
+	str = ft_itoa(ms->remodel[2]);
 	mlx_string_put(ms->mlx, ms->win, 250, WIN_H - 120, 0xFFF04D, str);
 	free(str);
 	cone_menu(ms);
@@ -102,6 +104,6 @@ void	bottom_menu(t_mlxs *ms)
 
 void	cone_menu(t_mlxs *ms)
 {
-	mlx_string_put(ms->mlx, ms->win, 42, 230, 0xFF00FF, "Right click:");
-	mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFF, "Z");
+	mlx_string_put(ms->mlx, ms->win, 42, 230, 0xFF00FF, "Conic axis:");
+	mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "Z");
 }

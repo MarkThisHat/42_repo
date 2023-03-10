@@ -17,7 +17,7 @@ SRCB = ./bonus/srcs
 HDR = -I ./incl/
 HDRB = -I ./bonus/incl
 FUN = bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c
-FUNB = conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
+FUNB = fdf_bonus.c conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm
@@ -28,10 +28,10 @@ OBJB = $(FUNB:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+$(NAME): putfdf $(OBJ)
 	@cc $(CFLAG) $(HDR) ./objs/$(NAME).o $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf && echo done || echo Something went wrong
 
-$(OBJ): putfdf
+$(OBJ):
 	@cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@
 
 putfdf: putdir
@@ -55,10 +55,11 @@ fclean: clean
 bonus: $(NAMEB)
 
 $(NAMEB): $(OBJB)
-	cc $(CFLAG) $(HDR) $(HDRB) $(addprefix ./objs/, $(FUNB:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf_bonus && echo done || echo Something went wrong
+	@cc $(CFLAG) $(HDR) $(HDRB) $(addprefix ./objs/, $(FUN:.c=.o)) $(addprefix ./objs/, $(FUNB:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf_bonus && echo done || echo Something went wrong
 
-$(OBJB): $(OBJ)
-	cc $(CFLAG) -c ./bonus/srcs/$(@:.o=.c) $(HDRB) -o ./objs/$@
+$(OBJB): putdir $(OBJ)
+	@cc $(CFLAG) -c ./bonus/srcs/$(NAMEB).c $(HDRB) -o ./objs/$(NAMEB).o
+	@cc $(CFLAG) -c ./bonus/srcs/$(@:.o=.c) $(HDRB) -o ./objs/$@
 
 re: fclean all
 

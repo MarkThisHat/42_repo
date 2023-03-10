@@ -71,13 +71,16 @@ void	set_matrixes(t_mlxs *ms, int average)
 	put_dot(ms, ms->matrix);
 }
 
-void	coord_calibrate(t_mlxs *ms, t_coord *cart, int i, int j)
+void	free_close(t_mlxs *ms, char *str, int col)
 {
-	cart->xyz[0] = i;
-	cart->xyz[1] = j;
-	cart->xyz[2] = cart->z;
-	if (ms->higher < cart->z)
-		ms->higher = cart->z;
-	if (ms->lower > cart->z)
-		ms->lower = cart->z;
+	while (col)
+	{
+		col--;
+		free(ms->cart[col]);
+	}
+	if (ms->cart)
+		free(ms->cart);
+	if (!str)
+		leave_program(0, 0, 0);
+	leave_program(str, 2, 5);
 }

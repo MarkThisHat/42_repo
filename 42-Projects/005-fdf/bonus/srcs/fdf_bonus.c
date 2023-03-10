@@ -28,11 +28,28 @@ int	main(int argc, char **argv)
 	mlx_setup(&main_struct);
 }
 
+void	mlx_fail(t_mlxs *ms, char *error, int mode)
+{
+	if (mode < 1)
+		mlx_destroy_image(ms->mlx, ms->img1->img);
+	if (mode < 0)
+		mlx_destroy_window(ms->mlx, ms->win);
+	mlx_destroy_display(ms->mlx);
+	free(ms->mlx);
+	free_close(ms, error, ms->col);
+}
+
 void	mlx_setup(t_mlxs *ms)
 {
 	ms->mlx = mlx_init();
+	if (!ms->mlx)
+		free_close(ms, "Couldn't start mlx\n", ms->col);
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
+	if (!ms->win)
+		mlx_fail(ms, "Couldn't make a mlx window\n", 0);
 	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
+	if (!(*ms->fad))
+		mlx_fail(ms, "Couldn't make a mlx image\n", 1);
 	(*ms->fad)->addr = mlx_get_data_addr(\
 	(*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);
@@ -42,6 +59,7 @@ void	mlx_setup(t_mlxs *ms)
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, \
 	(*ms->fad)->img, WIN_W / WIN_W, WIN_H / WIN_H);
+	top_menu(ms);
 	mlx_loop(ms->mlx);
 }
 
@@ -59,20 +77,6 @@ int	close_win(t_mlxs *ms)
 	free(ms->mlx);
 	free_close(ms, 0, ms->col);
 	return (1);
-}
-
-void	free_close(t_mlxs *ms, char *str, int col)
-{
-	while (col)
-	{
-		col--;
-		free(ms->cart[col]);
-	}
-	if (ms->cart)
-		free(ms->cart);
-	if (!str)
-		leave_program(0, 0, 0);
-	leave_program(str, 2, 5);
 }
 
 int	keypress(int keycode, t_mlxs *ms)
