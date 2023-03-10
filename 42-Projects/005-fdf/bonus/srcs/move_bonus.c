@@ -6,11 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:14:10 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/10 15:08:07 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:34:03 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../../incl/fdf.h"
+#include "../incl/fdf_bonus.h"
 
 void	reset_placement(t_mlxs *ms, int change)
 {

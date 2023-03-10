@@ -6,11 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:44:21 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/10 15:33:05 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:33:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "../../incl/fdf.h"
+#include "../incl/fdf_bonus.h"
 
 int	key_rotation(int keycode, t_mlxs *ms)
 {

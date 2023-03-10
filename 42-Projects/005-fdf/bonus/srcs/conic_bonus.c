@@ -6,11 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:09:30 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/10 15:19:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:33:40 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../../incl/fdf.h"
+#include "../incl/fdf_bonus.h"
 
 static void	apply_cone(t_coord *coordin, double cx, double cy, double cz)
 {

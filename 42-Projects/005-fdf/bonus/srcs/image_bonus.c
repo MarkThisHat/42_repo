@@ -6,11 +6,12 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:22:38 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/10 15:42:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 16:33:53 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/fdf.h"
+#include "../../incl/fdf.h"
+#include "../incl/fdf_bonus.h"
 
 void	fad_toggle(t_mlxs *ms)
 {

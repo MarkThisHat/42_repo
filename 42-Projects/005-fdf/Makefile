@@ -6,28 +6,36 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/03/10 15:41:41 by maalexan         ###   ########.fr        #
+#    Updated: 2023/03/10 16:43:55 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
+NAMEB = fdf_bonus
 SRC = ./srcs/
+SRCB = ./bonus/srcs
 HDR = -I ./incl/
-FUN = fdf.c bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
+HDRB = -I ./bonus/incl
+FUN = bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c
+FUNB = conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
 CFLAG = -Wall -Wextra -Werror
 MLXINCL = /usr/local/include/mlx.h
 MFLAG = -lbsd -lmlx -lXext -lX11 -lm
 PFUNC = $(addprefix $(SRC), $(FUN))
 FTLIB = ./libs/libft/libft.a
 OBJ = $(FUN:.c=.o)
+OBJB = $(FUNB:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@cc $(CFLAG) $(HDR) $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf && echo done || echo Something went wrong
+	@cc $(CFLAG) $(HDR) ./objs/$(NAME).o $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf && echo done || echo Something went wrong
 
-$(OBJ): putdir
+$(OBJ): putfdf
 	@cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@
+
+putfdf: putdir
+	@cc $(CFLAG) -c ./srcs/$(NAME).c $(HDR) -o ./objs/$(NAME).o
 
 putdir: lookfmlx
 	@mkdir -p objs
@@ -42,8 +50,17 @@ clean:
 fclean: clean
 #	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
 	@[ -f ./fdf ] && rm fdf && echo fdf cleaned || echo Program fdf isn\'t compiled
+	@[ -f ./fdf_bonus ] && rm fdf_bonus && echo bonus cleaned || echo bonus fdf isn\'t compiled
+
+bonus: $(NAMEB)
+
+$(NAMEB): $(OBJB)
+	cc $(CFLAG) $(HDR) $(HDRB) $(addprefix ./objs/, $(FUNB:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf_bonus && echo done || echo Something went wrong
+
+$(OBJB): $(OBJ)
+	cc $(CFLAG) -c ./bonus/srcs/$(@:.o=.c) $(HDRB) -o ./objs/$@
 
 re: fclean all
 
-.PHONY: all putdir lookfmlx clean fclean re
+.PHONY: all bonus putdir lookfmlx clean fclean re
 
