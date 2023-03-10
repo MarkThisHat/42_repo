@@ -111,17 +111,17 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	col = 0;
 	while (col < ms->col)
 	{
-		while (*line == ' ')
+		while (*line == ' ' && *line)
 			line++;
 		ms->cart[col][row].z = ft_atoi(line);
 		coord_calibrate(ms, &ms->cart[col][row], col, row);
 		ms->cart[col][row].color = 0;
-		while (*line != '\n' && *line != ' ' && *line != ',')
+		while (*line != '\n' && *line != ' ' && *line != ',' && *line)
 			line++;
 		if (*line == ',')
 		{
 			ms->cart[col][row].color = ft_atoi_base(++line, 16);
-			while (*line != '\n' && *line != ' ')
+			while (*line != '\n' && *line != ' ' && *line)
 				line++;
 		}
 		col++;
