@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 11:37:28 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 12:26:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:34:23 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	mlx_setup(t_mlxs *ms)
 	ms->mlx = mlx_init();
 	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
 	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);
-	(*ms->fad)->addr = mlx_get_data_addr\
-	((*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
+	(*ms->fad)->addr = mlx_get_data_addr(\
+	(*ms->fad)->img, &(*ms->fad)->bits_per_pixel, \
 	&(*ms->fad)->line_length, &(*ms->fad)->endian);
 	mlx_hook(ms->win, 17, 0, &close_win, ms);
-	mlx_hook(ms->win, 2, 1L<<0, keypress, ms);
+	mlx_hook(ms->win, 2, 1L << 0, keypress, ms);
 	mlx_mouse_hook(ms->win, mouse_group, ms);
 	draw_map(ms);
 	mlx_put_image_to_window(ms->mlx, ms->win, \
@@ -44,7 +44,7 @@ void	mlx_setup(t_mlxs *ms)
 	mlx_loop(ms->mlx);
 }
 
-int		close_win(t_mlxs *ms)
+int	close_win(t_mlxs *ms)
 {
 	if (ms->toggle == 42)
 		mlx_destroy_image(ms->mlx, (*ms->fad)->img);
@@ -57,24 +57,24 @@ int		close_win(t_mlxs *ms)
 	mlx_destroy_display(ms->mlx);
 	free(ms->mlx);
 	free_close(ms, 0, ms->col);
-	return (1);	
+	return (1);
 }
 
 void	free_close(t_mlxs *ms, char *str, int col)
 {
-	while(col)
+	while (col)
 	{
 		col--;
 		free(ms->cart[col]);
 	}
-	if(ms->cart)
+	if (ms->cart)
 		free(ms->cart);
 	if (!str)
 		leave_program(0, 0, 0);
 	leave_program(str, 2, 5);
 }
 
-int		keypress(int keycode, t_mlxs *ms)
+int	keypress(int keycode, t_mlxs *ms)
 {
 	if (keycode == ESC_K)
 		close_win(ms);

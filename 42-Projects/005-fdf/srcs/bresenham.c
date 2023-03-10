@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:29:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 12:03:33 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:35:09 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	low_slope(t_mlxs *ms, t_line *l, int n)
 {
 	int	x;
 	int	y;
-	
+
 	l->dx = l->x1 - l->x0;
 	l->dy = l->y1 - l->y0;
 	if (l->dy < 0)
@@ -43,8 +43,8 @@ void	low_slope(t_mlxs *ms, t_line *l, int n)
 
 void	high_slope(t_mlxs *ms, t_line *l, int n)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	l->dx = l->x1 - l->x0;
 	l->dy = l->y1 - l->y0;
@@ -90,9 +90,9 @@ void	keep_bound(t_line *l)
 		l->y1 = WIN_H - 1;
 }
 
-void put_line(t_mlxs *ms, t_line *l)
+void	put_line(t_mlxs *ms, t_line *l)
 {
-	t_line p;
+	t_line	p;
 
 	keep_bound(l);
 	p.x1 = l->x0;

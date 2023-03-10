@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 17:58:47 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:13:25 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:04:58 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	rotation_matrix(double matrix[4][4], int axis, double angle)
 	}
 	if (axis == 1)
 	{
-		
 		matrix[0][0] = cos(angle);
 		matrix[0][2] = -sin(angle);
 		matrix[2][0] = sin(angle);
@@ -88,9 +87,9 @@ void	copy_matrix(double src[4][4], double dest[4][4])
 
 void	meld_matrix(t_mlxs *ms, double m1[4][4], double m2[4][4])
 {
-	int	i;
-	int	j;
-	double temp[4][4];
+	int		i;
+	int		j;
+	double	temp[4][4];
 
 	i = 0;
 	while (i < 4)

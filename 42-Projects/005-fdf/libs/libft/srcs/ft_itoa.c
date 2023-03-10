@@ -5,78 +5,67 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/26 14:44:47 by maalexan          #+#    #+#             */
-/*   Updated: 2022/09/26 14:44:47 by maalexan         ###   ########.fr       */
+/*   Created: 2023/03/10 14:43:54 by maalexan          #+#    #+#             */
+/*   Updated: 2023/03/10 14:45:47 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ft_cdigits(int n);
-static int			ft_powdigits(int len, int n);
-static void			ft_populate(char *itoa, unsigned int len, int n);
+static int	find_len(int n)
+{
+	int	len;
+
+	len = 1;
+	while (n / 10)
+	{
+		len++;
+		n /= 10;
+	}
+	return (len);
+}
+
+static void	fill_in(char *r, int n, int sign, int len)
+{
+	while (len + 1)
+	{
+		r[len] = ((n % 10) * sign) + '0';
+		n /= 10;
+		len--;
+	}
+}
+
+static char	*itoa_zero(char *r)
+{
+	r = malloc(sizeof(char) * 2);
+	r[0] = '0';
+	r[1] = '\0';
+	return (r);
+}
 
 char	*ft_itoa(int n)
 {
-	char				*itoa;
-	unsigned int		len;
+	char	*r;
+	int		len;
+	int		sign;
 
-	len = ft_cdigits(n);
+	r = NULL;
+	if (!n)
+		return (itoa_zero(r));
+	sign = 0;
 	if (n < 0)
+		sign = 1;
+	len = find_len(n);
+	if (sign)
 		len++;
-	itoa = (char *)malloc(sizeof(char) * (len + 1));
-	if (!itoa)
-		return (NULL);
-	ft_populate(itoa, len, n);
-	itoa[len] = '\0';
-	return (itoa);
-}
-
-static void	ft_populate(char *itoa, unsigned int len, int n)
-{
-	unsigned int	i;
-	unsigned int	un;
-	unsigned int	digits;
-	unsigned int	singled;
-
-	i = 0;
-	digits = ft_powdigits(len, n);
-	if (n < 0)
-	{
-		itoa[i] = '-';
-		un = n * (-1);
-		i++;
-	}
+	r = malloc(sizeof(char) * (len + 1));
+	r[len] = '\0';
+	if (!sign)
+		fill_in(r, n, 1, len - 1);
 	else
-		un = n;
-	while (i < len)
 	{
-		singled = un / digits;
-		itoa[i] = singled + '0';
-		un -= digits * singled;
-		digits /= 10;
-		i++;
+		r[0] = '-';
+		fill_in(&r[1], n, -1, len - 2);
 	}
-}
-
-static unsigned int	ft_cdigits(int n)
-{
-	if (n / 10 == 0)
-		return (1);
-	return (1 + ft_cdigits(n / 10));
-}
-
-static int	ft_powdigits(int len, int n)
-{
-	int	digits;
-
-	if (n < 0)
-		len--;
-	digits = 1;
-	while (len > 1)
-	{
-		digits *= 10;
-		--len;
-	}
-	return (digits);
+	return (r);
 }

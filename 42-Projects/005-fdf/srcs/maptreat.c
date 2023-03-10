@@ -6,23 +6,25 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:51:53 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:15:38 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:02:37 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/fdf.h"
 
-int		count_col(int fd, t_mlxs *ms)
+int	count_col(int fd, t_mlxs *ms)
 {
 	char	c;
 
 	c = ' ';
-	while (c == ' ' && read(fd, &c, 1));
-	while(read(fd, &c, 1))
+	while (c == ' ' && read(fd, &c, 1))
+		;
+	while (read(fd, &c, 1))
 	{
 		if (c == ' ')
 		{
-			while (c == ' ' && read(fd, &c, 1));
+			while (c == ' ' && read(fd, &c, 1))
+				;
 			if (c != '\n')
 				ms->col++;
 		}
@@ -35,16 +37,16 @@ int		count_col(int fd, t_mlxs *ms)
 	return (0);
 }
 
-int		count_row(int fd, t_mlxs *ms)
+int	count_row(int fd, t_mlxs *ms)
 {
-	char 	c;
+	char	c;
 	int		val;
 
 	if (!ms->col)
 		return (0);
 	ms->row++;
 	val = 1;
-	while(read(fd, &c, 1))
+	while (read(fd, &c, 1))
 	{
 		if (val && c != '\n')
 		{
@@ -71,7 +73,7 @@ int	parse_map(t_mlxs *ms, char *filename)
 		leave_program("Error opening file\n", 2, 1);
 	ms->cart = allocate_map(ms);
 	line = get_next_line(fd);
-	while(i < ms->row)
+	while (i < ms->row)
 	{
 		fill_col(ms, line, i);
 		free(line);
@@ -85,7 +87,7 @@ int	parse_map(t_mlxs *ms, char *filename)
 
 t_coord	**allocate_map(t_mlxs *ms)
 {
-	t_coord **carthesian;
+	t_coord	**carthesian;
 	int		i;
 
 	carthesian = malloc(sizeof(t_coord *) * ms->col);
@@ -109,20 +111,20 @@ int	fill_col(t_mlxs *ms, char *line, int row)
 	col = 0;
 	while (col < ms->col)
 	{
-		while(*line == ' ')
+		while (*line == ' ')
 			line++;
 		ms->cart[col][row].z = ft_atoi(line);
 		coord_calibrate(ms, &ms->cart[col][row], col, row);
 		ms->cart[col][row].color = 0;
-		while(*line != '\n' && *line != ' ' && *line != ',')
+		while (*line != '\n' && *line != ' ' && *line != ',')
 			line++;
 		if (*line == ',')
 		{
 			ms->cart[col][row].color = ft_atoi_base(++line, 16);
-			while(*line != '\n' && *line != ' ')
+			while (*line != '\n' && *line != ' ')
 				line++;
-		} 
+		}
 		col++;
 	}
-	return(col);
+	return (col);
 }

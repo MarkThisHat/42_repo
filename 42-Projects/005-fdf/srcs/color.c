@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 11:57:13 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 11:57:50 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:37:46 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 void	add_color(int *color, int *dye, int bitshift)
 {
-		int	temp;
-		int ff;
+	int	temp;
+	int	ff;
 
-		ff = 255;
-		temp = *color >> bitshift;
-		temp += 10;
-		if (temp > ff)
-			temp = ff;
-		*color -= *color & (ff << bitshift);
-		*color += temp << bitshift;
-		*dye = 0xFF000000;
+	ff = 255;
+	temp = *color >> bitshift;
+	temp += 10;
+	if (temp > ff)
+		temp = ff;
+	*color -= *color & (ff << bitshift);
+	*color += temp << bitshift;
+	*dye = 0xFF000000;
 }
 
-int		add_factor(int color, int factor)
+int	add_factor(int color, int factor)
 {
-	int red;
-	int green;
-	int blue;
+	int	red;
+	int	green;
+	int	blue;
 
 	red = color & 0x00FF0000 >> 16;
 	green = color & 0x0000FF00 >> 8;
@@ -51,11 +51,11 @@ int		add_factor(int color, int factor)
 	return ((red << 16) + (green << 8) + blue);
 }
 
-int		put_colors(int color, int factor)
+int	put_colors(int color, int factor)
 {
-	int red_goal;
-	int green_goal;
-	int blue_goal;
+	int	red_goal;
+	int	green_goal;
+	int	blue_goal;
 
 	red_goal = color & 0x00FF0000 >> 16;
 	if (red_goal > 255)
@@ -78,12 +78,12 @@ int		put_colors(int color, int factor)
 	return ((red_goal << 16) + (green_goal << 8) + blue_goal);
 }
 
-int		invert_endian(int color)
+int	invert_endian(int color)
 {
-	int alpha;
-	int red;
-	int green;
-	int blue;
+	int	alpha;
+	int	red;
+	int	green;
+	int	blue;
 
 	blue = color & 0xFF000000;
 	green = color & 0x00FF0000;
@@ -93,7 +93,7 @@ int		invert_endian(int color)
 	return (color);
 }
 
-int		see_color(t_mlxs *ms, int color, int z)
+int	see_color(t_mlxs *ms, int color, int z)
 {
 	if (color)
 		return (color);

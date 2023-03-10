@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 10:20:52 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 10:47:28 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:55:43 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	put_pixel(t_img *img, int x, int y, int factor)
 		color += add_factor(color, factor);
 	if (img->endian)
 		color = invert_endian(color);
-	*(unsigned int*)painter = color;
+	*(unsigned int *)painter = color;
 }
 
 void	clear_img(t_img *img)
@@ -113,9 +113,9 @@ void	clear_img(t_img *img)
 
 	target = img->addr + (WIN_H * img->line_length);
 	painter = img->addr;
-	while(painter < target + 1)
+	while (painter < target + 1)
 	{
-		*(unsigned int*)painter = 0;
+		*(unsigned int *)painter = 0;
 		painter++;
 	}
 }

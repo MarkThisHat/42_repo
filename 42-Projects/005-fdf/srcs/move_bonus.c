@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:14:10 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/08 17:14:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:08:07 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	reset_placement(t_mlxs *ms, int change)
 		}
 		i++;
 	}
-	ms->height_adj =  WIN_H / 6;
+	ms->height_adj = WIN_H / 6;
 	ms->width_adj = WIN_W / 2;
 	ms->dye = 0;
 	ms->color = 0xFFFFFFFF;
@@ -40,10 +40,10 @@ void	reset_placement(t_mlxs *ms, int change)
 	position_img(ms);
 }
 
-int		adjust_ambit(t_mlxs *ms, int height, int width)
+int	adjust_ambit(t_mlxs *ms, int height, int width)
 {
 	if (!width)
-		return(height);
+		return (height);
 	if (!height)
 		return (width);
 	ms->height_adj = height;
@@ -74,7 +74,7 @@ void	bonus_scale(t_mlxs *ms, int negative)
 
 void	change_height(t_mlxs *ms, int change)
 {
-	static int new_z;
+	static int	new_z;
 
 	new_z += change;
 	reset_placement(ms, new_z);

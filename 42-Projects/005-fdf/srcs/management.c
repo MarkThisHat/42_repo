@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 20:48:41 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/07 12:29:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:57:30 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ void	leave_program(char *str, int fd, int return_code)
 
 void	set_struct(t_mlxs *ms, t_img *img1, t_img *img2)
 {
-	*ms = (t_mlxs) {0};
-	*img1 = (t_img) {0};
-	*img2 = (t_img) {0};
+	*ms = (t_mlxs){0};
+	*img1 = (t_img){0};
+	*img2 = (t_img){0};
 	ms->color = 0xFFFFFFFF;
 	ms->toggle = 42;
 	ms->fad = &ms->img1;
-	ms->height_adj =  WIN_H / 6;
+	ms->height_adj = WIN_H / 6;
 	ms->width_adj = WIN_W / 2;
 	crosswise_matrix(ms->matrix, 1, 0);
 }
 
-int		validate_usage(int	argc, char **argv, t_mlxs *ms)
+int	validate_usage(int argc, char **argv, t_mlxs *ms)
 {
 	int	fd;
 	int	len;
@@ -48,7 +48,6 @@ int		validate_usage(int	argc, char **argv, t_mlxs *ms)
 		leave_program("Error opening file\n", 2, 3);
 	if (!count_col(fd, ms))
 		leave_program("Can't parse this map\n", 2, 4);
-	ft_printf("Map %s has %i rows and %i columns\n", argv[1], ms->row, ms->col);//REMOVE
 	close(fd);
 	return (1);
 }
