@@ -105,5 +105,17 @@ void	bottom_menu(t_mlxs *ms)
 void	cone_menu(t_mlxs *ms)
 {
 	mlx_string_put(ms->mlx, ms->win, 42, 230, 0xFF00FF, "Conic axis:");
-	mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "Z");
+	mlx_string_put(ms->mlx, ms->win, 42, 250, 0xFF00FF, "M key to change!");
+	if (!ms->remodel[7])
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "+Z");
+	else if (ms->remodel[7] == 'Y')
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "+Y");
+	else if (ms->remodel[7] == 'X')
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "+X");
+	else if (ms->remodel[7] == 'z')
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "-Z");
+	else if (ms->remodel[7] == 'y')
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "-Y");
+	else
+		mlx_string_put(ms->mlx, ms->win, 150, 230, 0xFFF04D, "-X");
 }

@@ -66,7 +66,7 @@ typedef struct s_mlxs {
 	int		lower;
 	int		height_adj;
 	int		width_adj;
-	int		remodel[6];
+	int		remodel[7];
 	double	mapspot;
 }			t_mlxs;
 

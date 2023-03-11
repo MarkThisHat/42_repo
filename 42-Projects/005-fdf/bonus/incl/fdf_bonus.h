@@ -41,6 +41,7 @@
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
+# define M_KEY 109
 # define N_PLU_K 65453
 # define N_MIN_K 65451
 
@@ -59,6 +60,8 @@ int		key_rotation(int keycode, t_mlxs *ms);
 int		key_shift(t_mlxs *ms, int keycode);
 int		key_anchor(t_mlxs *ms, int keycode);
 void	project_cone(t_mlxs *ms, double cx, double cy, double cz);
+void	set_cone(t_mlxs *ms, double project, int axis);
+void	cone_mode(t_mlxs *ms, int mod);
 int		mouse_group(int keycode, int x, int y, t_mlxs *ms);
 
 #endif

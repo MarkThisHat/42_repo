@@ -73,6 +73,8 @@ int	key_anchor(t_mlxs *ms, int keycode)
 		translate_point(ms, 0, -1, 0);
 	if (keycode == D_KEY)
 		translate_point(ms, 0, 0, -1);
+	if (keycode == M_KEY)
+		cone_mode(ms, 1);
 	redraw_map(ms);
 	return (keycode);
 }
@@ -86,7 +88,7 @@ int	mouse_group(int keycode, int x, int y, t_mlxs *ms)
 	if (keycode == 5)
 		bonus_scale(ms, 1);
 	if (keycode == 3)
-		project_cone(ms, 0, 0, 50);
+		cone_mode(ms, 0);
 	redraw_map(ms);
 	return (keycode);
 }

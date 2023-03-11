@@ -44,7 +44,7 @@ void	mlx_setup(t_mlxs *ms)
 	ms->mlx = mlx_init();
 	if (!ms->mlx)
 		free_close(ms, "Couldn't start mlx\n", ms->col);
-	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDF");
+	ms->win = mlx_new_window(ms->mlx, WIN_W, WIN_H, "FDFun");
 	if (!ms->win)
 		mlx_fail(ms, "Couldn't make a mlx window\n", 0);
 	(*ms->fad)->img = mlx_new_image(ms->mlx, WIN_W, WIN_H);

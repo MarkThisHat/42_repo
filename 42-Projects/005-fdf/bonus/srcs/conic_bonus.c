@@ -52,3 +52,60 @@ void	project_cone(t_mlxs *ms, double cx, double cy, double cz)
 		i++;
 	}
 }
+
+void	set_cone(t_mlxs *ms, double project, int axis)
+{
+	double	cx;
+	double	cy;
+	double	cz;
+
+	cx = ms->remodel[4];
+	cy = ms->remodel[5];
+	cz = ms->remodel[6];
+	if (axis == 0)
+		cx = project;
+	if (axis == 1)
+		cy = project;
+	if (axis == 2)
+		cz = project;
+	project_cone(ms, cx, cy, cz);
+}
+
+static int	cone_change(int model, int *ptr)
+{
+	ptr[4] = 0;
+	ptr[5] = 0;
+	ptr[6] = 0;
+	if (!model)
+		return ('Y');
+	if (model == 'Y')
+		return ('X');
+	if (model == 'X')
+		return ('z');
+	if (model == 'z')
+		return ('y');
+	if (model == 'y')
+		return ('x');
+	return (0);
+}
+
+void	cone_mode(t_mlxs *ms, int mod)
+{
+	if (mod)
+	{
+		ms->remodel[7] = cone_change(ms->remodel[7], ms->remodel);
+		return ;
+	}
+	if (!ms->remodel[7])
+		set_cone(ms, 42, 2);
+	else if (ms->remodel[7] == 'Y')
+		set_cone(ms, 42, 1);
+	else if (ms->remodel[7] == 'X')
+		set_cone(ms, 42, 0);
+	else if (ms->remodel[7] == 'z')
+		set_cone(ms, -42, 2);
+	else if (ms->remodel[7] == 'y')
+		set_cone(ms, -42, 1);
+	else if (ms->remodel[7] == 'x')
+		set_cone(ms, -42, 0);
+}
