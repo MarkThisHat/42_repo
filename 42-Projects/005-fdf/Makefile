@@ -49,6 +49,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 putdir:
 	@[ -d ./objs ] || mkdir -p ./objs
 
+bonus: putdir $(NAMEB)
+
+$(NAMEB): $(FTLIB) $(OBJ) $(BOBJ)
+	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
+
+$(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
+	@cc $(CFLAGS) -c $< -o $@
+
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
@@ -57,14 +65,6 @@ fclean: clean
 	@$(MAKE) -C $(FTLIB_DIR) fclean
 	@[ -f ./fdf ] && rm fdf && echo fdf cleaned || echo Program fdf isn\'t compiled
 	@[ -f ./fdf_bonus ] && rm fdf_bonus && echo bonus cleaned || echo bonus fdf isn\'t compiled
-
-bonus: putdir $(NAMEB)
-
-$(NAMEB): $(FTLIB) $(OBJ) $(BOBJ)
-	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
-
-$(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
-	@cc $(CFLAGS) -c $< -o $@
 
 re: fclean all
 

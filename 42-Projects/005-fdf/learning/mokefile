@@ -1,0 +1,54 @@
+# Name of the final executable
+NAME = fdf
+
+# Directories for source files, object files, and libraries
+SRC_DIR = src
+OBJ_DIR = obj
+LIBFT_DIR = libft
+LIBFT_INC = $(LIBFT_DIR)
+LIBFT = $(LIBFT_DIR)/libft.a
+MLX_DIR = minilibx_macos
+MLX_INC = $(MLX_DIR)
+MLX_LIB = $(MLX_DIR)
+INC_DIR = include
+
+# Compiler and flags
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR) -I $(LIBFT_INC) -I $(MLX_INC)
+LDFLAGS = -L $(LIBFT_DIR) -L $(MLX_LIB) -lft -lmlx -framework OpenGL -framework AppKit
+
+# Source files
+SRC = main.c \
+      # Add the rest of the source files here
+
+# Object files
+OBJ = $(SRC:%.c=$(OBJ_DIR)/%.o)
+
+# Rule to build the final executable
+#The object files are then linked together using the rule:
+$(NAME): $(LIBFT) $(OBJ)
+    $(CC) $(OBJ) $(LDFLAGS) -o $@
+
+# Rule to build the library
+#The $(LIBFT) library is built separately using the rule:
+$(LIBFT):
+    $(MAKE) -C $(LIBFT_DIR)
+
+# Rule to build object files
+#In this modified Makefile, the source files are compiled into object files using the rule:
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+# Rule to clean object files
+clean:
+    $(RM) -r $(OBJ_DIR)
+
+# Rule to clean object files and library
+fclean: clean
+    $(RM) $(NAME)
+    $(MAKE) -C $(LIBFT_DIR) fclean
+
+# Rule to re-build the project
+re: fclean $(NAME)
+
+
