@@ -10,58 +10,62 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
-NAMEB = fdf_bonus
-SRC = ./srcs/
-SRCB = ./bonus/srcs
-HDR = -I ./incl/
-HDRB = -I ./bonus/incl
-FUN = bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c
-FUNB = fdf_bonus.c conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
-CFLAG = -Wall -Wextra -Werror
-MLXINCL = /usr/local/include/mlx.h
-MFLAG = -lbsd -lmlx -lXext -lX11 -lm
-PFUNC = $(addprefix $(SRC), $(FUN))
-FTLIB = ./libs/libft/libft.a
-OBJ = $(FUN:.c=.o)
-OBJB = $(FUNB:.c=.o)
+# Program name
+NAME := fdf
+NAMEB := fdf_bonus
 
-all: $(NAME)
+# Directories for source, object and libraries
+SRC_DIR := ./srcs
+OBJ_DIR := ./objs
+BSRC_DIR := ./bonus/srcs
+HDR_DIR := ./incl
+FTLIB_DIR := ./libs/libft
+FTLIB := $(FTLIB_DIR)/libft.a
+BHDR_DIR := ./bonus/incl
 
-$(NAME): putfdf $(OBJ)
-	@cc $(CFLAG) $(HDR) ./objs/$(NAME).o $(addprefix ./objs/, $(FUN:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf && echo done || echo Something went wrong
+# Compilation flags
+MFLAG := -lbsd -lmlx -lXext -lX11 -lm
+CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR) $(MFLAG)
 
-$(OBJ):
-	@cc $(CFLAG) -c ./srcs/$(@:.o=.c) $(HDR) -o ./objs/$@
+# Source files
+FUN := fdf.c bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c
+FUNB := fdf_bonus.c conic_bonus.c image_bonus.c input_bonus.c move_bonus.c
 
-putfdf: putdir
-	@cc $(CFLAG) -c ./srcs/$(NAME).c $(HDR) -o ./objs/$(NAME).o
+# Object files
+OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
+BOBJ := $(filter-out $(OBJ_DIR)/fdf.o, $(OBJ)) $(FUNB:%.c=$(OBJ_DIR)/%.o)
 
-putdir: lookfmlx
-	@mkdir -p objs
-#	@[ -f $(FTLIB) ] && echo libft is already built || make only -C ./libs/libft/
+all: putdir $(NAME)
 
-lookfmlx:
-		@[ -f $(MLXINCL) ] && echo building fdf... || echo It seems your mlx.h isn\'t at /usr/local/include
+$(NAME): $(FTLIB) $(OBJ)
+	@cc $(OBJ) $(FTLIB) $(MFLAG) -o $@
+
+$(FTLIB):
+	@$(MAKE) -C $(FTLIB_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@cc $(CFLAGS) -c $< -o $@
+
+putdir:
+	@[ -d ./objs ] || mkdir -p ./objs
 
 clean:
+	@$(MAKE) -C $(FTLIB_DIR) clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean: clean
-#	@[ -f $(FTLIB) ] && make fclean -C ./libs/libft/ || echo libft already removed
+	@$(MAKE) -C $(FTLIB_DIR) fclean
 	@[ -f ./fdf ] && rm fdf && echo fdf cleaned || echo Program fdf isn\'t compiled
 	@[ -f ./fdf_bonus ] && rm fdf_bonus && echo bonus cleaned || echo bonus fdf isn\'t compiled
 
-bonus: $(NAMEB)
+bonus: putdir $(NAMEB)
 
-$(NAMEB): $(OBJB)
-	@cc $(CFLAG) $(HDR) $(HDRB) $(addprefix ./objs/, $(FUN:.c=.o)) $(addprefix ./objs/, $(FUNB:.c=.o)) $(FTLIB) $(MFLAG) -g -o fdf_bonus && echo done || echo Something went wrong
+$(NAMEB): $(FTLIB) $(OBJ) $(BOBJ)
+	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
 
-$(OBJB): putdir $(OBJ)
-	@cc $(CFLAG) -c ./bonus/srcs/$(NAMEB).c $(HDRB) -o ./objs/$(NAMEB).o
-	@cc $(CFLAG) -c ./bonus/srcs/$(@:.o=.c) $(HDRB) -o ./objs/$@
+$(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
+	@cc $(CFLAGS) -c $< -o $@
 
 re: fclean all
 
-.PHONY: all bonus putdir lookfmlx clean fclean re
-
+.PHONY: all bonus putdir clean fclean re
