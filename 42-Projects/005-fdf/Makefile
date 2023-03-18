@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/03/10 16:43:55 by maalexan         ###   ########.fr        #
+#    Updated: 2023/03/18 14:06:12 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ BHDR_DIR := ./bonus/incl
 
 # Compilation flags
 MFLAG := -lbsd -lmlx -lXext -lX11 -lm
-CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR) $(MFLAG)
+CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
 FUN := fdf.c bresenham.c color.c image.c management.c maptreat.c matrix_core.c matrix_op.c
