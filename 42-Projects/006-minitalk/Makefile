@@ -6,13 +6,13 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/03/18 16:26:39 by maalexan         ###   ########.fr        #
+#    Updated: 2023/03/25 20:28:24 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Program name
-NAME := server
-NAMEB := minitalk_bonus
+NAMEA := server
+NAMEBA := server_bonus
 
 # Directories for source, object and libraries
 SRC_DIR := ./srcs
@@ -33,9 +33,9 @@ FUNB := server_bonus.c
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
 BOBJ := $(FUNB:%.c=$(OBJ_DIR)/%.o)
 
-all: putdir $(NAME)
+all: putdir $(NAMEA)
 
-$(NAME): $(FTLIB) $(OBJ)
+$(NAMEA): $(FTLIB) $(OBJ)
 	@cc $(OBJ) $(FTLIB) -o $@
 
 $(FTLIB):
@@ -44,9 +44,9 @@ $(FTLIB):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	cc $(CFLAGS) -c $< -o $@
 
-bonus: putdir $(NAMEB)
+bonus: putdir $(NAMEBA)
 
-$(NAMEB): $(FTLIB) $(OBJ) $(BOBJ)
+$(NAMEBA): $(FTLIB) $(OBJ) $(BOBJ)
 	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
 
 $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
