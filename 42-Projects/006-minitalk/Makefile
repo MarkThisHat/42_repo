@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/03/25 20:28:24 by maalexan         ###   ########.fr        #
+#    Updated: 2023/04/07 17:03:05 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 FUN := mini_utils.c
 
 # Object files
-C_OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o) $(OBJ_DIR)/$(NAME2).o
-S_OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o) $(OBJ_DIR)/$(NAME1).o
+C_OBJ := $(OBJ_DIR)/$(NAME2).o $(FUN:%.c=$(OBJ_DIR)/%.o)
+S_OBJ := $(OBJ_DIR)/$(NAME1).o $(FUN:%.c=$(OBJ_DIR)/%.o)
 BOBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
 
 all: putdir $(NAME1) $(NAME2)
@@ -38,20 +38,21 @@ all: putdir $(NAME1) $(NAME2)
 test:
 	@echo $(C_OBJ)
 
-$(NAME1): $(FTLIB) $(S_OBJ)
-	@echo At $@
-	@echo lessthan $<
-	@echo up $^
+$(NAME1): $(S_OBJ) $(FTLIB)
 	cc $(S_OBJ) $(FTLIB) -o $@
 
-$(NAME2): $(FTLIB) $(C_OBJ)
-	cc $^ -o $@
+$(NAME2): $(C_OBJ) $(FTLIB)
+	cc $(C_OBJ) $(FTLIB) -o $@
 
 $(FTLIB):
 	@$(MAKE) -C $(FTLIB_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	cc $(CFLAGS) -c $< -o $@
+
+putdir:
+	@[ -d ./objs ] || mkdir -p ./objs
+
 
 bonus: putdir $(NAMEB1)
 
@@ -60,9 +61,6 @@ $(NAMEB1): $(FTLIB) $(BOBJ1)
 
 $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 	@cc $(CFLAGS) -c $< -o $@
-
-putdir:
-	@[ -d ./objs ] || mkdir -p ./objs
 
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) clean
