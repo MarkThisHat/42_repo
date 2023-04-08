@@ -6,18 +6,21 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:54:24 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/07 17:42:25 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/07 21:18:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
-static void send_bit(int bit, int pid)
+static int send_bit(int bit, int pid)
 {
 	if (!bit)
-		kill(pid, SIGUSR2);
+        ft_printf("%i", bit);
+	//	kill(pid, SIGUSR2);
 	else
-		kill(pid, SIGUSR1);
+        ft_printf("%i", bit);
+    //	kill(pid, SIGUSR1);
+    return (pid);
 }
 
 static void send_char(unsigned char c, int pid)
@@ -27,12 +30,12 @@ static void send_char(unsigned char c, int pid)
 	i = 8;
 	while (i + 1)
 	{
-		ft_printf("%i", (c >> i) & 1);
+	    send_bit((c >> i) & 1, pid);
 		i--;
+        usleep(50);
 	}
 	ft_printf(" %c", c);
 	ft_printf(" \n");
-	send_bit(1, pid);
 }
 
 static void	send_message(char *str, int pid)

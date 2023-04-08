@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/04/07 17:03:05 by maalexan         ###   ########.fr        #
+#    Updated: 2023/04/07 13:27:18 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ C_OBJ := $(OBJ_DIR)/$(NAME2).o $(FUN:%.c=$(OBJ_DIR)/%.o)
 S_OBJ := $(OBJ_DIR)/$(NAME1).o $(FUN:%.c=$(OBJ_DIR)/%.o)
 BOBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
 
-all: putdir $(NAME1) $(NAME2)
+all: $(NAME1) $(NAME2)
 
 test:
 	@echo $(C_OBJ)
@@ -48,13 +48,10 @@ $(FTLIB):
 	@$(MAKE) -C $(FTLIB_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	cc $(CFLAGS) -c $< -o $@
 
-putdir:
-	@[ -d ./objs ] || mkdir -p ./objs
-
-
-bonus: putdir $(NAMEB1)
+bonus: $(NAMEB1)
 
 $(NAMEB1): $(FTLIB) $(BOBJ1)
 	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
@@ -74,4 +71,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus client server putdir clean fclean re
+.PHONY: all bonus clean fclean re
