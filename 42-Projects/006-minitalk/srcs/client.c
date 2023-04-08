@@ -12,25 +12,29 @@
 
 #include "../incl/minitalk.h"
 
-static int send_bit(int bit, int pid)
+static void send_bit(int bit, int pid)
 {
 	if (!bit)
+	{
         ft_printf("%i", bit);
-	//	kill(pid, SIGUSR2);
+		kill(pid, SIGUSR2);
+	}
 	else
+	{
         ft_printf("%i", bit);
-    //	kill(pid, SIGUSR1);
-    return (pid);
+    	kill(pid, SIGUSR1);
+	}
 }
 
 static void send_char(unsigned char c, int pid)
 {
 	int	i;
 
-	i = 8;
+	i = 7;
 	while (i + 1)
 	{
-	    send_bit((c >> i) & 1, pid);
+//	    ft_printf("tick: %i\n", i);
+		send_bit((c >> i) & 1, pid);
 		i--;
         usleep(50);
 	}
@@ -51,14 +55,12 @@ static void	send_message(char *str, int pid)
 int	main(int argc, char **argv)
 {
 	int	pid;
-	int	len;
 
 	if (argc != 3)
 		leave_program("Usage ./client [server PID] [message]\n", 1);
 	pid = ft_atoi(argv[1]);
 	if (pid < 1)
 		leave_program("Server PID has to be numeric and positive\n", 1);
+	ft_printf("Client PID %i\n", getpid());
 	send_message(argv[2], pid);
-	len = ft_strlen(argv[2]);
-	ft_printf("pid is %i and len is %i\n", pid, len);
 }
