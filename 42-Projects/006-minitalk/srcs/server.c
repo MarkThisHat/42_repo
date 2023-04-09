@@ -29,15 +29,12 @@ void print_binary(char c)
 
 static void binary_signal(int sig, int sender_pid)
 {
-	static char	c;
+	static unsigned char	c;
 	static int	pid;
 	static int	bit;
 
 	if (pid && pid != sender_pid)
-	{
-		ft_printf("I'm busy rn, try again later");
 		return ;
-	}
 	if (!c && !pid && !bit)
 	{
 		pid = sender_pid;
@@ -54,16 +51,16 @@ static void binary_signal(int sig, int sender_pid)
 	}
 	else if (bit < 0 && !c)
 	{
-		ft_printf("pog\n");
+		ft_printf("\n#End of Message#\n");
 		pid = 0;
 		bit = 0;
 	}
-	if (sig == SIGUSR1)
+/*	if (sig == SIGUSR1)
 		ft_printf("\nSIGUSR1\n");
 	else if (sig == SIGUSR2)
 		ft_printf("\nSIGUSR2\n");
 	ft_printf("leaving bith with bit: %i\npid %i\nchar: ", bit, pid);
-	print_binary(c);
+	print_binary(c);*/
 }
 
 static void	sig_handler(int sig, siginfo_t *info, void *context)
@@ -86,7 +83,7 @@ static void	sig_handler(int sig, siginfo_t *info, void *context)
 			ft_printf("\nOnce more, with feeling\n");
 		else if (count == 5)*/
 		{
-			ft_printf("\nk thx bye\n");
+			ft_printf("\nOk, goodbye and thanks for all the signals!\n");
 			exit (0);
 		}
 		count++;

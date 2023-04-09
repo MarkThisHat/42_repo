@@ -36,7 +36,7 @@ static void send_char(unsigned char c, int pid)
 //	    ft_printf("tick: %i\n", i);
 		send_bit((c >> i) & 1, pid);
 		i--;
-        usleep(500);
+        usleep(4200);
 	}
 	ft_printf(" %c", c);
 	ft_printf(" \n");
