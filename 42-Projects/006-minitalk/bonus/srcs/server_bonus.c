@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:22:12 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/08 22:18:20 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:48:44 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ int	main(void)
 {
 	struct sigaction s_action;
 
-	s_action.sa_handler = NULL;
-	s_action.sa_mask = (sigset_t){0};
-	s_action.sa_flags = SA_SIGINFO;
+	set_sigaction(&s_action);
 	s_action.sa_sigaction = &sig_handler;
 	sigaction(SIGUSR1, &s_action, NULL);
 	sigaction(SIGUSR2, &s_action, NULL);

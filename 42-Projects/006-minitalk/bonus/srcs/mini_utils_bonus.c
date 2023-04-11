@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 10:04:48 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/11 10:09:15 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:48:00 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,24 @@ void	leave_program(char *str, int return_code)
 		exit (return_code);
 }
 
+void	set_sigaction(struct sigaction* s_action)
+{
+	s_action->sa_handler = NULL;
+	s_action->sa_mask = (sigset_t){0};
+	s_action->sa_flags = SA_SIGINFO;
+}
+
+/*
+echo -e '\xDF\xB7''\xF0\x9F\x98\x80''\xC3\xB8''\xE1\x8E\x88''\xF0\x9F\x98\x85''\xDF\xA6''\xE1\x8F\xA2''\xF0\x9F\x98\x8A'
+
+int	main(int argc, char **argv)
+{
+	if (argc != 2)
+		return 1;
+	printf("\nLength is %i\n", print_utf_eight(argv[1]));
+	write(1, "\n", 1);
+}
+
 void print_binary(char c)
 {
 	int i;
@@ -65,15 +83,4 @@ void print_binary(char c)
 	ft_printf("\n");
 }
 
-
-/*
-echo -e '\xDF\xB7''\xF0\x9F\x98\x80''\xC3\xB8''\xE1\x8E\x88''\xF0\x9F\x98\x85''\xDF\xA6''\xE1\x8F\xA2''\xF0\x9F\x98\x8A'
-
-int	main(int argc, char **argv)
-{
-	if (argc != 2)
-		return 1;
-	printf("\nLength is %i\n", print_utf_eight(argv[1]));
-	write(1, "\n", 1);
-}
 */

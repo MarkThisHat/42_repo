@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   linked_list.c                                      :+:      :+:    :+:   */
+/*   linked_list_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 22:06:23 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/10 22:07:03 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/11 16:50:39 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static void	received_null_byte(t_msg *node)
 	{
 		node->msg -= node->len;
 		print_utf_eight(node->msg);
-		ft_printf("\n");
+		ft_printf("\n\nMarco?\n");
 		free(node->msg);
+		kill(node->pid, SIGUSR1);
 		*node = (t_msg){0};
 	}
 }
