@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minitalk.h"
+#include "../incl/minitalk_bonus.h"
 
 static void send_bit(int bit, int pid)
 {

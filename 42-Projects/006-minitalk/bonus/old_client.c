@@ -15,9 +15,15 @@
 static void send_bit(int bit, int pid)
 {
 	if (!bit)
+	{
+        ft_printf("%i", bit);
 		kill(pid, SIGUSR2);
+	}
 	else
-		kill(pid, SIGUSR1);
+	{
+        ft_printf("%i", bit);
+    	kill(pid, SIGUSR1);
+	}
 }
 
 static void send_char(unsigned char c, int pid)
@@ -27,10 +33,13 @@ static void send_char(unsigned char c, int pid)
 	i = 7;
 	while (i + 1)
 	{
+//	    ft_printf("tick: %i\n", i);
 		send_bit((c >> i) & 1, pid);
 		i--;
-		usleep(1000);
+        usleep(4200);
 	}
+	ft_printf(" %c", c);
+	ft_printf(" \n");
 }
 
 static void	send_message(char *str, int pid)
@@ -45,21 +54,13 @@ static void	send_message(char *str, int pid)
 
 int	main(int argc, char **argv)
 {
-	char	*len;
-	int		pid;
-	int		length;
+	int	pid;
 
 	if (argc != 3)
 		leave_program("Usage ./client [server PID] [message]\n", 1);
 	pid = ft_atoi(argv[1]);
 	if (pid < 1)
 		leave_program("Server PID has to be numeric and positive\n", 1);
-	length = ft_strlen(argv[2]);
-	if (length > 99999)
-		leave_program("Cannot send message with 100k characters or more\n", 1);
-	len = ft_itoa(length);
-	send_message(len, pid);
-	free(len);
-	len = NULL;
+	ft_printf("Client PID %i\n", getpid());
 	send_message(argv[2], pid);
 }

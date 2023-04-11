@@ -31,12 +31,13 @@ FUN := mini_utils.c linked_list.c
 # Object files
 C_OBJ := $(OBJ_DIR)/$(NAME2).o $(FUN:%.c=$(OBJ_DIR)/%.o)
 S_OBJ := $(OBJ_DIR)/$(NAME1).o $(FUN:%.c=$(OBJ_DIR)/%.o)
-BOBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
+C_BOBJ := $(FUN:%.c=$(OBJ_DIR)/%_bonus.o) $(OBJ_DIR)/$(NAME2)_bonus.o
+S_BOBJ := $(FUN:%.c=$(OBJ_DIR)/%_bonus.o) $(OBJ_DIR)/$(NAME1)_bonus.o
 
 all: $(NAME1) $(NAME2)
 
 test:
-	@echo $(C_OBJ)
+	@echo $(BOBJ)
 
 $(NAME1): $(S_OBJ) $(FTLIB)
 	cc $(S_OBJ) $(FTLIB) -o $@
@@ -51,12 +52,16 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	cc $(CFLAGS) -c $< -o $@
 
-bonus: $(NAMEB1)
+bonus: $(NAME1)_bonus $(NAME2)_bonus
 
-$(NAMEB1): $(FTLIB) $(BOBJ1)
-	@cc $(BOBJ) $(FTLIB) $(MFLAG) -o $@
+$(NAME1)_bonus: $(S_BOBJ) $(FTLIB)
+	cc $(S_BOBJ) $(FTLIB) -o $@
+
+$(NAME2)_bonus: $(C_BOBJ) $(FTLIB)
+	cc $(C_BOBJ) $(FTLIB) -o $@
 
 $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
+	@mkdir -p $(@D)
 	@cc $(CFLAGS) -c $< -o $@
 
 clean:
