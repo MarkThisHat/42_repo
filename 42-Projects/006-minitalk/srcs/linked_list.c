@@ -12,21 +12,12 @@
 
 #include "../incl/minitalk.h"
 
-static t_msg *set_node(t_msg *node, int sender_pid)
+static void	set_node(t_msg *node, int sender_pid)
 {
 	if (!node->pid)
 		node->pid = sender_pid;
 	if (node->pid && node->pid != sender_pid)
-	{
-		if (!node->next)
-		{
-			node->next = malloc(sizeof(t_msg));
-			if (!node->next)
-				leave_program("No memory available\n", 1);
-			*node->next = (t_msg){0};
-		}
-		return (set_node(node->next, sender_pid));
-	}
+	    return ;
 	if (!node->msg)
 	{
 		if (!node->len)
@@ -37,14 +28,10 @@ static t_msg *set_node(t_msg *node, int sender_pid)
 			leave_program("No memory available\n", 1);
 		node->bit = 7;
 	}
-	return (node);
 }
 
-static t_msg	*received_null_byte(t_msg *node)
+static void	received_null_byte(t_msg *node)
 {
-	t_msg *temp;
-
-	temp = node->next;
 	if (!node->len)
 	{
 		node->len = ft_atoi(node->msg_size);
@@ -58,7 +45,6 @@ static t_msg	*received_null_byte(t_msg *node)
 		free(node->msg);
 		*node = (t_msg){0};
 	}
-	return (temp);
 }
 
 static void treat_byte(t_msg *node, int sig)
@@ -74,16 +60,13 @@ static void treat_byte(t_msg *node, int sig)
 		node->bit = 7;
 	}
 	else if (node->bit < 0 && !node->c)
-		node->next = received_null_byte(node);
+		received_null_byte(node);
 }
 
 void binary_signal(int sig, int sender_pid)
 {
 	static t_msg	node;
-	t_msg			*ptr;
 
-    if (sig == SIGINT)
-		clear_list(&node);
-	ptr = set_node(&node, sender_pid);
-	treat_byte(ptr, sig);
+	set_node(&node, sender_pid);
+	treat_byte(&node, sig);
 }

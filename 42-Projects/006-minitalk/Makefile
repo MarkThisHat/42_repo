@@ -39,7 +39,7 @@ test:
 	@echo $(C_OBJ)
 
 $(NAME1): $(S_OBJ) $(FTLIB)
-	cc $(S_OBJ) $(FTLIB) -g -o $@
+	cc $(S_OBJ) $(FTLIB) -o $@
 
 $(NAME2): $(C_OBJ) $(FTLIB)
 	cc $(C_OBJ) $(FTLIB) -o $@

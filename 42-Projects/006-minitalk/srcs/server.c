@@ -29,8 +29,7 @@ int	main(void)
 	s_action.sa_sigaction = &sig_handler;
 	sigaction(SIGUSR1, &s_action, NULL);
 	sigaction(SIGUSR2, &s_action, NULL);
-	sigaction(SIGINT, &s_action, NULL);
-	ft_printf("Server ID is [%i]. Press Ctrl + C to exit\n", getpid());
+	ft_printf("Server ID is [%i]\n", getpid());
 	while (42)
 		sleep(1);
 	return (0);

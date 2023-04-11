@@ -20,20 +20,6 @@ void	leave_program(char *str, int return_code)
 		exit (return_code);
 }
 
-void	clear_list(t_msg *node)
-{
-	t_msg *tmp;
-
-	ft_printf("pog\n");
-	while(node->next)
-	{
-		tmp = node->next;
-		free(node->next);
-		node->next = tmp;
-	}
-	leave_program("clear_list ok", 0);
-}
-
 void print_binary(char c)
 {
 	int i;
