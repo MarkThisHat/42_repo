@@ -19,3 +19,31 @@ void	leave_program(char *str, int return_code)
 		ft_putstr_fd(str, 2);
 		exit (return_code);
 }
+
+void	clear_list(t_msg *node)
+{
+	t_msg *tmp;
+
+	ft_printf("pog\n");
+	while(node->next)
+	{
+		tmp = node->next;
+		free(node->next);
+		node->next = tmp;
+	}
+	leave_program("clear_list ok", 0);
+}
+
+void print_binary(char c)
+{
+	int i;
+
+	for (i = 7; i >= 0; i--) {
+		if (c & (1 << i)) {
+			ft_printf("1");
+		} else {
+			ft_printf("0");
+		}
+	}
+	ft_printf("\n");
+}

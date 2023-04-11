@@ -12,84 +12,11 @@
 
 #include "../incl/minitalk.h"
 
-
-void print_binary(char c)
-{
-	int i;
-
-	for (i = 7; i >= 0; i--) {
-		if (c & (1 << i)) {
-			ft_printf("1");
-		} else {
-			ft_printf("0");
-		}
-	}
-	ft_printf("\n");
-}
-
-static void binary_signal(int sig, int sender_pid)
-{
-	static unsigned char	c;
-	static int	pid;
-	static int	bit;
-
-	if (pid && pid != sender_pid)
-		return ;
-	if (!c && !pid && !bit)
-	{
-		pid = sender_pid;
-		bit = 7;
-	}
-	if (sig == SIGUSR1)
-		c |= (1 << bit);
-	bit--;
-	if (bit < 0 && c)
-	{
-		ft_printf("%c", c);
-		bit = 7;
-		c = 0;
-	}
-	else if (bit < 0 && !c)
-	{
-		ft_printf("\n#End of Message#\n");
-		pid = 0;
-		bit = 0;
-	}
-/*	if (sig == SIGUSR1)
-		ft_printf("\nSIGUSR1\n");
-	else if (sig == SIGUSR2)
-		ft_printf("\nSIGUSR2\n");
-	ft_printf("leaving bith with bit: %i\npid %i\nchar: ", bit, pid);
-	print_binary(c);*/
-}
-
 static void	sig_handler(int sig, siginfo_t *info, void *context)
 {
-	static int count;
-
 	if (sig == SIGUSR1 || sig == SIGUSR2)
 		binary_signal(sig, info->si_pid);
-	if (sig == SIGINT)
-	{
-		if (!count)
-			ft_printf("\nAh, so you wanna quit the server?\n");
-		else if (count == 1)
-/*			ft_printf("\nGonna have to try harder than that\n");
-		else if (count == 2)
-			ft_printf("\nKeep trying, chump\n");
-		else if (count == 3)
-			ft_printf("\nGetting closer, are we?\n");
-		else if (count == 4)
-			ft_printf("\nOnce more, with feeling\n");
-		else if (count == 5)*/
-		{
-			ft_printf("\nOk, goodbye and thanks for all the signals!\n");
-			exit (0);
-		}
-		count++;
-	}
 	(void)context;
-	(void)info;
 }
 
 int	main(void)
@@ -103,7 +30,7 @@ int	main(void)
 	sigaction(SIGUSR1, &s_action, NULL);
 	sigaction(SIGUSR2, &s_action, NULL);
 	sigaction(SIGINT, &s_action, NULL);
-	ft_printf("Server ID is %i\n", getpid());
+	ft_printf("Server ID is [%i]. Press Ctrl + C to exit\n", getpid());
 	while (42)
 		sleep(1);
 	return (0);

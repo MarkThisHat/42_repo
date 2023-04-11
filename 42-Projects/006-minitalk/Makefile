@@ -26,7 +26,7 @@ FTLIB := $(FTLIB_DIR)/libft.a
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
-FUN := mini_utils.c
+FUN := mini_utils.c linked_list.c
 
 # Object files
 C_OBJ := $(OBJ_DIR)/$(NAME2).o $(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -39,7 +39,7 @@ test:
 	@echo $(C_OBJ)
 
 $(NAME1): $(S_OBJ) $(FTLIB)
-	cc $(S_OBJ) $(FTLIB) -o $@
+	cc $(S_OBJ) $(FTLIB) -g -o $@
 
 $(NAME2): $(C_OBJ) $(FTLIB)
 	cc $(C_OBJ) $(FTLIB) -o $@

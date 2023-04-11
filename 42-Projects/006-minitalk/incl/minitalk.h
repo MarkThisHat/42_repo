@@ -15,7 +15,20 @@
 #include <unistd.h>
 #include "../libs/libft/incl/libft.h"
 
+typedef struct s_msg {
+	char	c;
+	char	*msg;
+	char	msg_size[7];
+	int		pid;
+	int		bit;
+	int		len;
+	struct s_msg	*next;
+}	t_msg;
+
 void	leave_program(char *str, int return_code);
+void	binary_signal(int sig, int sender_pid);
+void	clear_list(t_msg *node);
+void	print_binary(char c);
 
 /*
 struct sigaction {

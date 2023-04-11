@@ -17,6 +17,8 @@ int	s_specif(const char *str, va_list args, int count)
 	char	c;
 	char	*s;
 
+	s = NULL;
+	c = 0;
 	if (*str == 'c')
 	{
 		c = va_arg(args, int);
