@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:54:24 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/08 23:16:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:36:13 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ static void send_char(unsigned char c, int pid)
 	{
 		send_bit((c >> i) & 1, pid);
 		i--;
-		usleep(1000);
+        usleep(4200);
 	}
+	ft_printf(" %c", c);
+	ft_printf(" \n");
 }
 
 static void	send_message(char *str, int pid)
@@ -45,21 +47,20 @@ static void	send_message(char *str, int pid)
 
 int	main(int argc, char **argv)
 {
-	char	*len;
-	int		pid;
-	int		length;
+	int	pid;
+	struct sigaction s_action;
+
+	s_action.sa_handler = NULL;
+	s_action.sa_mask = (sigset_t){0};
+	s_action.sa_flags = SA_SIGINFO;
+	s_action.sa_sigaction = &sig_handler;
+	sigaction(SIGUSR1, &s_action, NULL);
+	sigaction(SIGUSR2, &s_action, NULL);
 
 	if (argc != 3)
 		leave_program("Usage ./client [server PID] [message]\n", 1);
 	pid = ft_atoi(argv[1]);
 	if (pid < 1)
 		leave_program("Server PID has to be numeric and positive\n", 1);
-	length = ft_strlen(argv[2]);
-	if (length > 99999)
-		leave_program("Cannot send message with 100k characters or more\n", 1);
-	len = ft_itoa(length);
-	send_message(len, pid);
-	free(len);
-	len = NULL;
 	send_message(argv[2], pid);
 }

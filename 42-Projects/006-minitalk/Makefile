@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/04/07 13:27:18 by maalexan         ###   ########.fr        #
+#    Updated: 2023/04/11 17:27:46 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,9 +70,10 @@ clean:
 
 fclean: clean
 	@$(MAKE) -C $(FTLIB_DIR) fclean
-	@[ -f ./$(NAME2) ] && rm $(NAME2) && echo $(NAME2) cleaned || echo Program $(NAME2) isn\'t compiled
-	@[ -f ./$(NAME1) ] && rm $(NAME1) && echo $(NAME1) cleaned || echo Program $(NAME1) isn\'t compiled
-	@[ -f ./minitalk_bonus ] && rm minitalk_bonus && echo bonus cleaned || echo bonus minitalk isn\'t compiled
+	@[ -f ./$(NAME2) ] && rm $(NAME2) || echo Program $(NAME2) isn\'t compiled
+	@[ -f ./$(NAME1) ] && rm $(NAME1) || echo Program $(NAME1) isn\'t compiled
+	@[ -f ./$(NAME2)_bonus ] && rm $(NAME2)_bonus|| echo Bonus $(NAME2) isn\'t compiled
+	@[ -f ./$(NAME1)_bonus ] && rm $(NAME1)_bonus|| echo Bonus $(NAME1) isn\'t compiled
 
 re: fclean all
 
