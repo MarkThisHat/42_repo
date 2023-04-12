@@ -12,34 +12,33 @@
 
 #include "../incl/minitalk.h"
 
-
 static void binary_signal(int sig, int sender_pid)
 {
-	static unsigned char	c;
-	static int	pid;
-	static int	bit;
+	static t_msg	talk;
 
-	if (pid && pid != sender_pid)
+	if (talk.pid && talk.pid != sender_pid)
 		return ;
-	if (!c && !pid && !bit)
+	if (!talk.c && !talk.pid && !talk.bit)
 	{
-		pid = sender_pid;
-		bit = 7;
+		talk.pid = sender_pid;
+		talk.bit = 7;
 	}
 	if (sig == SIGUSR1)
-		c |= (1 << bit);
-	bit--;
-	if (bit < 0 && c)
+		talk.c |= (1 << talk.bit);
+	talk.bit--;
+	if (talk.bit < 0 && talk.c)
 	{
-		ft_printf("%c", c);
-		bit = 7;
-		c = 0;
+		ft_printf("%c", talk.c);
+		talk.bit = 7;
+		talk.c = 0;
 	}
-	else if (bit < 0 && !c)
+	else if (talk.bit < 0 && !talk.c)
 	{
-		pid = 0;
-		bit = 0;
+		kill(talk.pid, SIGUSR2);
+		talk.pid = 0;
+		talk.bit = 0;
 	}
+	kill(sender_pid, SIGUSR1);
 }
 
 static void	sig_handler(int sig, siginfo_t *info, void *context)
@@ -51,7 +50,7 @@ static void	sig_handler(int sig, siginfo_t *info, void *context)
 	if (sig == SIGINT)
 	{
 		if (!count)
-			ft_printf("\nAh, so you wanna quit the server?\n");
+/*			ft_printf("\nAh, so you wanna quit the server?\n");
 		else if (count == 1)
 			ft_printf("\nGonna have to try harder than that\n");
 		else if (count == 2)

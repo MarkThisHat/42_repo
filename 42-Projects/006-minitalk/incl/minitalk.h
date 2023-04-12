@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include "../libs/libft/incl/libft.h"
-
+/*
 typedef struct s_msg {
 	char	c;
 	char	*msg;
@@ -23,9 +23,16 @@ typedef struct s_msg {
 	int		bit;
 	int		len;
 }	t_msg;
+*/
+
+typedef struct s_msg {
+	char	c;
+	int		pid;
+	int		bit;
+}			t_msg;
 
 void	leave_program(char *str, int return_code);
-void	binary_signal(int sig, int sender_pid);
+//void	binary_signal(int sig, int sender_pid);
 void	print_binary(char c);
 
 /*
