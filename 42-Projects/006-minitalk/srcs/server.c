@@ -6,25 +6,44 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:22:12 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/11 17:34:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 19:30:49 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
 
+volatile sig_atomic_t	g_andalf = 0;
+
+
+static void over_kill(int pid)
+{
+	g_andalf = 1;
+	if (g_andalf)
+	{
+		kill(pid, SIGUSR2);
+		g_andalf = 0;
+	}
+	if (!g_andalf)
+		kill(pid, SIGUSR1);
+}
+
 static void binary_signal(int sig, int sender_pid)
 {
 	static t_msg	talk;
+	
 	if (talk.pid && talk.pid != sender_pid)
 		return ;
 	if (!talk.c && !talk.pid && !talk.bit)
 	{
 		talk.pid = sender_pid;
 		talk.bit = 7;
+		over_kill(talk.pid);
+		return ;
 	}
 	if (sig == SIGUSR1)
 		talk.c |= (1 << talk.bit);
-	ft_printf("\n%i\n", (1 << talk.bit));
+	else if (sig == SIGUSR2)
+		talk.c &= ~(1 << talk.bit);
 	talk.bit--;
 	if (talk.bit < 0)
 	{
@@ -35,18 +54,25 @@ static void binary_signal(int sig, int sender_pid)
 			talk.c = 0;
 		}
 		else
+		{
 			talk = (t_msg){0};
+			over_kill(sender_pid);
+			return ;
+		}
 	}
-	kill(sender_pid, SIGUSR1);
-	print_binary(talk.c);
+	over_kill(talk.pid);
+//	print_binary(talk.c);
 }
 
 static void	sig_handler(int sig, siginfo_t *info, void *context)
 {
 //	static int count;
-
+//	g_andalf = sig;
 	if (sig == SIGUSR1 || sig == SIGUSR2)
+	{
+		//kill(info->si_pid, SIGUSR1);
 		binary_signal(sig, info->si_pid);
+	}
 	if (sig == SIGINT)
 /*	{
 		if (!count)

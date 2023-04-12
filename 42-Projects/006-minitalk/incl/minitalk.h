@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/18 16:41:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:44:56 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_msg {
 	int		pid;
 	int		bit;
 }			t_msg;
+
+extern volatile sig_atomic_t	g_andalf;
 
 void	leave_program(char *str, int return_code);
 //void	binary_signal(int sig, int sender_pid);
