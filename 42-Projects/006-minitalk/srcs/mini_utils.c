@@ -19,3 +19,16 @@ void	leave_program(char *str, int return_code)
 		ft_putstr_fd(str, 2);
 		exit (return_code);
 }
+
+void print_binary(char c)
+{
+	int i;
+	for (i = 7; i >= 0; i--) {
+		if (c & (1 << i)) {
+			ft_printf("1");
+		} else {
+			ft_printf("0");
+		}
+	}
+	ft_printf("\n");
+}

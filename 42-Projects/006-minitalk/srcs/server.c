@@ -39,6 +39,7 @@ static void binary_signal(int sig, int sender_pid)
 		talk.bit = 0;
 	}
 	kill(sender_pid, SIGUSR1);
+	print_binary(talk.c);
 }
 
 static void	sig_handler(int sig, siginfo_t *info, void *context)

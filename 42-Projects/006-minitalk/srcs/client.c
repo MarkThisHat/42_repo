@@ -15,54 +15,48 @@
 static void send_bit(int bit, int pid)
 {
 	if (!bit)
+{
 		kill(pid, SIGUSR2);
+		ft_printf("0");
+}
 	else
+{	
 		kill(pid, SIGUSR1);
-	usleep(100);
-//	ft_printf("%i\n", pid);
+		ft_printf("1");
+}
+	usleep(4200);
 }
 
-static void send_char(unsigned char c, int pid)
+static void send_char(unsigned char c, int pid, int i)
 {
-	static int	i;
-	static char	sending;
-
-	if (!sending && c)
-	{
-		i = 7;
-		sending = c;
-	}
-	if (c)
-		send_bit((sending >> i) & 1, pid);
-	else
 		send_bit((c >> i) & 1, pid);
-	i--;
-	ft_printf("sendchar %i\n", i);
-	if (i < 0)
-		sending = 0;
 }
 
 static void	send_message(char *str, int pid)
 {
 	static char	*message;
 	static int	i;
+	static int	last;
 
 	if (str)
-		message = str;
-	if (*message)
 	{
-		send_char(*message, pid);
-		ft_printf("i is %i and msg is %c\n", i, *message);
-		if (i < 7)
-			i++;
-		else
-		{
-			i = 0;
-			message++;
-		}
+		message = str;
+		i = 7;
 	}
-	else
-		send_char(0, pid);
+	send_char(*message, pid, i);
+	i--;
+	if (i < 0)
+	{
+		i = 7;
+		message++;
+	}
+	if (!*message)
+		last++;
+	if (last > 8)
+	{
+		ft_printf("pog\n");
+		leave_program("Done", 0);
+	}
 }
 
 static void	sig_c_handler(int sig, siginfo_t *info, void *context)
