@@ -6,11 +6,18 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 11:23:57 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/07 11:24:24 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:18:31 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
+
+sig_atomic_t	trade_signals(sig_atomic_t oldsig, int newsig)
+{
+	int	err;
+	
+	err = kill()	
+}
 
 void	leave_program(char *str, int return_code)
 {
@@ -20,15 +27,19 @@ void	leave_program(char *str, int return_code)
 		exit (return_code);
 }
 
-void print_binary(char c)
-{
-	int i;
-	for (i = 7; i >= 0; i--) {
-		if (c & (1 << i)) {
-			ft_printf("1");
-		} else {
-			ft_printf("0");
-		}
-	}
-	ft_printf("\n");
-}
+/*
+	recebi SIGUSR1 (old signal)
+	envio SIGUSR2
+	pauso até receber SIGUSR1
+	vida que segue
+
+
+
+client:
+
+0110: 
+manda SIGUSR2
+
+
+
+*/

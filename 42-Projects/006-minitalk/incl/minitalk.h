@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/12 18:44:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/12 20:05:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <signal.h>
 #include <unistd.h>
 #include "../libs/libft/incl/libft.h"
-/*
+
 typedef struct s_msg {
 	char	c;
 	char	*msg;
@@ -23,18 +23,12 @@ typedef struct s_msg {
 	int		bit;
 	int		len;
 }	t_msg;
-*/
-
-typedef struct s_msg {
-	char	c;
-	int		pid;
-	int		bit;
-}			t_msg;
 
 extern volatile sig_atomic_t	g_andalf;
 
 void	leave_program(char *str, int return_code);
-//void	binary_signal(int sig, int sender_pid);
+void	binary_signal(int sig, int sender_pid);
+sig_atomic_t	trade_signals(sig_atomic_t oldsig, int newsig);
 void	print_binary(char c);
 
 /*
