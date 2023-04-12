@@ -14,22 +14,21 @@
 
 static void send_bit(int bit, int pid)
 {
+	int err;
+
 	if (!bit)
 {
-		kill(pid, SIGUSR2);
+		err = kill(pid, SIGUSR2);
 		ft_printf("0");
 }
 	else
 {	
-		kill(pid, SIGUSR1);
+		err = kill(pid, SIGUSR1);
 		ft_printf("1");
 }
-	usleep(4200);
-}
-
-static void send_char(unsigned char c, int pid, int i)
-{
-		send_bit((c >> i) & 1, pid);
+	if (err)
+		leave_program("Failed to send signal\n", 1);
+	usleep(100);
 }
 
 static void	send_message(char *str, int pid)
@@ -43,9 +42,9 @@ static void	send_message(char *str, int pid)
 		message = str;
 		i = 7;
 	}
-	send_char(*message, pid, i);
+	send_bit((*message >> i) & 1, pid);
 	i--;
-	if (i < 0)
+	if (i < 0 && *message)
 	{
 		i = 7;
 		message++;
@@ -53,10 +52,7 @@ static void	send_message(char *str, int pid)
 	if (!*message)
 		last++;
 	if (last > 8)
-	{
-		ft_printf("pog\n");
-		leave_program("Done", 0);
-	}
+		leave_program("\nLeft on my own volition\n", 42);
 }
 
 static void	sig_c_handler(int sig, siginfo_t *info, void *context)
@@ -64,13 +60,17 @@ static void	sig_c_handler(int sig, siginfo_t *info, void *context)
 	if (sig == SIGUSR1)
 		send_message(0, info->si_pid);
 	if (sig == SIGUSR2)
+	{
+		ft_printf("\nLeft by server\n");
 		leave_program("Success", 0);
+	}
 	(void)context;
 }
 
 int	main(int argc, char **argv)
 {
 	int	pid;
+	sigset_t	ice;
 	struct sigaction s_action;
 
 	if (argc != 3)
@@ -78,12 +78,15 @@ int	main(int argc, char **argv)
 	pid = ft_atoi(argv[1]);
 	if (pid < 1)
 		leave_program("Server PID has to be numeric and positive\n", 1);
+	sigemptyset(&ice);
 	s_action.sa_handler = NULL;
-	s_action.sa_mask = (sigset_t){0};
+	s_action.sa_mask = ice;
 	s_action.sa_flags = SA_SIGINFO;
 	s_action.sa_sigaction = &sig_c_handler;
 	sigaction(SIGUSR1, &s_action, NULL);
 	sigaction(SIGUSR2, &s_action, NULL);
 	send_message(argv[2], pid);
-	sleep(10);
+	while (42)
+		;
+	ft_printf("\nbye\n");
 }
