@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:54:24 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/12 20:01:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:55:39 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 volatile sig_atomic_t	g_andalf = 0;
 
-static void send_bit(int bit, int pid)
+static void	send_bit(int bit, int pid)
 {
-    g_andalf = 0;
-    while (!g_andalf)
-    {
-        if (!bit)
-            kill(pid, SIGUSR2);
-        else
-            kill(pid, SIGUSR1);
-        usleep(42000);
-    }
+	g_andalf = 0;
+	while (!g_andalf)
+	{
+		if (!bit)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		usleep(42000);
+	}
 }
 
-static void send_char(unsigned char c, int pid)
+static void	send_char(unsigned char c, int pid)
 {
 	int	i;
 
@@ -49,19 +49,19 @@ static void	send_message(char *str, int pid)
 	send_char(0, pid);
 }
 
-static void sig_c_handler(int sig, siginfo_t *info, void *context)
+static void	sig_c_handler(int sig, siginfo_t *info, void *context)
 {
-    if (sig == SIGUSR1)
+	if (sig == SIGUSR1)
 		g_andalf = 1;
 	(void)info;
-    (void)context;
+	(void)context;
 }
 
 int	main(int argc, char **argv)
 {
-	int	pid;
-	struct sigaction s_action;
-	sigset_t ice;
+	int					pid;
+	struct sigaction	s_action;
+	sigset_t			ice;
 
 	if (argc != 3)
 		leave_program("Usage ./client [server PID] [message]\n", 1);

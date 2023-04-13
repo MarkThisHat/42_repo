@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:22:12 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/12 20:01:24 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:56:42 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	process_character(unsigned char *c, int *pid, int *bit)
 	}
 }
 
-static void binary_signal(int sig, int sender_pid)
+static void	binary_signal(int sig, int sender_pid)
 {
 	static unsigned char	c;
-	static int	pid;
-	static int	bit;
+	static int				pid;
+	static int				bit;
 
 	if (pid && pid != sender_pid)
 		return ;
@@ -52,7 +52,7 @@ static void binary_signal(int sig, int sender_pid)
 	kill(sender_pid, SIGUSR1);
 }
 
-static void sig_handler(int sig, siginfo_t *info, void *context)
+static void	sig_handler(int sig, siginfo_t *info, void *context)
 {
 	if (sig == SIGUSR1 || sig == SIGUSR2)
 	{
@@ -66,8 +66,8 @@ static void sig_handler(int sig, siginfo_t *info, void *context)
 
 int	main(void)
 {
-	struct sigaction s_action;
-	sigset_t	ice;
+	struct sigaction	s_action;
+	sigset_t			ice;
 
 	sigemptyset(&ice);
 	s_action.sa_handler = NULL;

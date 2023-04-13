@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:43:54 by maalexan          #+#    #+#             */
-/*   Updated: 2023/03/26 18:25:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:52:59 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	find_len(int n, int base)
 
 static void	fill_in(char *r, int n, int based, int len)
 {
-	int sign;
+	int	sign;
 
 	if (based < 0)
 	{
