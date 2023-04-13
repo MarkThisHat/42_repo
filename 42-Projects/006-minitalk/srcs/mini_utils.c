@@ -11,14 +11,7 @@
 /* ************************************************************************** */
 
 #include "../incl/minitalk.h"
-/*
-sig_atomic_t	trade_signals(sig_atomic_t oldsig, int newsig)
-{
-	int	err;
-	
-	err = kill()	
-}
-*/
+
 void	leave_program(char *str, int return_code)
 {
 		if (return_code == 0)
@@ -26,20 +19,3 @@ void	leave_program(char *str, int return_code)
 		ft_putstr_fd(str, 2);
 		exit (return_code);
 }
-
-/*
-	recebi SIGUSR1 (old signal)
-	envio SIGUSR1
-	pauso até receber SIGUSR2
-	vida que segue
-
-
-
-client:
-
-0110: 
-manda SIGUSR2
-
-
-
-*/

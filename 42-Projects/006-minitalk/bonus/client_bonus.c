@@ -53,6 +53,11 @@ static void sig_c_handler(int sig, siginfo_t *info, void *context)
 {
     if (sig == SIGUSR1)
 		g_andalf = 1;
+	if (sig == SIGUSR2)
+	{
+		ft_printf("\n\t\"Polo!\"\n\n");
+		leave_program(0, 0);
+	}
 	(void)info;
     (void)context;
 }
@@ -74,5 +79,8 @@ int	main(int argc, char **argv)
 	s_action.sa_flags = SA_SIGINFO;
 	s_action.sa_sigaction = &sig_c_handler;
 	sigaction(SIGUSR1, &s_action, NULL);
+	sigaction(SIGUSR2, &s_action, NULL);
 	send_message(argv[2], pid);
+	while (42)
+		;
 }

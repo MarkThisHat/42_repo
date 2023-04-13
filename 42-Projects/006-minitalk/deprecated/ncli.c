@@ -23,7 +23,7 @@ static void send_bit(int bit, int pid)
             kill(pid, SIGUSR2);
         else
             kill(pid, SIGUSR1);
-        usleep(42000);
+        usleep(42000); // Adjust usleep time as needed
     }
 }
 

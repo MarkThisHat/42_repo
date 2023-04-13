@@ -14,15 +14,15 @@
 
 volatile sig_atomic_t	g_andalf = 0;
 
-static void	process_character(unsigned char *c, int *pid, int *bit)
+static void process_character(int *bit, int *pid, unsigned char *c)
 {
-	if (*c)
+	if (*bit <= 0 && *c)
 	{
 		write(1, c, 1);
 		*bit = 7;
 		*c = 0;
 	}
-	else
+	else if (*bit <= 0 && !*c)
 	{
 		write(1, "\n", 1);
 		*pid = 0;
@@ -30,14 +30,14 @@ static void	process_character(unsigned char *c, int *pid, int *bit)
 	}
 }
 
-static void binary_signal(int sig, int sender_pid)
+static void process_signal(int sig, int sender_pid)
 {
-	static unsigned char	c;
-	static int	pid;
-	static int	bit;
+	static unsigned char c;
+	static int pid;
+	static int bit;
 
 	if (pid && pid != sender_pid)
-		return ;
+		return;
 	if (!c && !pid && !bit)
 	{
 		pid = sender_pid;
@@ -46,8 +46,12 @@ static void binary_signal(int sig, int sender_pid)
 	if (sig == SIGUSR1)
 		c |= (1 << bit);
 	bit--;
-	if (bit < 0)
-		process_character(&c, &pid, &bit);
+	process_character(&bit, &pid, &c);
+}
+
+static void binary_signal(int sig, int sender_pid)
+{
+	process_signal(sig, sender_pid);
 	g_andalf = 1;
 	kill(sender_pid, SIGUSR1);
 }
@@ -60,7 +64,7 @@ static void sig_handler(int sig, siginfo_t *info, void *context)
 		binary_signal(sig, info->si_pid);
 	}
 	if (sig == SIGINT)
-		leave_program(0, 0);
+		exit(0);
 	(void)context;
 }
 

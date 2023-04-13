@@ -17,7 +17,7 @@ NAME2 := client
 # Directories for source, object and libraries
 SRC_DIR := ./srcs
 OBJ_DIR := ./objs
-BSRC_DIR := ./bonus/srcs
+BSRC_DIR := ./bonus/
 HDR_DIR := ./incl
 FTLIB_DIR := ./libs/libft
 FTLIB := $(FTLIB_DIR)/libft.a
@@ -27,7 +27,6 @@ CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
 FUN := mini_utils.c
-#linked_list.c
 
 # Object files
 C_OBJ := $(OBJ_DIR)/$(NAME2).o $(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -36,9 +35,6 @@ C_BOBJ := $(FUN:%.c=$(OBJ_DIR)/%_bonus.o) $(OBJ_DIR)/$(NAME2)_bonus.o
 S_BOBJ := $(FUN:%.c=$(OBJ_DIR)/%_bonus.o) $(OBJ_DIR)/$(NAME1)_bonus.o
 
 all: $(NAME1) $(NAME2)
-
-test:
-	@echo $(BOBJ)
 
 $(NAME1): $(S_OBJ) $(FTLIB)
 	cc $(S_OBJ) $(FTLIB) -o $@

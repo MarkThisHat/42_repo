@@ -24,7 +24,10 @@ static void	process_character(unsigned char *c, int *pid, int *bit)
 	}
 	else
 	{
-		write(1, "\n", 1);
+		ft_printf("\n\n#End of Message from PID %i#\n", *pid);
+		ft_printf("\n#Initiating advanced confirmation protocol#\n\n");
+		ft_printf("\t\"Marco?\"\n");
+		kill(*pid, SIGUSR2);
 		*pid = 0;
 		*bit = 0;
 	}
@@ -41,6 +44,7 @@ static void binary_signal(int sig, int sender_pid)
 	if (!c && !pid && !bit)
 	{
 		pid = sender_pid;
+		ft_printf("\n#Start of message from PID %i#\n\n", pid);
 		bit = 7;
 	}
 	if (sig == SIGUSR1)
@@ -60,7 +64,7 @@ static void sig_handler(int sig, siginfo_t *info, void *context)
 		binary_signal(sig, info->si_pid);
 	}
 	if (sig == SIGINT)
-		leave_program(0, 0);
+		exit(0);
 	(void)context;
 }
 

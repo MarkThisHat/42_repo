@@ -1,0 +1,338 @@
+Server ID is 407171
+sent:
+01110101 u
+01100111 g
+01100001 a
+00000000
+
+
+{{output:}}
+SIGUSR2
+leaving bith with bit: 6
+pid 407230
+char: 00000000
+
+SIGUSR1
+leaving bith with bit: 5
+pid 407230
+char: 01000000
+
+SIGUSR1
+leaving bith with bit: 4
+pid 407230
+char: 01100000
+
+SIGUSR1
+leaving bith with bit: 3
+pid 407230
+char: 01110000
+
+SIGUSR2
+leaving bith with bit: 2
+pid 407230
+char: 01110000
+
+SIGUSR1
+leaving bith with bit: 1
+pid 407230
+char: 01110100
+
+SIGUSR2
+leaving bith with bit: 0
+pid 407230
+char: 01110100
+u
+SIGUSR1
+leaving bith with bit: 7
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 6
+pid 407230
+char: 00000000
+
+SIGUSR1
+leaving bith with bit: 5
+pid 407230
+char: 01000000
+
+SIGUSR1
+leaving bith with bit: 4
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 3
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 2
+pid 407230
+char: 01100000
+
+SIGUSR1
+leaving bith with bit: 1
+pid 407230
+char: 01100100
+
+SIGUSR1
+leaving bith with bit: 0
+pid 407230
+char: 01100110
+g
+SIGUSR1
+leaving bith with bit: 7
+pid 407230
+char: 0
+SIGUSR2
+leaving bith with bit: 6
+pid 407230
+char: 00000000
+0000000
+
+SIGUSR1
+leaving bith with bit: 5
+pid 407230
+char: 01000000
+
+SIGUSR1
+leaving bith with bit: 4
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 3
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 2
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 1
+pid 407230
+char: 01100000
+
+SIGUSR2
+leaving bith with bit: 0
+pid 407230
+char: 01100000
+a
+SIGUSR1
+leaving bith with bit: 7
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 6
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 5
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 4
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 3
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 2
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 1
+pid 407230
+char: 00000000
+
+SIGUSR2
+leaving bith with bit: 0
+pid 407230
+char: 00000000
+pog
+
+SIGUSR2
+leaving bith with bit: 0
+pid 0
+char: 00000000
+
+
+
+//Handshake gepeto:
+
+static void send_message(char *str, int pid)
+{
+    static char *message;
+    static int i;
+    static int last;
+
+    if (str)
+    {
+        message = str;
+        i = 7;
+        last = 0;
+        // Send start of message signal
+        send_bit((SOM >> i) & 1, pid);
+    }
+
+    // ... rest of the function
+}
+
+
+//cont
+
+static void binary_signal(int sig, int sender_pid)
+{
+    static t_msg talk;
+    static int som_received = 0;
+
+    if (talk.pid && talk.pid != sender_pid)
+        return;
+
+    if (!talk.c && !talk.pid && !talk.bit)
+    {
+        talk.pid = sender_pid;
+        talk.bit = 7;
+    }
+
+    if (sig == SIGUSR1)
+        talk.c |= (1 << talk.bit);
+
+    talk.bit--;
+
+    if (talk.bit < 0)
+    {
+        if (!som_received)
+        {
+            if (talk.c == SOM)
+            {
+                som_received = 1;
+            }
+        }
+        else
+        {
+            if (talk.c)
+            {
+                write(1, &talk.c, 1);
+                talk.bit = 7;
+                talk.c = 0;
+            }
+            else
+            {
+                // Reset the struct and the SOM flag
+                talk.c = 0;
+                talk.bit = 7;
+                talk.pid = 0;
+                som_received = 0;
+            }
+        }
+    }
+
+    kill(sender_pid, SIGUSR1);
+    print_binary(talk.c);
+}
+
+
+////
+
+
+const fs = require('fs');
+
+// Get the current value of the "counter" environment variable
+let counter = pm.environment.get('counter');
+
+// If the variable doesn't exist, set it to 1
+if (!counter) {
+  counter = 1;
+}
+
+// Specify the path where you want to save the response
+const folderPath = '/path/to/folder/';
+
+// Specify the file name for the response, using the counter variable
+const fileName = `response_${__V(counter)}.json`;
+
+// Get the response body as a string
+const responseBody = pm.response.text();
+
+// Write the response body to a file
+fs.writeFileSync(folderPath + fileName, responseBody);
+
+// Increment the counter variable for the next request
+counter++;
+pm.environment.set('counter', counter);
+
+
+
+//
+
+const fs = require('fs');
+
+// Get the current value of the "counter" environment variable
+let counter = pm.environment.get('counter');
+
+// If the variable doesn't exist, set it to 1
+if (!counter) {
+  counter = 1;
+}
+
+// Specify the path where you want to save the response
+const folderPath = '/path/to/folder/';
+
+// Specify the file name for the response, using the counter variable and request number
+const fileName = `response_${__V(counter)}_${__V(pm.info.requestNum)}.json`;
+
+// Get the response body as a string
+let responseBody_${__V(pm.info.requestNum)} = pm.response.text();
+
+// Write the response body to a file
+fs.writeFileSync(folderPath + fileName, responseBody_${__V(pm.info.requestNum)});
+
+// Increment the counter variable for the next request
+counter++;
+pm.environment.set('counter', counter);
+
+///
+
+const fs = require('fs');
+
+// Get the current value of the "counter" environment variable
+let counter = pm.environment.get('counter');
+
+// If the variable doesn't exist, set it to 1
+if (!counter) {
+  counter = 1;
+}
+
+// Specify the path where you want to save the response
+const folderPath = '/path/to/folder/';
+
+// Specify the file name for the response, using the counter variable and request number
+const fileName = `response_${__V(counter)}_${__V(pm.info.requestNum)}.json`;
+
+// Get the response body as a string
+let responseBodyVarName = `responseBody_${__V(pm.info.requestNum)}`;
+let responseBody = pm.response.text();
+pm.variables.set(responseBodyVarName, responseBody);
+
+// Write the response body to a file
+fs.writeFileSync(folderPath + fileName, pm.variables.get(responseBodyVarName));
+
+// Increment the counter variable for the next request
+counter++;
+pm.environment.set('counter', counter);
+
+// gp4
+
