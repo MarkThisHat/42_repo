@@ -58,13 +58,30 @@ static void binary_signal(int sig, int sender_pid)
 
 static void sig_handler(int sig, siginfo_t *info, void *context)
 {
+	static int count;
+
 	if (sig == SIGUSR1 || sig == SIGUSR2)
 	{
 		g_andalf = 0;
 		binary_signal(sig, info->si_pid);
 	}
 	if (sig == SIGINT)
-		exit(0);
+	{
+		if (!count)
+			ft_printf("\nAh, so you wanna quit the server?\n");
+		else if (count == 1)
+			ft_printf("\nGonna have to try harder than that\n");
+		else if (count == 2)
+			ft_printf("\nGetting closer, are we?\n");
+		else if (count == 3)
+			ft_printf("\nOnce more, with feeling\n");
+		else if (count == 4)
+		{
+			ft_printf("\nOk, goodbye and thanks for all the signals!\n");
+			leave_program(0, 0);
+		}
+		count++;
+	}
 	(void)context;
 }
 
