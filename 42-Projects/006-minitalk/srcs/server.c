@@ -14,20 +14,6 @@
 
 volatile sig_atomic_t	g_andalf = 0;
 
-void print_binary(char c)
-{
-	int i;
-
-	for (i = 7; i >= 0; i--) {
-		if (c & (1 << i)) {
-			ft_printf("1");
-		} else {
-			ft_printf("0");
-		}
-	}
-	ft_printf("\n");
-}
-
 void binary_signal(int sig, int sender_pid)
 {
 	static unsigned char	c;
@@ -46,51 +32,30 @@ void binary_signal(int sig, int sender_pid)
 	bit--;
 	if (bit < 0 && c)
 	{
-		ft_printf("%c", c);
+		write(1, &c, 1);
 		bit = 7;
 		c = 0;
 	}
 	else if (bit < 0 && !c)
 	{
-		ft_printf("\n#End of Message#\n");
 		pid = 0;
 		bit = 0;
+		write(1, "\n", 1);
 	}
-/*	if (sig == SIGUSR1)
-		ft_printf("\nSIGUSR1\n");
-	else if (sig == SIGUSR2)
-		ft_printf("\nSIGUSR2\n");
-	ft_printf("leaving bith with bit: %i\npid %i\nchar: ", bit, pid);
-	print_binary(c);*/
+	g_andalf = 1;
+	kill(sender_pid, SIGUSR1);
 }
 
-static void	sig_handler(int sig, siginfo_t *info, void *context)
+static void sig_handler(int sig, siginfo_t *info, void *context)
 {
-	static int count;
-
 	if (sig == SIGUSR1 || sig == SIGUSR2)
-		binary_signal(sig, info->si_pid);
-	if (sig == SIGINT)
 	{
-		if (!count)
-/*			ft_printf("\nAh, so you wanna quit the server?\n");
-		else if (count == 1)
-			ft_printf("\nGonna have to try harder than that\n");
-		else if (count == 2)
-			ft_printf("\nKeep trying, chump\n");
-		else if (count == 3)
-			ft_printf("\nGetting closer, are we?\n");
-		else if (count == 4)
-			ft_printf("\nOnce more, with feeling\n");
-		else if (count == 5)*/
-		{
-			ft_printf("\nOk, goodbye and thanks for all the signals!\n");
-			exit (0);
-		}
-		count++;
+		g_andalf = 0;
+		binary_signal(sig, info->si_pid);
 	}
+	if (sig == SIGINT)
+		exit(0);
 	(void)context;
-	(void)info;
 }
 
 int	main(void)
@@ -109,5 +74,4 @@ int	main(void)
 	ft_printf("Server ID is %i\n", getpid());
 	while (42)
 		sleep(1);
-	return (0);
 }
