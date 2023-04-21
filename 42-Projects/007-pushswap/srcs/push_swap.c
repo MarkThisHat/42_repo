@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/19 11:17:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/20 19:03:34 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	print_pile(t_pile *pile)
 {
-	while (pile->next)
-	{
-		ft_printf("%i", pile->n);
-		print_pile(pile->next);
-	}
+	if (!pile->next)
+		return ;
+	ft_printf("%i\n", pile->n);
+	print_pile(pile->next);
 }
 
 void	fill_a(t_pile *a, int len, char **nbrs)
@@ -26,7 +25,8 @@ void	fill_a(t_pile *a, int len, char **nbrs)
 	static int	i;
 
 	i++;
-	while (i < len)
+	a->next = NULL;
+	if (i < len)
 	{
 		a->next = malloc(sizeof(t_pile));
 		if (!a->next)
@@ -34,7 +34,6 @@ void	fill_a(t_pile *a, int len, char **nbrs)
 		a->n = ft_atoi(nbrs[i]);
 		fill_a(a->next, len, nbrs);
 	}
-	a->next = NULL;
 }
 
 t_pile	*stack_up(int argc, char **argv)
