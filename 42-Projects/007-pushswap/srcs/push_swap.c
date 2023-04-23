@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/23 16:07:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/23 16:12:56 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,8 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 		return (1);
-	a = stack_up(argc, argv);
 	check_args(argc, argv);
-	print_item(a);
+	a = stack_up(argc, argv);
 	print_detailed(a);
 	free_and_leave(a, 0);
 	(void)b;
