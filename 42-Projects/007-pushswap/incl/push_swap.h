@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/19 11:16:53 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/23 14:06:30 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@
 # include <unistd.h>
 # include "../libs/libft/incl/libft.h"
 
-typedef struct s_pile t_pile;
+typedef struct s_item t_item;
 
-struct s_pile {
+struct s_item {
 	int		n;
 	int		i;
-	t_pile	*next;
-	t_pile	*prev;
-	t_pile	*head;
-	t_pile	*tail;
+	t_item	*next;
+	t_item	*prev;
 };
+
+typedef struct s_ctrl {
+	int		size_a;
+	int		size_b;
+	t_item	*head_a;
+	t_item	*head_b;
+	t_item	*tail_a;
+	t_item	*tail_b;
+} t_ctrl;
 
 void	leave_program(char *str, int return_code);
 void	check_args(int argc, char **argv);
