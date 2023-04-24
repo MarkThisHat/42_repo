@@ -10,21 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "push_swap.h"
 #include <stdio.h>
 
-typedef struct s_merge_data
-{
-	int	left;
-	int	middle;
-	int	right;
-	int	*stack;
-	int	*invers;
-	int	*l_half;
-	int	*r_half;
-}				t_merge_data;
-
-void	fill_arrays(t_merge_data *data, int n1, int n2)
+static void	fill_arrays(t_merge_data *data, int n1, int n2)
 {
 	int	i;
 	int	j;
@@ -37,7 +26,7 @@ void	fill_arrays(t_merge_data *data, int n1, int n2)
 		data->r_half[j] = data->stack[data->middle + 1 + j];
 }
 
-void	merge_arrays(t_merge_data *data, int n1, int n2)
+static void	merge_arrays(t_merge_data *data, int n1, int n2)
 {
 	int	i;
 	int	j;
@@ -64,15 +53,15 @@ void	merge_arrays(t_merge_data *data, int n1, int n2)
 		data->stack[k++] = data->r_half[j++];
 }
 
-void	merge(t_merge_data *data)
+static void	merge(t_merge_data *data)
 {
 	int	n1;
 	int	n2;
 
 	n1 = data->middle - data->left + 1;
 	n2 = data->right - data->middle;
-	data->l_half = (int *)malloc(n1 * sizeof(int));
-	data->r_half = (int *)malloc(n2 * sizeof(int));
+	data->l_half = malloc(n1 * sizeof(int));
+	data->r_half = malloc(n2 * sizeof(int));
 	fill_arrays(data, n1, n2);
 	merge_arrays(data, n1, n2);
 	free(data->l_half);

@@ -34,6 +34,18 @@ typedef struct s_ctrl {
 	t_item	*tail_b;
 } t_ctrl;
 
+typedef struct s_merge_data
+{
+	int	left;
+	int	middle;
+	int	right;
+	int	*stack;
+	int	*invers;
+	int	*l_half;
+	int	*r_half;
+}				t_merge_data;
+
+void	merge_sort(int *stack, int *invers, int left, int right);
 void	leave_program(char *str, int return_code);
 void	check_args(int argc, char **argv);
 void	check_digits(char *str);
