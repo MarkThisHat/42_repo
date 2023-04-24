@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/04/18 19:49:57 by maalexan         ###   ########.fr        #
+#    Updated: 2023/04/24 19:21:52 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ FTLIB := $(FTLIB_DIR)/libft.a
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
-FUN := push_swap.c ps_utils.c merge_swap.c
+FUN := push_swap.c ps_utils.c merge_swap.c push_index.c verify_input.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)

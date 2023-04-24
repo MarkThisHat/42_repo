@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/23 14:06:30 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:22:51 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ typedef struct s_merge_data
 void	merge_sort(int *stack, int *invers, int left, int right);
 void	leave_program(char *str, int return_code);
 void	check_args(int argc, char **argv);
-void	check_digits(char *str);
-void	check_size(char *str);
+int		check_unique(int *stack, t_item *item, int size, int *invers);
 void	empty_stack(t_item *item);
 void	free_and_leave(t_item *stack, int return_code);
 int		assess_pile(t_item *head, int size);

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/23 16:12:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:25:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
 
 t_item	*stack_up(int argc, char **argv)
 {
-	t_item *a;
+	t_item	*a;
 
 	if (argc == 2)
 		exit(0);
