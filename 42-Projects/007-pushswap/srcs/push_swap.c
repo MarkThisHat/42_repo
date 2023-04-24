@@ -12,26 +12,6 @@
 
 #include "push_swap.h"
 
-void	empty_stack(t_item *item)
-{
-	t_item	*temp;
-	
-	while (item->prev)
-		item = item->prev;
-	while (item)
-	{
-		temp = item->next;
-		free(item);
-		item = temp;
-	}
-}
-
-void	free_and_leave(t_item *stack, int return_code)
-{
-	empty_stack(stack);
-	exit(return_code);
-}
-
 void	print_item(t_item *item)
 {
 	ft_printf("%i\n", item->n);
@@ -42,11 +22,11 @@ void	print_item(t_item *item)
 
 void	print_detailed(t_item *item)
 {
-	ft_printf("\nCurrent: %i\n", item->n);
+	ft_printf("\nCurrent: %i index: %i\n", item->n, item->i);
 	if (item->next)
-		ft_printf("Next: %i\n", item->next->n);
+		ft_printf("Next: %i index: %i\n", item->next->n, item->next->i);
 	if (item->prev)
-		ft_printf("Previous: %i\n", item->prev->n);
+		ft_printf("Previous: %i index: %i\n", item->prev->n, item->prev->i);
 	if (!item->next)
 		return ;
 	print_detailed(item->next);
@@ -95,6 +75,7 @@ int	main(int argc, char **argv)
 		return (1);
 	check_args(argc, argv);
 	a = stack_up(argc, argv);
+	assess_pile(a, argc - 1);
 	print_detailed(a);
 	free_and_leave(a, 0);
 	(void)b;

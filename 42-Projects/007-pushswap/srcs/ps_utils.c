@@ -50,3 +50,23 @@ void	check_args(int argc, char **argv)
 		argc--;
 	}
 }
+
+void	empty_stack(t_item *item)
+{
+	t_item	*temp;
+	
+	while (item->prev)
+		item = item->prev;
+	while (item)
+	{
+		temp = item->next;
+		free(item);
+		item = temp;
+	}
+}
+
+void	free_and_leave(t_item *stack, int return_code)
+{
+	empty_stack(stack);
+	exit(return_code);
+}

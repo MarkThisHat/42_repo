@@ -25,7 +25,7 @@ FTLIB := $(FTLIB_DIR)/libft.a
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
-FUN := push_swap.c ps_utils.c
+FUN := push_swap.c ps_utils.c merge_swap.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)

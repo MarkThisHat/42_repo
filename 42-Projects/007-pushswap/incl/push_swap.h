@@ -50,5 +50,8 @@ void	leave_program(char *str, int return_code);
 void	check_args(int argc, char **argv);
 void	check_digits(char *str);
 void	check_size(char *str);
+void	empty_stack(t_item *item);
+void	free_and_leave(t_item *stack, int return_code);
+int		assess_pile(t_item *head, int size);
 
 #endif
