@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:49:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 21:09:42 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/25 10:48:19 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,37 @@
 
 int	swap_a(t_ctrl *c)
 {
-	t_item  *temp;
-	
 	if (c->size_a < 2)
 		return (0);
-	temp = c->head_a;
-	c->head_a = c->head_a->next;
-	c->head_a->next = temp;
+	ft_printf("before %i \n", c->head_a->n);
+	switch_nodes(c->head_a, c->head_a->next);
+	ft_printf("after %i \n", c->head_a->n);
+	c->head_a = c->head_a->prev;
+	if (c->size_a == 2)
+		c->tail_a = c->head_a->next;
+	ft_printf("even after %i \n", c->head_a->n);
 	return(SA);
 }
+
+/*
+void	switch_nodes(t_item *a, t_item *b)
+{
+	t_item	*temp;
+
+	if (b->next)
+		b->next->prev = a;
+	temp = a->next;
+	a->next = b->next;
+	a->prev = temp;
+	b->next = b->prev;
+	b->prev = a->prev;
+}
+
+	a->next = b->next;
+	a->prev = a->next;
+	b->next = b->prev;
+	b->prev = a->prev; */
+
 
 /*wtfgpt
 
@@ -56,4 +78,4 @@ int	swap_a(t_ctrl *c)
 	return(SA);
 }
 
-/*
+*/

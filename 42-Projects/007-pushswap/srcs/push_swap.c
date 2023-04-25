@@ -22,8 +22,8 @@ void	print_item(t_item *item)
 
 void	print_detailed(t_item *item)
 {
-	while (item->prev)
-		item = item->prev;
+//	while (item->prev)
+//		item = item->prev;
 	ft_printf("\nCurrent: %i index: %i\n", item->n, item->i);
 	if (item->next)
 		ft_printf("Next: %i index: %i\n", item->next->n, item->next->i);
@@ -82,6 +82,6 @@ int	main(int argc, char **argv)
 	print_detailed(a);
 	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
 	swap_a(&c);
-	print_detailed(a);
+	print_detailed(c.head_a);
 	free_and_leave(a, 0);
 }

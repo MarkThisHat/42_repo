@@ -64,6 +64,7 @@ void	empty_stack(t_item *item);
 void	free_and_leave(t_item *stack, int return_code);
 void	assess_pile(t_item *head, int size);
 void	set_control(t_ctrl *c, t_item *item, int size);
+void	switch_nodes(t_item *a, t_item *b);
 int		swap_a(t_ctrl *c);
 
 #endif
