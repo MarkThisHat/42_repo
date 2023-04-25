@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 19:25:57 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/24 21:02:27 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	print_item(t_item *item)
 
 void	print_detailed(t_item *item)
 {
+	while (item->prev)
+		item = item->prev;
 	ft_printf("\nCurrent: %i index: %i\n", item->n, item->i);
 	if (item->next)
 		ft_printf("Next: %i index: %i\n", item->next->n, item->next->i);
@@ -69,14 +71,17 @@ t_item	*stack_up(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_item	*a;
-	t_item	*b;
+	t_ctrl	c;
 
 	if (argc < 2)
 		return (1);
 	check_args(argc, argv);
 	a = stack_up(argc, argv);
+	set_control(&c, a, argc - 1);
 	assess_pile(a, argc - 1);
 	print_detailed(a);
+	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
+	swap_a(&c);
+	print_detailed(a);
 	free_and_leave(a, 0);
-	(void)b;
 }

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:18:01 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 19:27:13 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/24 19:36:25 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,25 @@ static void	set_index(t_item *item, int *stack, int size)
 		set_index(item, stack, size);
 }
 
+static int	check_unique(int *stack, t_item *item, int size, int *invers)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (stack[i] == stack[i + 1])
+		{
+			free(stack);
+			free(invers);
+			empty_stack(item);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 static int	*pile_on(t_item *item, int size, int *invers)
 {
 	int		i;
@@ -55,7 +74,7 @@ static int	*pile_on(t_item *item, int size, int *invers)
 	return (stack);
 }
 
-int	assess_pile(t_item *head, int size)
+void	assess_pile(t_item *head, int size)
 {
 	int	*stack;
 	int	*invers;
@@ -78,5 +97,4 @@ int	assess_pile(t_item *head, int size)
 	ft_printf("\n");
 	free(invers);
 	free(stack);
-	return (0);
 }
