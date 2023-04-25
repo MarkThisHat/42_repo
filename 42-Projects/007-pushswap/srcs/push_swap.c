@@ -78,10 +78,10 @@ int	main(int argc, char **argv)
 	check_args(argc, argv);
 	a = stack_up(argc, argv);
 	set_control(&c, a, argc - 1);
-	assess_pile(a, argc - 1);
-	print_detailed(a);
-	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
-	swap_a(&c);
+	assess_pile(c.head_a, argc - 1);
 	print_detailed(c.head_a);
-	free_and_leave(a, 0);
+	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
+	rotate_a(&c);
+	print_detailed(c.head_a);
+	free_and_leave(c.head_a, 0);
 }
