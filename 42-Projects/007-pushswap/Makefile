@@ -25,7 +25,7 @@ FTLIB := $(FTLIB_DIR)/libft.a
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
-FUN := push_swap.c ps_utils.c merge_swap.c push_index.c verify_input.c a_moves.c
+FUN := push_swap.c ps_utils.c merge_swap.c push_index.c verify_input.c node_swap.c a_moves.c b_moves.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -34,7 +34,7 @@ BOBJ := $(BFUN:%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(FTLIB)
-	cc $(OBJ) $(FTLIB) -o $@
+	cc $(OBJ) $(FTLIB) -g -o $@
 
 $(FTLIB):
 	@$(MAKE) -C $(FTLIB_DIR)

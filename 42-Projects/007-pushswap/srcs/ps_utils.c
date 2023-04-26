@@ -50,22 +50,6 @@ void	set_control(t_ctrl *c, t_item *item, int size)
 	c->size_a = size;
 }
 
-void	switch_adj_nodes(t_item *a, t_item *b)
-{
-	t_item	*temp;
-
-	if (a->prev)
-		a->prev->next = b;
-	if (b->next)
-		b->next->prev = a;
-	temp = b->next;
-	b->next = a;
-	a->next = temp;
-	temp = a->prev;
-	a->prev = b;
-	b->prev = temp;
-}
-
 /*
 void	switch_nodes(t_item *a, t_item *b)
 {

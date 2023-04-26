@@ -14,6 +14,8 @@
 
 void	print_item(t_item *item)
 {
+	if (!item)
+		return ;
 	ft_printf("%i\n", item->n);
 	if (!item->next)
 		return ;
@@ -24,6 +26,8 @@ void	print_detailed(t_item *item)
 {
 //	while (item->prev)
 //		item = item->prev;
+	if (!item)
+		return ;
 	ft_printf("\nCurrent: %i index: %i\n", item->n, item->i);
 	if (item->next)
 		ft_printf("Next: %i index: %i\n", item->next->n, item->next->i);
@@ -81,7 +85,11 @@ int	main(int argc, char **argv)
 	assess_pile(c.head_a, argc - 1);
 	print_detailed(c.head_a);
 	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
-	rotate_a(&c);
+	rev_rotate_a(&c);
+//	rotate_a(&c);
+	push_b(&c);
+	print_detailed(c.head_b);
+	push_a(&c);
 	print_detailed(c.head_a);
 	free_and_leave(c.head_a, 0);
 }

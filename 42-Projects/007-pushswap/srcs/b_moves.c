@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   a_moves.c                                          :+:      :+:    :+:   */
+/*   b_moves.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,68 +12,70 @@
 
 #include "push_swap.h"
 
-int	swap_a(t_ctrl *c)
+int	swap_b(t_ctrl *c)
 {
-	if (c->size_a < 2)
+	if (c->size_b < 2)
 		return (0);
-	switch_adj_nodes(c->head_a, c->head_a->next);
-	c->head_a = c->head_a->prev;
-	if (c->size_a == 2)
-		c->tail_a = c->head_a->next;
-	return(SA);
+	switch_adj_nodes(c->head_b, c->head_b->next);
+	c->head_b = c->head_b->prev;
+	if (c->size_b == 2)
+		c->tail_b = c->head_b->next;
+	return(SB);
 }
 
-int	rotate_a(t_ctrl *c)
+int	rotate_b(t_ctrl *c)
 {
 	t_item	*temp;
 
-	if (c->size_a < 2)
+	if (c->size_b < 2)
 		return (0);
-	if (c->size_a == 2)
-		return (swap_a(c) - SA + RA);
+	if (c->size_b == 2)
+		return (swap_b(c) - SB + RB);
 	temp = c->head_a;
 	c->head_a = c->head_a->next;
 	temp = sever_node(temp);
 	c->tail_a = place_node(temp, c->tail_a);
-	return(RA);
+	return(RB);
 }
 
-int	rev_rotate_a(t_ctrl *c)
+int	rev_rotate_b(t_ctrl *c)
 {
 	t_item	*temp;
 
-	if (c->size_a < 2)
-		return (0);
-	if (c->size_a == 2)
-		return (swap_a(c) - SA + RRA);
-	temp = c->tail_a;
-	c->tail_a = c->tail_a->prev;
-	temp = sever_node(temp);
-	c->head_a = place_node(temp, c->head_a);
-	return(RRA);
-}
-
-int		push_b(t_ctrl *c)
-{
-	t_item	*temp;
-
-	if (!c->size_a)
-		return (0);
-	temp = sever_node(c->head_a);
-	if (c->head_a->next)
-		c->head_a = c->head_a->next;
-	if (!c->size_b)
-		c->tail_b = temp;
-	if (c->size_b == 1)
-	{
-		c->head_b->prev = temp;
-		temp->next = c->head_b;
-	}
 	if (c->size_b < 2)
-		c->head_b = temp;
-	if (c->size_b > 1)
-		c->head_b = place_node(temp, c->head_b);
-	c->size_b++;
-	c->size_a--;
-	return(PB);
+		return (0);
+	if (c->size_b == 2)
+		return (swap_b(c) - SB + RRB);
+	temp = c->tail_b;
+	c->tail_b = c->tail_b->prev;
+	temp = sever_node(temp);
+	c->head_b = place_node(temp, c->head_b);
+	return(RRB);
+}
+
+int		push_a(t_ctrl *c)
+{
+	t_item	*temp;
+
+	if (!c->size_b)
+		return (0);
+	temp = sever_node(c->head_b);
+	if (c->head_b->next)
+		c->head_b = c->head_b->next;
+	if (!c->size_a)
+	{
+		c->head_a = temp;
+		c->tail_a = temp;
+	}
+	if (c->size_a == 1)
+	{
+		c->head_a->prev = temp;
+		temp->next = c->head_a;
+		c->head_a = temp;
+	}
+	if (c->size_a > 1)
+		c->head_a = place_node(temp, c->head_a);
+	c->size_a++;
+	c->size_b--;
+	return(PA);
 }
