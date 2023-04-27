@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:49:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/26 22:17:14 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:20:36 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,9 @@ int		push_a(t_ctrl *c)
 	}
 	if (c->size_a < 2)
 		c->head_a = temp;
-	if (c->size_a > 1)
+	if (c->size_a++ > 1)
 		c->head_a = place_node(temp, c->head_a);
-	c->size_a++;
-	c->size_b--;
-	if (!c->size_b)
+	if (!--c->size_b)
 	{
 		c->head_b = NULL;
 		c->tail_b = NULL;
