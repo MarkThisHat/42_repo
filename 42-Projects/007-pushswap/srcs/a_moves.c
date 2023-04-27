@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:49:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/26 10:01:31 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:16:40 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ int		push_b(t_ctrl *c)
 
 	if (!c->size_a)
 		return (0);
-	temp = sever_node(c->head_a);
-	if (c->head_a->next)
-		c->head_a = c->head_a->next;
+	temp = c->head_a;
+	c->head_a = c->head_a->next;
+	temp = sever_node(temp);
 	if (!c->size_b)
 		c->tail_b = temp;
 	if (c->size_b == 1)
@@ -75,5 +75,10 @@ int		push_b(t_ctrl *c)
 		c->head_b = place_node(temp, c->head_b);
 	c->size_b++;
 	c->size_a--;
+	if (!c->size_a)
+	{
+		c->head_a = NULL;
+		c->tail_a = NULL;
+	}
 	return(PB);
 }

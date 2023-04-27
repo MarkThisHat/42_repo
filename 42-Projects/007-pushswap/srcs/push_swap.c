@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 21:02:27 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/26 22:12:39 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,16 @@ int	main(int argc, char **argv)
 	assess_pile(c.head_a, argc - 1);
 	print_detailed(c.head_a);
 	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
-	rev_rotate_a(&c);
+//	rev_rotate_a(&c);
 //	rotate_a(&c);
 	push_b(&c);
+	push_b(&c);
+	ft_printf("stack b:\n");
 	print_detailed(c.head_b);
-	push_a(&c);
+//	push_a(&c);
+	ft_printf("stack a:\n");
 	print_detailed(c.head_a);
+	if (c.head_b)
+		empty_stack(c.head_b);
 	free_and_leave(c.head_a, 0);
 }
