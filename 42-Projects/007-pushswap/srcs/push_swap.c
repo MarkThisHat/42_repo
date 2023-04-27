@@ -56,8 +56,10 @@ int	main(int argc, char **argv)
 	c.head_a = stack_up(argc, argv);
 	set_control(&c, c.head_a, argc - 1);
 	assess_pile(c.head_a, argc - 1);
-	push_b(&c);
+	if (is_sorted(&c))
+		free_and_leave(c.head_a, 0);
 	print_full_stacks(&c);
+	test_moves(&c, 1);
 	if (c.head_b)
 		empty_stack(c.head_b);
 	if (c.head_a)

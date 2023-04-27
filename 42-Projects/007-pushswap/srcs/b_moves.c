@@ -31,10 +31,10 @@ int	rotate_b(t_ctrl *c)
 		return (0);
 	if (c->size_b == 2)
 		return (swap_b(c) - SB + RB);
-	temp = c->head_a;
-	c->head_a = c->head_a->next;
+	temp = c->head_b;
+	c->head_b = c->head_b->next;
 	temp = sever_node(temp);
-	c->tail_a = place_node(temp, c->tail_a);
+	c->tail_b = place_node(temp, c->tail_b);
 	return(RB);
 }
 

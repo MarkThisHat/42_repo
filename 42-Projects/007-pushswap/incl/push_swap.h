@@ -65,6 +65,7 @@ void	free_and_leave(t_item *stack, int return_code);
 void	assess_pile(t_item *head, int size);
 void	set_control(t_ctrl *c, t_item *item, int size);
 void	switch_adj_nodes(t_item *a, t_item *b);
+int		is_sorted(t_ctrl *c);
 int		swap_a(t_ctrl *c);
 int		swap_b(t_ctrl *c);
 int		swap_both(t_ctrl *c);
@@ -82,5 +83,6 @@ t_item	*place_node(t_item *item, t_item *edge);
 //not project
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);
+void	test_moves(t_ctrl *c, int mode);
 
 #endif
