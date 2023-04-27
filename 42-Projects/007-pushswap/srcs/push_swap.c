@@ -49,17 +49,20 @@ t_item	*stack_up(int argc, char **argv)
 int	main(int argc, char **argv)
 {
 	t_ctrl	c;
+	int		pivot;
 
 	if (argc < 2)
 		return (1);
 	check_args(argc, argv);
 	c.head_a = stack_up(argc, argv);
 	set_control(&c, c.head_a, argc - 1);
-	assess_pile(c.head_a, argc - 1);
+	pivot = assess_pile(c.head_a, argc - 1);
+	ft_printf("Pivot: %i\n", pivot);
 	if (is_sorted(&c))
 		free_and_leave(c.head_a, 0);
-	print_full_stacks(&c);
-	test_moves(&c, 1);
+	sort_stack(&c, pivot, c.size_a);
+/*	print_full_stacks(&c);
+	test_moves(&c, 1);*/
 	if (c.head_b)
 		empty_stack(c.head_b);
 	if (c.head_a)
