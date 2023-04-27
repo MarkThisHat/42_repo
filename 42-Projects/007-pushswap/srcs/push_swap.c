@@ -48,16 +48,14 @@ t_item	*stack_up(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_item	*a;
 	t_ctrl	c;
 
 	if (argc < 2)
 		return (1);
 	check_args(argc, argv);
-	a = stack_up(argc, argv);
-	set_control(&c, a, argc - 1);
+	c.head_a = stack_up(argc, argv);
+	set_control(&c, c.head_a, argc - 1);
 	assess_pile(c.head_a, argc - 1);
-	push_b(&c);
 	push_b(&c);
 	print_full_stacks(&c);
 	if (c.head_b)
