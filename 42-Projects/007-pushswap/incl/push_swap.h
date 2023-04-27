@@ -79,4 +79,8 @@ int		rev_rotate_both(t_ctrl *c);
 t_item	*sever_node(t_item *item);
 t_item	*place_node(t_item *item, t_item *edge);
 
+//not project
+void	print_stacks(t_ctrl *c);
+void	print_full_stacks(t_ctrl *c);
+
 #endif

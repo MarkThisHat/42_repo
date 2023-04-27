@@ -12,32 +12,6 @@
 
 #include "push_swap.h"
 
-void	print_item(t_item *item)
-{
-	if (!item)
-		return ;
-	ft_printf("%i\n", item->n);
-	if (!item->next)
-		return ;
-	print_item(item->next);
-}
-
-void	print_detailed(t_item *item)
-{
-//	while (item->prev)
-//		item = item->prev;
-	if (!item)
-		return ;
-	ft_printf("\nCurrent: %i index: %i\n", item->n, item->i);
-	if (item->next)
-		ft_printf("Next: %i index: %i\n", item->next->n, item->next->i);
-	if (item->prev)
-		ft_printf("Previous: %i index: %i\n", item->prev->n, item->prev->i);
-	if (!item->next)
-		return ;
-	print_detailed(item->next);
-}
-
 void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
 {
 	static int	i;
@@ -83,18 +57,13 @@ int	main(int argc, char **argv)
 	a = stack_up(argc, argv);
 	set_control(&c, a, argc - 1);
 	assess_pile(c.head_a, argc - 1);
-	print_detailed(c.head_a);
-	ft_printf("testiong\n\n%i\n\n\n", c.size_a);
-//	rev_rotate_a(&c);
-//	rotate_a(&c);
 	push_b(&c);
 	push_b(&c);
-	ft_printf("stack b:\n");
-	print_detailed(c.head_b);
-//	push_a(&c);
-	ft_printf("stack a:\n");
-	print_detailed(c.head_a);
+	print_full_stacks(&c);
 	if (c.head_b)
 		empty_stack(c.head_b);
-	free_and_leave(c.head_a, 0);
+	if (c.head_a)
+		free_and_leave(c.head_a, 0);
+	else
+		exit(0);
 }
