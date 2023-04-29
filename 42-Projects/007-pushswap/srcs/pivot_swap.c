@@ -2,19 +2,19 @@
 
 static double	calculate_sum(int *arr, int start, int end)
 {
-    int i;
-    double sum;
+	int		i;
+	double	sum;
 
-    sum = 0;
-    i = start - 1;
-    while (++i < end)
-        sum += arr[i];
-    return (sum);
+	sum = 0;
+	i = start - 1;
+	while (++i < end)
+		sum += arr[i];
+	return (sum);
 }
 
 static double	calculate_average(int *arr, int start, int end)
 {
-	double sum;
+	double	sum;
 
 	sum = calculate_sum(arr, start, end);
 	return (sum / (end - start));

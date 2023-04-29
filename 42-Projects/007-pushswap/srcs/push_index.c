@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:18:01 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 19:36:25 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:09:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	*pile_on(t_item *item, int size, int *invers)
 	return (stack);
 }
 
-int		assess_pile(t_item *head, int size)
+int	assess_pile(t_item *head, int size)
 {
 	int	*stack;
 	int	*invers;

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 19:42:08 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/26 22:12:39 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:15:04 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ int	main(int argc, char **argv)
 	if (is_sorted(&c))
 		free_and_leave(c.head_a, 0);
 	sort_stack(&c, pivot, c.size_a);
-/*	print_full_stacks(&c);
-	test_moves(&c, 1);*/
 	if (c.head_b)
 		empty_stack(c.head_b);
 	if (c.head_a)
 		free_and_leave(c.head_a, 0);
 	else
-		exit(0);
+		return (0);
 }

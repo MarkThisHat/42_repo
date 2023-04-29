@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:49:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/26 22:20:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:06:10 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	swap_b(t_ctrl *c)
 	c->head_b = c->head_b->prev;
 	if (c->size_b == 2)
 		c->tail_b = c->head_b->next;
-	return(SB);
+	return (SB);
 }
 
 int	rotate_b(t_ctrl *c)
@@ -35,7 +35,7 @@ int	rotate_b(t_ctrl *c)
 	c->head_b = c->head_b->next;
 	temp = sever_node(temp);
 	c->tail_b = place_node(temp, c->tail_b);
-	return(RB);
+	return (RB);
 }
 
 int	rev_rotate_b(t_ctrl *c)
@@ -50,10 +50,10 @@ int	rev_rotate_b(t_ctrl *c)
 	c->tail_b = c->tail_b->prev;
 	temp = sever_node(temp);
 	c->head_b = place_node(temp, c->head_b);
-	return(RRB);
+	return (RRB);
 }
 
-int		push_a(t_ctrl *c)
+int	push_a(t_ctrl *c)
 {
 	t_item	*temp;
 
@@ -78,5 +78,5 @@ int		push_a(t_ctrl *c)
 		c->head_b = NULL;
 		c->tail_b = NULL;
 	}
-	return(PA);
+	return (PA);
 }

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:12:24 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/27 15:40:32 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/04/28 21:09:35 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_args(int argc, char **argv)
 	}
 }
 
-int		is_sorted(t_ctrl *c)
+int	is_sorted(t_ctrl *c)
 {
 	t_item	*ptr;
 

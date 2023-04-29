@@ -94,7 +94,163 @@ int	sort_stack(t_ctrl *c, int quadrant, int size)
 	return (pivot);
 }
 
+int	sort_three(t_ctrl *c)
+{
+	t_item	*a;
+
+	a = c->head_a;
+	if (a->i > a->next->i)
+		swap_a(c);
+	
+}
+
 /*
+1 1 2 2 3 3
+2 3 1 3 1 2
+3 2 3 1 2 1
+
+
+1 2 2 3 3
+3 1 3 1 2
+2 3 1 2 1
+
+1	swap_a->rotate_a
+3	rev_rotate_a->swap_a
+2
+
+2	swap_a
+1
+3
+
+2	rev_rotate_a
+3
+1
+
+3	rotate_a
+1
+2
+
+3	swap_a->rev_rotate_a
+2	rotate_a->swap_a
+1
+
+four
+
+1 rev_rotate_a->rev_rotate_a->swap_a->rotate_a->rotate_a	 
+2 swap_a->rotate_a->swap_a ??
+4
+3
+
+1
+3
+2
+4
+
+1
+3
+4
+2
+
+1
+4
+2
+3
+
+1
+4
+3
+2
+
+2
+1
+3
+4
+
+2
+1
+4
+3
+
+2
+3
+1
+4
+
+2
+3
+4
+1
+
+2
+4
+1
+3
+
+2
+4
+3
+1
+
+3
+1
+2
+4
+
+3
+1
+4
+2
+
+3
+2
+1
+4
+
+3
+2
+4
+1
+
+3
+4
+1
+2
+
+3
+4
+2
+1
+
+4
+1
+2
+3
+
+4
+1
+3
+2
+
+4
+2
+1
+3
+
+4
+2
+3
+1
+
+4
+3
+1
+2
+
+4
+3
+2
+1
+
 int	sort_four(t_item *head, t_item *tail)
 {
 	int	i;
