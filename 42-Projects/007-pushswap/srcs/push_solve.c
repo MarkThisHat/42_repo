@@ -94,14 +94,32 @@ int	sort_stack(t_ctrl *c, int quadrant, int size)
 	return (pivot);
 }
 
-int	sort_three(t_ctrl *c)
+int	sort_three(t_item *item, int *sol)
 {
-	t_item	*a;
+	int	a;
+	int	b;
+	int	c;
 
-	a = c->head_a;
-	if (a->i > a->next->i)
-		swap_a(c);
-	
+	a = item->i;
+	b = item->next->i;
+	c = item->next->next->i;
+	if (a < b && b < c && a < c)
+		return (0);
+	if (a > b && b < c && a < c)
+		*sol = SA;
+	if (a > b && b < c && a > c)
+		*sol = RA;
+	if (*sol)
+		return (1);
+	if (a > b && b > c)
+		*sol = RA;
+	if (a < b && b > c)
+		*sol = RRA;
+	if (a < b && a > c)
+		return (1);
+	sol++;
+	*sol = SA;
+	return (2);
 }
 
 /*
@@ -114,155 +132,43 @@ int	sort_three(t_ctrl *c)
 3 1 3 1 2
 2 3 1 2 1
 
-1	swap_a->rotate_a
+1	//////swap_a->rotate_a//////
 3	rev_rotate_a->swap_a
 2
+if (a < b && b > c)
+if (a < c)
 
-2	swap_a
+//moves not used
+if (a < b && b > c && a < c)
+swap_a->rotate_a;
+if (a > b && b > c)
+swap-a->rev_rotate_a
+
+3	///swap_a->rev_rotate_a/////
+2	rotate_a->swap_a
 1
-3
+if (a > b && b > c)
 
 2	rev_rotate_a
 3
 1
+if (a < b && b > c)
+a < b, , a > c
+
+
+
+
+
+
+
+//
+2	swap_a
+1
+3
+if (a > b && b < c && a < c)
+
 
 3	rotate_a
 1
 2
-
-3	swap_a->rev_rotate_a
-2	rotate_a->swap_a
-1
-
-four
-
-1 rev_rotate_a->rev_rotate_a->swap_a->rotate_a->rotate_a	 
-2 swap_a->rotate_a->swap_a ??
-4
-3
-
-1
-3
-2
-4
-
-1
-3
-4
-2
-
-1
-4
-2
-3
-
-1
-4
-3
-2
-
-2
-1
-3
-4
-
-2
-1
-4
-3
-
-2
-3
-1
-4
-
-2
-3
-4
-1
-
-2
-4
-1
-3
-
-2
-4
-3
-1
-
-3
-1
-2
-4
-
-3
-1
-4
-2
-
-3
-2
-1
-4
-
-3
-2
-4
-1
-
-3
-4
-1
-2
-
-3
-4
-2
-1
-
-4
-1
-2
-3
-
-4
-1
-3
-2
-
-4
-2
-1
-3
-
-4
-2
-3
-1
-
-4
-3
-1
-2
-
-4
-3
-2
-1
-
-int	sort_four(t_item *head, t_item *tail)
-{
-	int	i;
-	int	moves;
-	int	ext[4];
-	int	lowest;
-
-	i = 0;
-	moves = 0;
-	ext[0] = head->i;
-	ext[1] = head->next->i;
-	ext[2] = tail->prev->i;
-	ext[3] = tail->i;
-}
-*/
+if (a > b && b < c && a > c)
