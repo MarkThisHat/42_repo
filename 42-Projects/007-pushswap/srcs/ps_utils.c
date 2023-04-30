@@ -20,7 +20,7 @@ void	leave_program(char *str, int return_code)
 	exit (return_code);
 }
 
-void	empty_stack(t_item *item)
+void	empty_stack(t_item *item, int return_code)
 {
 	t_item	*temp;
 
@@ -32,11 +32,16 @@ void	empty_stack(t_item *item)
 		free(item);
 		item = temp;
 	}
+	if (return_code)
+		exit(return_code);
 }
 
-void	free_and_leave(t_item *stack, int return_code)
+void	free_and_leave(t_ctrl *c, int return_code)
 {
-	empty_stack(stack);
+	if (c->head_a)
+		empty_stack(c->head_a, 0);
+	if (c->head_b)
+		empty_stack(c->head_b, 0);
 	exit(return_code);
 }
 

@@ -60,14 +60,13 @@ typedef struct s_merge_data
 void	merge_sort(int *stack, int *invers, int left, int right);
 void	leave_program(char *str, int return_code);
 void	check_args(int argc, char **argv);
-void	empty_stack(t_item *item);
-void	free_and_leave(t_item *stack, int return_code);
+void	empty_stack(t_item *item, int return_code);
+void	free_and_leave(t_ctrl *c, int return_code);
 void	set_control(t_ctrl *c, t_item *item, int size);
 void	switch_adj_nodes(t_item *a, t_item *b);
 int		find_pivot(int *arr, int len);
 int		assess_pile(t_item *head, int size);
 int		is_sorted(t_ctrl *c);
-int		sort_stack(t_ctrl *c, int quadrant, int size);
 int		swap_a(t_ctrl *c);
 int		swap_b(t_ctrl *c);
 int		swap_both(t_ctrl *c);
@@ -82,6 +81,9 @@ int		rev_rotate_both(t_ctrl *c);
 t_item	*sever_node(t_item *item);
 t_item	*place_node(t_item *item, t_item *edge);
 
+//unconsolidated
+void	find_sol(t_ctrl *c);
+int		sort_stack(t_ctrl *c, int quadrant, int size);
 //not project
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);

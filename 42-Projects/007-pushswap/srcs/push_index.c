@@ -45,7 +45,7 @@ static int	check_unique(int *stack, t_item *item, int size, int *invers)
 		{
 			free(stack);
 			free(invers);
-			empty_stack(item);
+			empty_stack(item, 0);
 			return (0);
 		}
 		i++;
@@ -62,7 +62,7 @@ static int	*pile_on(t_item *item, int size, int *invers)
 	if (!stack)
 	{
 		free(invers);
-		free_and_leave(item, 4);
+		empty_stack(item, 4);
 	}
 	i = 0;
 	while (i < size)
@@ -82,9 +82,9 @@ int	assess_pile(t_item *head, int size)
 
 	invers = ft_calloc(size, sizeof(int));
 	if (!invers)
-		free_and_leave(head, 4);
+		empty_stack(head, 4);
 	stack = pile_on(head, size, invers);
-	merge_sort(stack, invers, 0, size - 1);
+	merge_sort(stack, invers, 0, size - 1);//put failsafe here
 	if (!check_unique(stack, head, size, invers))
 		leave_program("Error\n", 2);
 	set_index(head, stack, size);

@@ -25,7 +25,7 @@ void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
 		{
 			a->next = malloc(sizeof(t_item));
 			if (!a->next)
-				free_and_leave(a, 4);
+				empty_stack(a, 4);
 			*a->next = (t_item){0};
 			fill_stack(a->next, len, nbrs, a);
 		}
@@ -59,12 +59,9 @@ int	main(int argc, char **argv)
 	pivot = assess_pile(c.head_a, argc - 1);
 	ft_printf("Pivot: %i\n", pivot);
 	if (is_sorted(&c))
-		free_and_leave(c.head_a, 0);
-	sort_stack(&c, pivot, c.size_a);
-	if (c.head_b)
-		empty_stack(c.head_b);
-	if (c.head_a)
-		free_and_leave(c.head_a, 0);
-	else
-		return (0);
+		free_and_leave(&c, 0);
+	print_stacks(&c);
+	find_sol(&c);
+	print_full_stacks(&c);
+	free_and_leave(&c, 0);
 }
