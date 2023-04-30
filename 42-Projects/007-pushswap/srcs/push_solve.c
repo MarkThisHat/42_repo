@@ -122,6 +122,18 @@ int	sort_three(t_item *item, int *sol)
 	return (2);
 }
 
+int	sort_five(t_ctrl *c, item size)
+{
+	int	sol[2];
+	
+	while(size-- > 3)
+		push_b(c);
+	sol[0] = 0;
+	sol[1] = 0;
+	sort_three(c->head_a, sol);
+	return (0);
+}
+
 /*
 1 1 2 2 3 3
 2 3 1 3 1 2
