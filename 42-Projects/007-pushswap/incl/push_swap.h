@@ -29,12 +29,19 @@
 # include "../libs/libft/incl/libft.h"
 
 typedef struct s_item	t_item;
+typedef struct s_sol	t_sol;
 
 struct s_item {
 	int		n;
 	int		i;
 	t_item	*next;
 	t_item	*prev;
+};
+
+struct s_sol {
+	int		move;
+	int		checkpoint;
+	t_sol	*next;
 };
 
 typedef struct s_ctrl {
@@ -44,6 +51,8 @@ typedef struct s_ctrl {
 	t_item	*head_b;
 	t_item	*tail_a;
 	t_item	*tail_b;
+	t_sol	*sol_a;
+	t_sol	*sol_b;
 }	t_ctrl;
 
 typedef struct s_merge_data

@@ -1,13 +1,5 @@
 #include "push_swap.h"
 
-typedef struct s_sol	t_sol;
-
-struct s_sol {
-	int		move;
-	int		checkpoint;
-	t_sol	*next;
-};
-
 int	sort_three(t_item *item, int *sol)
 {
 	int	a;
@@ -43,30 +35,30 @@ void	fill_sol(int *sol, int size)
 		sol[size] = 0;
 }
 
-t_sol	*apply_sol(t_sol *a, t_ctrl *c)
+t_sol	*apply_sol(t_sol *s, t_ctrl *c)
 {
 	t_sol	*latest;
 	
-	while (a)
+	while (s)
 	{
-		if (a->move == SA)
+		if (s->move == SA)
 			swap_a(c);
-		if (a->move == SB)
+		if (s->move == SB)
 			swap_b(c);
-		if (a->move == PA)
+		if (s->move == PA)
 			push_a(c);
-		if (a->move == PB)
+		if (s->move == PB)
 			push_b(c);
-		if (a->move == RA)
+		if (s->move == RA)
 			rotate_a(c);
-		if (a->move == RB)
+		if (s->move == RB)
 			rotate_b(c);
-		if (a->move == RRA)
+		if (s->move == RRA)
 			rev_rotate_a(c);
-		if (a->move == RRB)
+		if (s->move == RRB)
 			rev_rotate_b(c);
-		latest = a;
-		a = a->next;
+		latest = s;
+		s = s->next;
 	}
 	return (latest);
 }
@@ -86,26 +78,46 @@ int		weave_sol(t_sol *s, int *sol)
 	return (1);
 }
 
+t_sol	*set_solution(t_sol *s)
+{
+	while (s && s->next)
+		s = s->next;
+	s = malloc(sizeof(t_sol));
+	if (!s)
+		return (NULL);
+	*s = (t_sol){0};
+	return (s);
+}
+
 void	find_sol(t_ctrl *c)
 {
-	if (c->size_a != 3)
-		return ;
-	t_sol	*a;
-	t_sol	*b;
 	int		sol[3];
 
-	a = malloc(sizeof(t_sol));
-	if (!a)
+	c->sol_a = set_solution(c->sol_a);
+	if (!c->sol_a)
 		free_and_leave(c, 4);
-	b = NULL;
-	(void)b;
-	*a = (t_sol){0};
-	fill_sol(sol, 3);
-	sort_three(c->head_a, sol);
-	if (!weave_sol(a, sol))
+	if (c->size_a == 2)
+	{
+		fill_sol(sol, 2);
+		sol[0] = SA;
+	}
+	else
+	{
+		while (c->size_a > 3)
+			push_b(c);
+		fill_sol(sol, 3);
+		sort_three(c->head_a, sol);
+	}
+	if (!weave_sol(c->sol_a, sol))
 		free_and_leave(c, 4);
-	apply_sol(a, c);
+	apply_sol(c->sol_a, c);
 }
+/*
+t_sol	*log_and_act(int move, t_sol *stack)
+{
+	stack->move = move;
+	stack->next = malloc(sizeof(t_sol));
+}*/
 
 /*
 int	sort_five(t_ctrl *c, int size)

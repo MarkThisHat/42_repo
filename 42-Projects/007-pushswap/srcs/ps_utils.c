@@ -38,10 +38,30 @@ void	empty_stack(t_item *item, int return_code)
 
 void	free_and_leave(t_ctrl *c, int return_code)
 {
+	t_sol	*temp;
+
 	if (c->head_a)
 		empty_stack(c->head_a, 0);
 	if (c->head_b)
 		empty_stack(c->head_b, 0);
+	if (c->sol_a)
+	{
+		while (c->sol_a)
+		{
+			temp = c->sol_a->next;
+			free(c->sol_a);
+			c->sol_a = temp;
+		}
+	}
+	if (c->sol_b)
+	{
+		while (c->sol_b)
+		{
+			temp = c->sol_b->next;
+			free(c->sol_b);
+			c->sol_b = temp;
+		}
+	}
 	exit(return_code);
 }
 
