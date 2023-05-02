@@ -109,16 +109,14 @@ void	solve_small(t_ctrl *c, int *sol)
 		set_array(sol, 3);
 		sort_three_a(c->head_a, sol);
 	}
-	if (!array_sol(c->a_stream, sol))
-		free_and_leave(c, 4);
-	apply_sol(c->a_stream, c);
+	array_sol(c->a_stream, sol, c);
+	c->a_stream = apply_sol(c->a_stream, c);
 	if (c->size_b > 2)
 	{
 		set_array(sol, 2);
 		sort_three_b(c->head_b, sol);
-		if (!array_sol(c->b_stream, sol))
-			free_and_leave(c, 4);
-		apply_sol(c->b_stream, c);
+		array_sol(c->b_stream, sol, c);
+		c->b_stream = apply_sol(c->b_stream, c);
 	}
 	print_full_stacks(c);
 	print_sol(c->sol_a);

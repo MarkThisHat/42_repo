@@ -55,19 +55,19 @@ void	set_array(int *sol, int size)
 		sol[size] = 0;
 }
 
-int		array_sol(t_sol *s, int *sol)
+void		array_sol(t_sol *s, int *sol, t_ctrl *c)
 {
 	while (*sol > 0)
 	{
 		s->move = *sol;
 		s->next = prep_sol(s);
 		if (!s->next)
-			return (0);
+			free_and_leave(c, 0);
 		s = s->next;
 		sol++;
 	}
-	return (1);
 }
+
 /*
 void	array_sol(t_ctrl *c, int *sol, char pile)
 {
