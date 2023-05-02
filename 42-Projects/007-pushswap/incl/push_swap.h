@@ -53,6 +53,8 @@ typedef struct s_ctrl {
 	t_item	*tail_b;
 	t_sol	*sol_a;
 	t_sol	*sol_b;
+	t_sol	*a_stream;
+	t_sol	*b_stream;
 }	t_ctrl;
 
 typedef struct s_merge_data
