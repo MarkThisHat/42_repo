@@ -68,3 +68,48 @@ int		array_sol(t_sol *s, int *sol)
 	}
 	return (1);
 }
+/*
+void	array_sol(t_ctrl *c, int *sol, char pile)
+{
+	t_sol	*s;
+
+	if (pile == 'a')
+		s = c->a_stream;
+	if (pile == 'b')
+		s = c->b_stream;
+	while (*sol > 0)
+	{
+		s->move = *sol;
+		s->next = prep_sol(s);
+		if (!s->next)
+			free_and_leave(c, 0);
+		s = s->next;
+		sol++;
+	}
+	if (pile == 'a')
+		c->a_stream = s;
+	if (pile == 'b')
+		c->b_stream = s;
+}
+
+void array_sol(t_ctrl *c, int *sol, char pile)
+{
+	t_sol **s_ptr;
+
+	if (pile == 'a')
+		s_ptr = &(c->a_stream);
+	else if (pile == 'b')
+		s_ptr = &(c->b_stream);
+	else
+		return;
+	while (*sol > 0)
+	{
+		(*s_ptr)->move = *sol;
+		(*s_ptr)->next = prep_sol(*s_ptr);
+		if (!(*s_ptr)->next)
+			free_and_leave(c, 0);
+		*s_ptr = (*s_ptr)->next;
+		sol++;
+	}
+}
+*/

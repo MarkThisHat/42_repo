@@ -78,6 +78,7 @@ void	switch_adj_nodes(t_item *a, t_item *b);
 void	print_sol(t_sol *s);
 void	set_array(int *sol, int size);
 int		array_sol(t_sol *s, int *sol);
+//void	array_sol(t_ctrl *c, int *sol, char pile);
 int		find_pivot(int *arr, int len);
 int		assess_pile(t_item *head, int size);
 int		is_sorted(t_ctrl *c);

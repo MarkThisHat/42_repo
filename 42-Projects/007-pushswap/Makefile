@@ -34,7 +34,7 @@ BOBJ := $(BFUN:%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(FTLIB)
-	cc $(OBJ) $(FTLIB) -o $@
+	cc $(OBJ) $(FTLIB) -g -o $@
 
 $(FTLIB):
 	@$(MAKE) -C $(FTLIB_DIR)

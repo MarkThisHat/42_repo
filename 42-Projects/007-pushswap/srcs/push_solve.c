@@ -95,16 +95,8 @@ void	back_to_a(t_ctrl *c)
 	c->b_stream = trace_move(push_a(c), c->b_stream, c);
 }
 
-void	find_sol(t_ctrl *c)
+void	solve_small(t_ctrl *c, int *sol)
 {
-	int		sol[3];
-
-	c->sol_a = prep_sol(c->sol_a);
-	c->sol_b = prep_sol(c->sol_b);
-	if (!c->sol_a || !c->sol_b)
-		free_and_leave(c, 4);
-	c->a_stream = c->sol_a;
-	c->b_stream = c->sol_b;
 	if (c->size_a == 2)
 	{
 		set_array(sol, 2);
@@ -137,4 +129,18 @@ void	find_sol(t_ctrl *c)
 		back_to_a(c);
 	while (!is_sorted(c))
 		c->a_stream = trace_move(rev_rotate_a(c), c->a_stream, c);
+}
+
+void	find_sol(t_ctrl *c)
+{
+	int		sol[3];
+
+	c->sol_a = prep_sol(c->sol_a);
+	c->sol_b = prep_sol(c->sol_b);
+	if (!c->sol_a || !c->sol_b)
+		free_and_leave(c, 4);
+	c->a_stream = c->sol_a;
+	c->b_stream = c->sol_b;
+	if (c->size_a < 7)
+		solve_small(c, sol);
 }
