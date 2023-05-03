@@ -87,28 +87,31 @@ static void	put_move(int move)
 {
 		if (move == SA)
 			write(1, "sa\n", 3);
-		if (move == SB)
+		else if (move == SB)
 			write(1, "sb\n", 3);
-		if (move == SS)
+		else if (move == SS)
 			write(1, "ss\n", 3);
-		if (move == PA)
+		else if (move == PA)
 			write(1, "pa\n", 3);
-		if (move == PB)
+		else if (move == PB)
 			write(1, "pb\n", 3);
-		if (move == RA)
+		else if (move == RA)
 			write(1, "ra\n", 3);
-		if (move == RB)
+		else if (move == RB)
 			write(1, "rb\n", 3);
-		if (move == RR)
+		else if (move == RR)
 			write(1, "rr\n", 3);
-		if (move == RRA)
+		else if (move == RRA)
 			write(1, "rra\n", 4);
-		if (move == RRB)
+		else if (move == RRB)
 			write(1, "rrb\n", 4);
-		if (move == RRR)
+		else if (move == RRR)
 			write(1, "rrr\n", 4);
+		else
+			ft_printf("oops, move is %i\n", move);
 }
 
+/* Original one, probably will make it to final version
 void	print_sol(t_sol *s)
 {
 	if (!s)
@@ -116,8 +119,16 @@ void	print_sol(t_sol *s)
 	put_move(s->move);
 	print_sol(s->next);
 }
+*/
 
-
+void	print_sol(t_sol *s)
+{
+	if (!s)
+		return ;
+	ft_printf("%i - ", s->checkpoint);
+	put_move(s->move);
+	print_sol(s->next);
+}
 
 /*
 void	switch_nodes(t_item *a, t_item *b)

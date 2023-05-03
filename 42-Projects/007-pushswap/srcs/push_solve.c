@@ -80,7 +80,6 @@ void	back_to_a(t_ctrl *c)
 	spot = find_target(c->head_a, target);
 	if (spot < 0)
 	{
-		write(1, "fudeu\n", 6);
 		c->b_stream = trace_move(push_a(c), c->b_stream, c);
 		c->a_stream = trace_move(rotate_a(c), c->a_stream, c);
 		return ;
@@ -129,6 +128,58 @@ void	solve_small(t_ctrl *c, int *sol)
 		c->a_stream = trace_move(rev_rotate_a(c), c->a_stream, c);
 }
 
+void	set_checkpoint(t_sol **s, int step)
+{
+	(*s)->checkpoint = step;
+	(*s) = (*s)->next;
+}
+
+void	found_checkpoint(t_sol **a, t_sol **b, int *step)
+{
+	if ((*a)->move == PB)
+	{
+		while ((*a) && (*a)->move == PB)
+			set_checkpoint(a, *step);
+		*step += 1;
+		while ((*b) && (*b)->move != PA)
+			set_checkpoint(b, *step);
+	}
+	else if ((*b)->move == PA)
+	{
+		while ((*a) && (*a)->move != PB)
+			set_checkpoint(a, *step);
+		*step += 1;
+		while ((*b) && (*b)->move == PA)
+			set_checkpoint(b, *step);
+	}
+}
+
+void	checkpoint_sol(t_ctrl *c)
+{
+	t_sol	*nav_a;
+	t_sol	*nav_b;
+	int		step;
+
+	step = 0;
+	nav_a = c->sol_a;
+	nav_b = c->sol_b;
+	while (nav_a && nav_b)
+	{
+		if (nav_a->move == PB || nav_b->move == PA)
+			found_checkpoint(&nav_a, &nav_b, &step);
+		else
+		{
+			set_checkpoint(&nav_a, step);
+			set_checkpoint(&nav_b, step);
+		}
+	}
+	step++;
+	while (nav_a)
+		set_checkpoint(&nav_a, step);
+	while (nav_b)
+		set_checkpoint(&nav_b, step);
+}
+
 void	find_sol(t_ctrl *c)
 {
 	int		sol[3];
@@ -141,4 +192,8 @@ void	find_sol(t_ctrl *c)
 	c->b_stream = c->sol_b;
 	if (c->size_a < 7)
 		solve_small(c, sol);
+	checkpoint_sol(c);
+	print_sol(c->sol_a);
+	write(1, "pog\n", 4);
+	print_sol(c->sol_b);
 }
