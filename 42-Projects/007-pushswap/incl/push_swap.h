@@ -13,11 +13,11 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# define SA 1
-# define SB 2
-# define SS 3
-# define PA 4
-# define PB 5
+# define PA 1
+# define PB 2
+# define SA 3
+# define SB 4
+# define SS 5
 # define RA 6
 # define RB 7
 # define RR 8
@@ -77,7 +77,9 @@ void	set_control(t_ctrl *c, t_item *item, int size);
 void	switch_adj_nodes(t_item *a, t_item *b);
 void	print_sol(t_sol *s);
 void	set_array(int *sol, int size);
+void	solve_small(t_ctrl *c, int *sol);
 void	array_sol(t_sol *s, int *sol, t_ctrl *c);
+int		find_target(t_item *stack, int target);
 int		find_pivot(int *arr, int len);
 int		assess_pile(t_item *head, int size);
 int		is_sorted(t_ctrl *c);
@@ -105,5 +107,6 @@ int		sort_stack(t_ctrl *c, int quadrant, int size);
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);
 void	test_moves(t_ctrl *c, int mode);
+void	print_sol_detailed(t_sol *s);
 
 #endif

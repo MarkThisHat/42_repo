@@ -1,61 +1,5 @@
 #include "push_swap.h"
 
-int	sort_three_a(t_item *item, int *sol)
-{
-	int	a;
-	int	b;
-	int	c;
-
-	a = item->i;
-	b = item->next->i;
-	c = item->next->next->i;
-	if (a < b && b < c && a < c)
-		return (0);
-	if (a > b && b < c && a < c)
-		*sol = SA;
-	if (a > b && b < c && a > c)
-		*sol = RA;
-	if (*sol)
-		return (1);
-	if (a > b && b > c)
-		*sol = RA;
-	if (a < b && b > c)
-		*sol = RRA;
-	if (a < b && a > c)
-		return (1);
-	sol++;
-	*sol = SA;
-	return (2);
-}
-
-int	sort_three_b(t_item *item, int *sol)
-{
-	int	a;
-	int	b;
-	int	c;
-
-	a = item->i;
-	b = item->next->i;
-	c = item->next->next->i;
-	if (a > b && b > c && a > c)
-		return (0);
-	if (a < b && b > c && a > c)
-		*sol = SB;
-	if (a < b && b > c && a < c)
-		*sol = RB;
-	if (*sol)
-		return (1);
-	if (a < b && b < c)
-		*sol = RB;
-	if (a > b && b < c)
-		*sol = RRB;
-	if (a > b && a < c)
-		return (1);
-	sol++;
-	*sol = SB;
-	return (2);
-}
-
 int	find_target(t_item *stack, int target)
 {
 	int	position;
@@ -69,63 +13,6 @@ int	find_target(t_item *stack, int target)
 		position++;
 	}
 	return (-1);
-}
-
-void	back_to_a(t_ctrl *c)
-{
-	int	target;
-	int	spot;
-
-	target = c->head_b->i + 1;
-	spot = find_target(c->head_a, target);
-	if (spot < 0)
-	{
-		c->b_stream = trace_move(push_a(c), c->b_stream, c);
-		c->a_stream = trace_move(rotate_a(c), c->a_stream, c);
-		return ;
-	}
-	while (c->head_a->i != target)
-	{
-		if (spot > c->size_a / 2)
-			c->a_stream = trace_move(rev_rotate_a(c), c->a_stream, c);
-		else
-			c->a_stream = trace_move(rotate_a(c), c->a_stream, c);
-	}
-	c->b_stream = trace_move(push_a(c), c->b_stream, c);
-}
-
-void	solve_small(t_ctrl *c, int *sol)
-{
-	if (c->size_a == 2)
-	{
-		set_array(sol, 2);
-		sol[0] = SA;
-	}
-	else
-	{
-		while (c->size_a > 3)
-			c->a_stream = trace_move(push_b(c), c->a_stream, c);
-		set_array(sol, 3);
-		sort_three_a(c->head_a, sol);
-	}
-	array_sol(c->a_stream, sol, c);
-	c->a_stream = apply_sol(c->a_stream, c);
-	if (c->size_b > 2)
-	{
-		set_array(sol, 2);
-		sort_three_b(c->head_b, sol);
-		array_sol(c->b_stream, sol, c);
-		c->b_stream = apply_sol(c->b_stream, c);
-	}
-	print_full_stacks(c);
-	print_sol(c->sol_a);
-	write(1, "pog\n", 4);
-	print_sol(c->sol_b);
-	write(1, "pog\n", 4);
-	while (c->size_b)
-		back_to_a(c);
-	while (!is_sorted(c))
-		c->a_stream = trace_move(rev_rotate_a(c), c->a_stream, c);
 }
 
 void	set_checkpoint(t_sol **s, int step)
@@ -180,6 +67,80 @@ void	checkpoint_sol(t_ctrl *c)
 		set_checkpoint(&nav_b, step);
 }
 
+t_sol *stitch_sol(t_sol *a, t_sol *b)
+{
+	t_sol *merged = NULL;
+	t_sol **current = &merged;
+
+	while (a && b)
+	{
+		if (a->checkpoint <= b->checkpoint)
+		{
+			*current = a;
+			a = a->next;
+		}
+		else
+		{
+			*current = b;
+			b = b->next;
+		}
+		current = &((*current)->next);
+	}
+	if (a != NULL)
+		*current = a;
+	else
+		*current = b;
+	return (merged);
+}
+
+t_sol	*return_used(t_ctrl *c)
+{
+	if (c->sol_a)
+		return (c->sol_a);
+	else if (c->sol_b)
+		return (c->sol_b);
+	else
+		return (NULL);
+}
+
+t_sol	*nullify_unused(t_ctrl *c)
+{
+	t_sol	*temp;
+	int		a;
+	int		b;
+
+	a = 0;
+	b = 0;
+	temp = c->sol_a;
+	while (temp)
+	{
+		temp = temp->next;
+		a++;
+	}
+	temp = c->sol_b;
+	{
+		temp = temp->next;
+		b++;
+	}
+	if (a < b)
+		c->sol_a = NULL;
+	else
+		c->sol_b = NULL;
+	return (return_used(c));
+}
+/*
+t_sol*	seek_move(int)
+
+void	optimize_sol(t_sol	*s)
+{
+	t_sol	*current;
+	int		checkpoint;
+
+	current = s;
+	checkpoint = s->checkpoint;
+
+}
+*/
 void	find_sol(t_ctrl *c)
 {
 	int		sol[3];
@@ -192,8 +153,114 @@ void	find_sol(t_ctrl *c)
 	c->b_stream = c->sol_b;
 	if (c->size_a < 7)
 		solve_small(c, sol);
+	if (c->size_a < 4)
+		return ;
+	ft_printf("\nPre checkpoint sol:\n");
+	print_sol_detailed(c->sol_a);
+	print_sol_detailed(c->sol_b);
 	checkpoint_sol(c);
-	print_sol(c->sol_a);
-	write(1, "pog\n", 4);
-	print_sol(c->sol_b);
+	ft_printf("\nPre stitch sol:\n");
+	print_sol_detailed(c->sol_a);
+	print_sol_detailed(c->sol_b);
+	stitch_sol(c->sol_a, c->sol_b);
+	c->sol_a = nullify_unused(c);
+	ft_printf("\nLast Print:\n");
+	print_sol_detailed(c->sol_a);
+
 }
+
+
+
+
+/* 6 1 4 3 2 5 (optimizeable)
+t_sol *stitch_sol(t_sol *a, t_sol *b)
+{
+	t_sol *merged = NULL;
+	t_sol **current = &merged;
+
+	while (a != NULL && b != NULL)
+	{
+		if (a->checkpoint == b->checkpoint)
+		{
+			*current = a;
+			a = a->next;
+			current = &((*current)->next);
+			*current = b;
+			b = b->next;
+			current = &((*current)->next);
+		}
+		else if (a->checkpoint < b->checkpoint)
+		{
+			*current = a;
+			a = a->next;
+			current = &((*current)->next);
+		}
+		else
+		{
+			*current = b;
+			b = b->next;
+			current = &((*current)->next);
+		}
+	}
+	if (a != NULL)
+		*current = a;
+	else
+		*current = b;
+	return (merged);
+}
+
+
+t_sol	*stitch_sol(t_sol *a, t_sol *b)
+{
+	t_sol	*stitcher;
+	int		checkpoint;
+
+	stitcher = a;
+	checkpoint = stitcher->checkpoint;
+	while (stitcher)
+	{
+
+	}
+	return (a);
+}
+gpt sugg
+t_sol *stitch_sol(t_sol *a, t_sol *b)
+{
+    t_sol *merged = NULL;
+    t_sol **current = &merged;
+
+    while (a != NULL && b != NULL)
+    {
+        if (a->checkpoint == b->checkpoint)
+        {
+            *current = a;
+            a = a->next;
+            current = &((*current)->next);
+            *current = b;
+            b = b->next;
+            current = &((*current)->next);
+        }
+        else if (a->checkpoint < b->checkpoint)
+        {
+            *current = a;
+            a = a->next;
+            current = &((*current)->next);
+        }
+        else
+        {
+            *current = b;
+            b = b->next;
+            current = &((*current)->next);
+        }
+    }
+
+    // Append the remaining nodes from the non-empty list
+    if (a != NULL)
+        *current = a;
+    else
+        *current = b;
+
+    return merged;
+}
+
+*/

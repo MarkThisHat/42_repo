@@ -107,8 +107,8 @@ static void	put_move(int move)
 			write(1, "rrb\n", 4);
 		else if (move == RRR)
 			write(1, "rrr\n", 4);
-		else
-			ft_printf("oops, move is %i\n", move);
+/*		else
+			ft_printf("oops, move is %i\n", move);*/
 }
 
 /* Original one, probably will make it to final version
@@ -121,11 +121,19 @@ void	print_sol(t_sol *s)
 }
 */
 
-void	print_sol(t_sol *s)
+void	print_sol_detailed(t_sol *s)
 {
 	if (!s)
 		return ;
 	ft_printf("%i - ", s->checkpoint);
+	put_move(s->move);
+	print_sol_detailed(s->next);
+}
+
+void	print_sol(t_sol *s)
+{
+	if (!s)
+		return ;
 	put_move(s->move);
 	print_sol(s->next);
 }

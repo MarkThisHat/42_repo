@@ -1,27 +1,38 @@
 #include "push_swap.h"
 
+void	make_move(t_ctrl *c, int move)
+{
+	if (move == SA)
+		swap_a(c);
+	if (move == SB)
+		swap_b(c);
+	if (move == SS)
+		swap_both(c);
+	if (move == PA)
+		push_a(c);
+	if (move == PB)
+		push_b(c);
+	if (move == RA)
+		rotate_a(c);
+	if (move == RB)
+		rotate_b(c);
+	if (move == RR)
+		rotate_both(c);
+	if (move == RRA)
+		rev_rotate_a(c);
+	if (move == RRB)
+		rev_rotate_b(c);
+	if (move == RRR)
+		rev_rotate_both(c);
+}
+
 t_sol	*apply_sol(t_sol *s, t_ctrl *c)
 {
 	t_sol	*stream;
 	
 	while (s)
 	{
-		if (s->move == SA)
-			swap_a(c);
-		if (s->move == SB)
-			swap_b(c);
-		if (s->move == PA)
-			push_a(c);
-		if (s->move == PB)
-			push_b(c);
-		if (s->move == RA)
-			rotate_a(c);
-		if (s->move == RB)
-			rotate_b(c);
-		if (s->move == RRA)
-			rev_rotate_a(c);
-		if (s->move == RRB)
-			rev_rotate_b(c);
+		make_move(c, s->move);
 		stream = s;
 		s = s->next;
 	}
@@ -55,7 +66,7 @@ void	set_array(int *sol, int size)
 		sol[size] = 0;
 }
 
-void		array_sol(t_sol *s, int *sol, t_ctrl *c)
+void	array_sol(t_sol *s, int *sol, t_ctrl *c)
 {
 	while (*sol > 0)
 	{
