@@ -13,8 +13,8 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# define PA 1
-# define PB 2
+# define PB 1
+# define PA 2
 # define SA 3
 # define SB 4
 # define SS 5
@@ -98,12 +98,18 @@ int		rotate_both(t_ctrl *c);
 int		rev_rotate_both(t_ctrl *c);
 //		print_swap.c (2)
 void	print_sol(t_sol *s);
-//		solve_swap.c
+//		solve_swap.c(4)
 void	find_sol(t_ctrl *c);
+t_sol	*prep_sol(t_sol *s);
+t_sol	*get_stream(t_sol *s);
+t_sol	*log_move(int move, t_sol *stack, t_ctrl *c);
 //		small_swap.c
 void	a_is_three(t_ctrl *c, t_sol *sol);
+void	small_sol(t_ctrl *c);
 //		zwap_pivot.c (4)
 int		find_pivot(int *arr, int len);
+
+int		do_move(t_ctrl *c, int move);
 //		TODO
 void	set_array(int *sol, int size);
 void	solve_small(t_ctrl *c, int *sol);
