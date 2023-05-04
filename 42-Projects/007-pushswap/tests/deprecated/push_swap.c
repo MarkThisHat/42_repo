@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
+void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
 {
 	static int	i;
 
@@ -32,7 +32,7 @@ static void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
 	}
 }
 
-static t_item	*stack_up(int argc, char **argv)
+t_item	*stack_up(int argc, char **argv)
 {
 	t_item	*a;
 
