@@ -48,10 +48,9 @@ void	find_sol(t_ctrl *c)
 		a_is_three(c, c->answer);
 	else
 		c->answer->move = push_b(c);
-	if (c->size_a < 6)
-		small_sol(c);
+	if (c->size_a < 5 && c->size_b)
+		small_sol(c, c->size_a + c->size_b);
 //	else
 //		big_sol(c);
 	print_sol(c->answer);
-	print_sol(c->stream);
 }

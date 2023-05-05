@@ -105,7 +105,7 @@ t_sol	*get_stream(t_sol *s);
 t_sol	*log_move(int move, t_sol *stack, t_ctrl *c);
 //		small_swap.c
 void	a_is_three(t_ctrl *c, t_sol *sol);
-void	small_sol(t_ctrl *c);
+void	small_sol(t_ctrl *c, int size);
 //		zwap_pivot.c (4)
 int		find_pivot(int *arr, int len);
 

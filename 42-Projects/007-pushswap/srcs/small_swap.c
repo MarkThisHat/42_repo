@@ -79,42 +79,66 @@ int	do_move(t_ctrl *c, int move)
 	return (0);
 }
 
-void	small_sol(t_ctrl *c)
+int	find_target(t_item *stack, int target)
+{
+	int	i;
+
+	i = 1;
+	while (stack)
+	{
+		if (stack->i == target)
+			return (i);
+		stack = stack->next;
+		i++;
+	}
+	return (0);
+}
+
+static void	four_or_five(t_ctrl *c, int size)
+{
+	int	target;
+
+	if (c->head_b->i < size / 2)
+		while (c->head_a->i != c->head_b->i + 1)
+			c->stream = log_move(rotate_a(c), c->stream, c);
+	else
+		while (c->head_a->i != c->head_b->i + 1)
+			c->stream = log_move(rev_rotate_a(c), c->stream, c);
+	c->stream = log_move(push_a(c), c->stream, c);
+	if (c->head_b)
+	{
+		target = find_target(c->head_a, c->head_b->i + 1);
+		if (target < size / 2)
+			while (c->head_a->i != c->head_b->i + 1)
+				c->stream = log_move(rotate_a(c), c->stream, c);
+		else
+			while (c->head_a->i != c->head_b->i + 1)
+				c->stream = log_move(rev_rotate_a(c), c->stream, c);
+		c->stream = log_move(push_a(c), c->stream, c);
+	}
+}
+
+void	small_sol(t_ctrl *c, int size)
 {
 	c->stream = get_stream(c->answer);
 	while (c->size_a > 3)
 		c->stream = log_move(push_b(c), c->stream, c);
-	print_stacks(c);
 	sort_three(c, c->head_a, 0);
-	sort_three(c, c->head_b, 1);
+	if (size == 5 && c->head_b->i < c->head_b->next->i)
+		c->stream = log_move(swap_b(c), c->stream, c);
+	if (c->head_b->i == size - 1)
+	{
+		c->stream = log_move(push_a(c), c->stream, c);
+		c->stream = log_move(rotate_a(c), c->stream, c);
+	}
+	if (c->head_b && !c->head_b->i)
+		c->stream = log_move(push_a(c), c->stream, c);
+	if (c->head_b)
+		four_or_five(c, size);
+	if (find_target(c->head_a, 0) < size / 2)
+		while (c->head_a->i)
+			c->stream = log_move(rotate_a(c), c->stream, c);
+	else
+		while (c->head_a->i)
+			c->stream = log_move(rev_rotate_a(c), c->stream, c);
 }
-
-/*
-int	sort_three_a(t_item *item, int *sol)
-{
-	int	a;
-	int	b;
-	int	c;
-
-	a = item->i;
-	b = item->next->i;
-	c = item->next->next->i;
-	if (a < b && b < c && a < c)
-		return (0);
-	if (a > b && b < c && a < c)
-		*sol = SA;
-	if (a > b && b < c && a > c)
-		*sol = RA;
-	if (*sol)
-		return (1);
-	if (a > b && b > c)
-		*sol = RA;
-	if (a < b && b > c)
-		*sol = RRA;
-	if (a < b && a > c)
-		return (1);
-	sol++;
-	*sol = SA;
-	return (2);
-}
-*/
