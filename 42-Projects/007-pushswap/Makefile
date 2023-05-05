@@ -25,7 +25,7 @@ FTLIB := $(FTLIB_DIR)/libft.a
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 
 # Source files
-FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c solve_swap.c small_swap.c print_swap.c zwap_pivot.c zwap_print.c
+FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c small_swap.c print_swap.c opt_swap.c zwap_pivot.c zwap_print.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)

@@ -38,21 +38,12 @@ void	empty_stack(t_item *item, int return_code)
 
 void	free_and_leave(t_ctrl *c, int return_code)
 {
-	t_sol	*temp;
-
 	if (c->head_a)
 		empty_stack(c->head_a, 0);
 	if (c->head_b)
 		empty_stack(c->head_b, 0);
 	if (c->answer)
-	{
-		while (c->answer)
-		{
-			temp = c->answer->next;
-			free(c->answer);
-			c->answer = temp;
-		}
-	}
+		free_sol(c->answer);
 	exit(return_code);
 }
 

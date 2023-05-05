@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:31:07 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/26 16:31:22 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/05 11:51:10 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,35 @@ t_item	*place_node(t_item *item, t_item *edge)
 		return (item);
 	}
 	return (0);
+}
+
+void	free_sol(t_sol *solution)
+{
+	t_sol	*temp;
+
+	while (solution)
+	{
+		temp = solution->next;
+		free(solution);
+		solution = temp;
+	}
+}
+
+void remove_node(t_sol *head, t_sol *node)
+{
+	t_sol *current;
+	t_sol *prev;
+
+	current = head;
+	prev = NULL;
+	while (current && current != node)
+	{
+		prev = current;
+		current = current->next;
+	}
+	if (current)
+	{
+		prev->next = current->next;
+		free(current);
+	}
 }

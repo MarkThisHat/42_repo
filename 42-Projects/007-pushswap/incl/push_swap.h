@@ -17,12 +17,12 @@
 # define PA 2
 # define SA 3
 # define SB 4
-# define SS 5
-# define RA 6
-# define RB 7
-# define RR 8
-# define RRA 9
-# define RRB 10
+# define RA 5
+# define RB 6
+# define RRA 7
+# define RRB 8
+# define SS 9
+# define RR 10
 # define RRR 11
 
 # include <unistd.h>
@@ -77,7 +77,9 @@ void	set_control(t_ctrl *c, t_item *item, int size);
 int		is_sorted(t_ctrl *c);
 void	check_args(int argc, char **argv);
 //		node_swap.c
+void	free_sol(t_sol *solution);
 void	switch_adj_nodes(t_item *a, t_item *b);
+void	remove_node(t_sol *head, t_sol *node);
 t_item	*sever_node(t_item *item);
 t_item	*place_node(t_item *item, t_item *edge);
 //		push_index(5)
@@ -96,6 +98,10 @@ int		push_a(t_ctrl *c);
 int		swap_both(t_ctrl *c);
 int		rotate_both(t_ctrl *c);
 int		rev_rotate_both(t_ctrl *c);
+//		move_swap.c
+int		do_move(t_ctrl *c, int move);
+int		dive_target(t_item *stack, int target);
+int		climb_target(t_item *stack, int target);
 //		print_swap.c (2)
 void	print_sol(t_sol *s);
 //		solve_swap.c(4)
@@ -106,10 +112,11 @@ t_sol	*log_move(int move, t_sol *stack, t_ctrl *c);
 //		small_swap.c
 void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
+//		opt_swap.c(4)
+void	optimize_solution(t_sol *navi, t_sol *head);
 //		zwap_pivot.c (4)
 int		find_pivot(int *arr, int len);
 
-int		do_move(t_ctrl *c, int move);
 //		TODO
 void	set_array(int *sol, int size);
 void	solve_small(t_ctrl *c, int *sol);

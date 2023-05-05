@@ -52,48 +52,6 @@ void	sort_three(t_ctrl *c, t_item *head, int is_b)
 		c->stream = log_move(do_move(c, SA + is_b), c->stream, c);
 }
 
-int	do_move(t_ctrl *c, int move)
-{
-	if (move == SA)
-		return(swap_a(c));
-	if (move == SB)
-		return(swap_b(c));
-	if (move == SS)
-		return(swap_both(c));
-	if (move == PA)
-		return(push_a(c));
-	if (move == PB)
-		return(push_b(c));
-	if (move == RA)
-		return(rotate_a(c));
-	if (move == RB)
-		return(rotate_b(c));
-	if (move == RR)
-		return(rotate_both(c));
-	if (move == RRA)
-		return(rev_rotate_a(c));
-	if (move == RRB)
-		return(rev_rotate_b(c));
-	if (move == RRR)
-		return(rev_rotate_both(c));
-	return (0);
-}
-
-int	find_target(t_item *stack, int target)
-{
-	int	i;
-
-	i = 1;
-	while (stack)
-	{
-		if (stack->i == target)
-			return (i);
-		stack = stack->next;
-		i++;
-	}
-	return (0);
-}
-
 static void	four_or_five(t_ctrl *c, int size)
 {
 	int	target;
@@ -107,7 +65,7 @@ static void	four_or_five(t_ctrl *c, int size)
 	c->stream = log_move(push_a(c), c->stream, c);
 	if (c->head_b)
 	{
-		target = find_target(c->head_a, c->head_b->i + 1);
+		target = dive_target(c->head_a, c->head_b->i + 1);
 		if (target < size / 2)
 			while (c->head_a->i != c->head_b->i + 1)
 				c->stream = log_move(rotate_a(c), c->stream, c);
@@ -135,7 +93,7 @@ void	small_sol(t_ctrl *c, int size)
 		c->stream = log_move(push_a(c), c->stream, c);
 	if (c->head_b)
 		four_or_five(c, size);
-	if (find_target(c->head_a, 0) < size / 2)
+	if (dive_target(c->head_a, 0) < size / 2)
 		while (c->head_a->i)
 			c->stream = log_move(rotate_a(c), c->stream, c);
 	else

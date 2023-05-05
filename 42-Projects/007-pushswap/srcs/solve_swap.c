@@ -16,31 +16,6 @@ static t_sol	*first_move(t_ctrl *c)
 	return (list);
 }
 
-t_sol	*prep_sol(t_sol *s)
-{
-	s = malloc(sizeof(t_sol));
-	if (!s)
-		return (NULL);
-	*s = (t_sol){0};
-	return (s);
-}
-
-t_sol	*log_move(int move, t_sol *stack, t_ctrl *c)
-{
-	stack->next = prep_sol(stack->next);
-	if (!stack->next)
-		free_and_leave(c, 4);
-	stack->next->move = move;
-	return (stack->next);
-}
-
-t_sol	*get_stream(t_sol *s)
-{
-	if (s->next)
-		return (get_stream(s->next));
-	return (s);
-}
-
 void	find_sol(t_ctrl *c)
 {
 	c->answer = first_move(c);
@@ -52,5 +27,9 @@ void	find_sol(t_ctrl *c)
 		small_sol(c, c->size_a + c->size_b);
 //	else
 //		big_sol(c);
+	ft_printf("pre-optimization\n");
+	print_sol(c->answer);
+	ft_printf("aftermath\n");
+	optimize_solution(c->answer, c->answer);
 	print_sol(c->answer);
 }
