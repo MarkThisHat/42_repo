@@ -88,10 +88,10 @@ int	assess_pile(t_item *head, int size)
 	if (!check_unique(stack, head, size, invers))
 		leave_program("Error\n", 2);
 	set_index(head, stack, size);
-	ft_printf("Inversions array: \n");
+/*	ft_printf("Inversions array: \n");
 	for (int i = 0; i < size; i++)
 		ft_printf("%d ", invers[i]);
-	ft_printf("\n");
+	ft_printf("\n");*/
 	pivot = find_pivot(invers, size);
 	free(invers);
 	free(stack);

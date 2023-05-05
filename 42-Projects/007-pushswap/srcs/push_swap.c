@@ -57,11 +57,12 @@ int	main(int argc, char **argv)
 	c.head_a = stack_up(argc, argv);
 	set_control(&c, c.head_a, argc - 1);
 	pivot = assess_pile(c.head_a, argc - 1);
-	ft_printf("Pivot: %i\n", pivot);
+//	ft_printf("Pivot: %i\n", pivot);
+	(void)pivot;
 	if (is_sorted(&c))
 		free_and_leave(&c, 0);
-	print_stacks(&c);
+//	print_stacks(&c);
 	find_sol(&c);
-	print_full_stacks(&c);
+//	print_full_stacks(&c);
 	free_and_leave(&c, 0);
 }

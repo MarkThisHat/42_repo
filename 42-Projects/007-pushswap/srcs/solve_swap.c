@@ -27,9 +27,9 @@ void	find_sol(t_ctrl *c)
 		small_sol(c, c->size_a + c->size_b);
 //	else
 //		big_sol(c);
-	ft_printf("pre-optimization\n");
+/*	ft_printf("pre-optimization\n");
 	print_sol(c->answer);
-	ft_printf("aftermath\n");
+	ft_printf("aftermath\n");*/
 	optimize_solution(c->answer, c->answer);
 	print_sol(c->answer);
 }

@@ -12,20 +12,23 @@
 
 # Program name
 NAME := push_swap
+NAMEB := checker
 
 # Directories for source, object and libraries
 SRC_DIR := ./srcs
 OBJ_DIR := ./objs
-BSRC_DIR := ./bonus/
+BSRC_DIR := ./bonus/srcs
 HDR_DIR := ./incl
 FTLIB_DIR := ./libs/libft
 FTLIB := $(FTLIB_DIR)/libft.a
 
 # Compilation flags
 CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
+BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
 FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c small_swap.c print_swap.c opt_swap.c zwap_pivot.c zwap_print.c
+BFUN := checker_bonus.c mover_bonus.c ps_utils.c push_check.c push_check_bonus.c node_swap.c a_moves.c b_moves.c multi_swap.c    print_swap.c zwap_print.c
 
 # Object files
 OBJ := $(FUN:%.c=$(OBJ_DIR)/%.o)
@@ -43,14 +46,14 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	cc $(CFLAGS) -c $< -o $@
 
-bonus: $(NAME)_bonus
+bonus: $(NAMEB)
 
-$(NAME)_bonus: $(BOBJ) $(FTLIB)
+$(NAMEB): $(BOBJ) $(FTLIB)
 	cc $(BOBJ) $(FTLIB) -o $@
 
 $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 	@mkdir -p $(@D)
-	@cc $(CFLAGS) -c $< -o $@
+	@cc $(BCFLAGS) -c $< -o $@
 
 clean:
 	@$(MAKE) -C $(FTLIB_DIR) clean
@@ -59,7 +62,7 @@ clean:
 fclean: clean
 	@$(MAKE) -C $(FTLIB_DIR) fclean
 	@[ -f ./$(NAME) ] && rm $(NAME) || echo Program $(NAME) isn\'t compiled
-	@[ -f ./$(NAME)_bonus ] && rm $(NAME)_bonus|| echo Bonus $(NAME) isn\'t compiled
+	@[ -f ./$(BNAME) ] && rm $(BNAME)|| echo Bonus $(BNAME) isn\'t compiled
 
 re: fclean all
 
