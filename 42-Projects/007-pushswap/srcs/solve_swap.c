@@ -32,4 +32,8 @@ void	find_sol(t_ctrl *c)
 	ft_printf("aftermath\n");*/
 	optimize_solution(c->answer, c->answer);
 	print_sol(c->answer);
+	print_stacks(c);
+	ft_printf("aftermath\n");
+	reset_stacks(c, c->answer);
+	print_stacks(c);
 }

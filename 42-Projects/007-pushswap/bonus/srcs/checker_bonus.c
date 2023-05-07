@@ -56,7 +56,7 @@ int	main(int argc, char **argv)
 		else
 			write (1, "Error\n", 6);
 		free(line);
-		print_stacks(&c);
+//		print_stacks(&c);
 	}
 	free(line);
 //	print_stacks(&c);

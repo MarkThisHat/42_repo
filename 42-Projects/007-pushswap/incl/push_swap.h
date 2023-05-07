@@ -40,7 +40,6 @@ struct s_item {
 
 struct s_sol {
 	int		move;
-	int		checkpoint;
 	t_sol	*next;
 };
 
@@ -114,6 +113,8 @@ void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
 //		opt_swap.c(4)
 void	optimize_solution(t_sol *navi, t_sol *head);
+//		push_reset.c(2)
+void	reset_stacks(t_ctrl *c, t_sol *solution);
 //		zwap_pivot.c (4)
 int		find_pivot(int *arr, int len);
 
