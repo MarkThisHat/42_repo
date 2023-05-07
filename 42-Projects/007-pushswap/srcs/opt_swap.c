@@ -1,5 +1,25 @@
 #include "push_swap.h"
 
+static int is_redundant(int move1, int move2)
+{
+	if (move1 == RA && move2 == RRA)
+		return (1);
+	if (move1 == RRA && move2 == RA)
+		return (1);
+	if (move1 == RB && move2 == RRB)
+		return (1);
+	if (move1 == RRB && move2 == RB)
+		return (1);
+	if (move1 == PA && move2 == PB)
+		return (1);
+	if (move1 == PB && move2 == PA)
+		return (1);
+	if (move1 == SA && move2 == SA)
+		return (1);
+	if (move1 == SB && move2 == SB)
+		return (1);
+	return (0);
+}
 
 static	int	compli_move(int move)
 {
@@ -49,21 +69,29 @@ static t_sol	*find_replacement(t_sol *navi, int move)
 	return (NULL);
 }
 
-void	optimize_solution(t_sol *navi, t_sol *head)
+void optimize_solution(t_sol *navi, t_sol *head)
 {
-	t_sol	*temp;
+	t_sol *temp;
 
 	temp = NULL;
 	while (navi && navi->move <= PA)
 		navi = navi->next;
 	if (!navi)
-		return ;
-	if (navi->move >= SA && navi->move <= RRB)
-		temp = find_replacement(navi, compli_move(navi->move));
-	if (temp)
+		return;
+	if (navi->next && is_redundant(navi->move, navi->next->move))
 	{
-		navi->move = upgrade_move(navi->move);
+		temp = navi->next;
+		remove_node(head, navi);
 		remove_node(head, temp);
+	}
+	else if (navi->move >= SA && navi->move <= RRB)
+	{
+		temp = find_replacement(navi, compli_move(navi->move));
+		if (temp)
+		{
+			navi->move = upgrade_move(navi->move);
+			remove_node(head, temp);
+		}
 	}
 	optimize_solution(navi->next, head);
 }

@@ -115,7 +115,7 @@ void	print_sol_detailed(t_sol *s)
 {
 	if (!s)
 		return ;
-	ft_printf("%i - ", s->checkpoint);
+//	ft_printf("%i - ", s->checkpoint);
 	print_move(s->move);
 	print_sol_detailed(s->next);
 }

@@ -40,7 +40,7 @@ $(NAME): $(OBJ) $(FTLIB)
 	cc $(OBJ) $(FTLIB) -g -o $@
 
 $(FTLIB):
-	@$(MAKE) -C $(FTLIB_DIR)
+	@$(MAKE) -C $(FTLIB_DIR) --silent
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
@@ -56,11 +56,11 @@ $(OBJ_DIR)/%.o: $(BSRC_DIR)/%.c
 	@cc $(BCFLAGS) -c $< -o $@
 
 clean:
-	@$(MAKE) -C $(FTLIB_DIR) clean
+	@$(MAKE) -C $(FTLIB_DIR) --silent clean
 	@[ -d ./objs ] && rm -rf ./objs || echo Object directory doesn\'t exist
 
 fclean: clean
-	@$(MAKE) -C $(FTLIB_DIR) fclean
+	@$(MAKE) -C $(FTLIB_DIR) --silent fclean
 	@[ -f ./$(NAME) ] && rm $(NAME) || echo Program $(NAME) isn\'t compiled
 	@[ -f ./$(BNAME) ] && rm $(BNAME)|| echo Bonus $(BNAME) isn\'t compiled
 
