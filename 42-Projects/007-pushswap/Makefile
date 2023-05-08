@@ -27,7 +27,7 @@ CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
-FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c small_swap.c print_swap.c push_reset.c opt_swap.c zwap_pivot.c zwap_print.c
+FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c small_swap.c push_big.c print_swap.c push_reset.c opt_swap.c zwap_pivot.c zwap_print.c
 BFUN := checker_bonus.c mover_bonus.c ps_utils.c push_check.c push_check_bonus.c node_swap.c a_moves.c b_moves.c multi_swap.c    print_swap.c zwap_print.c
 
 # Object files

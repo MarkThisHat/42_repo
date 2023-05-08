@@ -25,3 +25,15 @@ t_sol	*get_stream(t_sol *s)
 		return (get_stream(s->next));
 	return (s);
 }
+
+t_sol	*first_move_big(t_ctrl *c, int move)
+{
+	t_sol	*list;
+
+	list = malloc(sizeof(t_sol));
+	if (!list)
+		free_and_leave(c, 4);
+	*list = (t_sol){0};
+	list->move = do_move(c, move);
+	return (list);
+}

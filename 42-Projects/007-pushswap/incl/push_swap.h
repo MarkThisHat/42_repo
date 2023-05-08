@@ -105,12 +105,16 @@ int		climb_target(t_item *stack, int target);
 void	print_sol(t_sol *s);
 //		solve_swap.c(4)
 void	find_sol(t_ctrl *c);
+t_sol	*first_move_big(t_ctrl *c, int move);
+//		push_sol.c(3)
 t_sol	*prep_sol(t_sol *s);
 t_sol	*get_stream(t_sol *s);
 t_sol	*log_move(int move, t_sol *stack, t_ctrl *c);
 //		small_swap.c
 void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
+//		big_swap.c
+void	big_sol(t_ctrl *c, int size);
 //		opt_swap.c(4)
 void	optimize_solution(t_sol *navi, t_sol *head);
 //		push_reset.c(2)

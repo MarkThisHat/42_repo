@@ -93,8 +93,6 @@ void	small_sol(t_ctrl *c, int size)
 		c->stream = log_move(push_a(c), c->stream, c);
 	if (c->head_b)
 		four_or_five(c, size);
-	ft_printf("%i dive target\n", dive_target(c->head_a, 0));
-	print_stacks(c);
 	if (dive_target(c->head_a, 0) > (size / 2 + 1))
 		while (c->head_a->i)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
