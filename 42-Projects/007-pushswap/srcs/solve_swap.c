@@ -26,12 +26,14 @@ void	find_sol(t_ctrl *c)
 		c->answer->move = push_b(c);
 	if (c->size_a < 5 && c->size_b)
 		small_sol(c, c->size_a + c->size_b);
-	else
+	else if (c->size_a > 5)
 	 	big_sol(c, c->size_a + c->size_b);
 /*	ft_printf("pre-optimization\n");
 	print_sol(c->answer);
 	ft_printf("aftermath\n");*/
-	optimize_solution(c->answer, c->answer);
+	optimize_solution(c->answer->next, c->answer);
+//	optimize_solution(c->answer->next, c->answer);
+//	optimize_solution(c->answer->next, c->answer);
 	print_sol(c->answer);
 //	print_stacks(c);
 //	ft_printf("aftermath\n");

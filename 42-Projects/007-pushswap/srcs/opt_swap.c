@@ -74,8 +74,8 @@ void optimize_solution(t_sol *navi, t_sol *head)
 	t_sol *temp;
 
 	temp = NULL;
-	while (navi && navi->move <= PA)
-		navi = navi->next;
+/*	while (navi && navi->move <= PA)
+		navi = navi->next;*/
 	if (!navi)
 		return;
 	if (navi->next && is_redundant(navi->move, navi->next->move))
@@ -83,6 +83,7 @@ void optimize_solution(t_sol *navi, t_sol *head)
 		temp = navi->next;
 		remove_node(head, navi);
 		remove_node(head, temp);
+		optimize_solution(temp, head);
 	}
 	else if (navi->move >= SA && navi->move <= RRB)
 	{
