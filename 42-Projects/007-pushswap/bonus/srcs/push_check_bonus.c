@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_check_bonus.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:15:04 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:15:24 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
 int	is_sorted_bonus(t_ctrl *c)
@@ -18,8 +30,8 @@ int	is_sorted_bonus(t_ctrl *c)
 
 int	check_duplicates(t_ctrl *c)
 {
-	t_item *current;
-	t_item *temp;
+	t_item	*current;
+	t_item	*temp;
 
 	current = c->head_a;
 	while (current)

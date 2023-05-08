@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mover_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:14:26 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:14:45 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
-int		mover_bonus(t_ctrl *c, char *line)
+int	mover_bonus(t_ctrl *c, char *line)
 {
 	if (!ft_strncmp("sa\n", line, 3))
 		swap_a(c);

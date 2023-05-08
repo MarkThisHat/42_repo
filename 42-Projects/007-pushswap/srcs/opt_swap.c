@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   opt_swap.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:04:42 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:07:47 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-static int is_redundant(int move1, int move2)
+static int	is_redundant(int move1, int move2)
 {
 	if (move1 == RA && move2 == RRA)
 		return (1);
@@ -64,10 +76,10 @@ static t_sol	*find_replacement(t_sol *navi, int move)
 	return (NULL);
 }
 
-static int wipe_unecessary(t_sol *navi, t_sol *head, int optimized)
+static int	wipe_unecessary(t_sol *navi, t_sol *head, int optimized)
 {
-	t_sol *temp;
-	t_sol *prev;
+	t_sol	*temp;
+	t_sol	*prev;
 
 	temp = NULL;
 	prev = NULL;
@@ -92,7 +104,7 @@ static int wipe_unecessary(t_sol *navi, t_sol *head, int optimized)
 	return (optimized);
 }
 
-void optimize_solution(t_sol *navi, t_sol *head)
+void	optimize_solution(t_sol *navi, t_sol *head)
 {
 	t_sol	*temp;
 	int		opt;
@@ -103,7 +115,7 @@ void optimize_solution(t_sol *navi, t_sol *head)
 	while (navi && navi->move <= PA)
 		navi = navi->next;
 	if (!navi)
-		return;
+		return ;
 	temp = NULL;
 	if (navi->move >= SA && navi->move <= RRB)
 	{

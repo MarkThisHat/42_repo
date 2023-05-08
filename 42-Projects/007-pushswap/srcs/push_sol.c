@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_sol.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:05:09 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:10:24 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_sol	*prep_sol(t_sol *s)
@@ -11,7 +23,6 @@ t_sol	*prep_sol(t_sol *s)
 
 t_sol	*log_move(int move, t_sol *stack, t_ctrl *c)
 {
-//	print_stacks(c);
 	stack->next = prep_sol(stack->next);
 	if (!stack->next)
 		free_and_leave(c, 4);

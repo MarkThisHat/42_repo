@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker_bonus.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:12:40 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:13:56 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap_bonus.h"
 
 static void	fill_stack(t_item *a, int len, char **nbrs, t_item *past)
@@ -56,10 +68,8 @@ int	main(int argc, char **argv)
 		else
 			write (1, "Error\n", 6);
 		free(line);
-//		print_stacks(&c);
 	}
 	free(line);
-//	print_stacks(&c);
 	if (is_sorted_bonus(&c))
 		write(1, "OK\n", 3);
 	else

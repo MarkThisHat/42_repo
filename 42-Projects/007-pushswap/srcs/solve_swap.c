@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solve_swap.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:05:21 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:11:09 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static t_sol	*first_move_small(t_ctrl *c)
@@ -27,13 +39,11 @@ void	find_sol(t_ctrl *c)
 	if (c->size_a < 5 && c->size_b)
 		small_sol(c, c->size_a + c->size_b);
 	else if (c->size_a > 5)
-	 	big_sol(c, c->size_a + c->size_b);
+		big_sol(c, c->size_a + c->size_b);
 /*	ft_printf("pre-optimization\n");
 	print_sol(c->answer);
 	ft_printf("aftermath\n");*/
 	optimize_solution(c->answer->next, c->answer);
-//	optimize_solution(c->answer->next, c->answer);
-//	optimize_solution(c->answer->next, c->answer);
 	print_sol(c->answer);
 //	print_stacks(c);
 //	ft_printf("aftermath\n");

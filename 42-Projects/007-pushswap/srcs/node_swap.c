@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 16:31:07 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/05 11:51:10 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/08 17:06:57 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	free_sol(t_sol *solution)
 	}
 }
 
-void remove_node(t_sol *head, t_sol *node)
+void	remove_node(t_sol *head, t_sol *node)
 {
-	t_sol *current;
-	t_sol *prev;
+	t_sol	*current;
+	t_sol	*prev;
 
 	current = head;
 	prev = NULL;

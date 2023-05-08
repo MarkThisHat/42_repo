@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_big.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/08 17:04:51 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/08 17:09:11 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 static	void	smart_repile_a(t_ctrl *c, int target)
@@ -8,10 +20,10 @@ static	void	smart_repile_a(t_ctrl *c, int target)
 	climb = climb_target(c->tail_b, target);
 	dive = dive_target(c->head_b, target);
 	if (climb > dive)
-		while(c->head_b->i != target)
+		while (c->head_b->i != target)
 			c->stream = log_move(rotate_b(c), c->stream, c);
 	else
-		while(c->head_b->i != target)
+		while (c->head_b->i != target)
 			c->stream = log_move(rev_rotate_b(c), c->stream, c);
 	c->stream = log_move(push_a(c), c->stream, c);
 }
@@ -19,7 +31,7 @@ static	void	smart_repile_a(t_ctrl *c, int target)
 void	sol_s(t_ctrl *c, int size)
 {
 	int	i;
-	int pivot;
+	int	pivot;
 
 	pivot = size / 2;
 	if (c->head_a->i < pivot)
