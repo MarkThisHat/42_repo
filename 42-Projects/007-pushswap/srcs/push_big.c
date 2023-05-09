@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 17:04:51 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/08 17:09:11 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:59:21 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,29 @@ void	sol_s(t_ctrl *c, int size)
 void	big_sol(t_ctrl *c, int size)
 {
 	sol_s(c, size);
+	sol_a(c, size);
+}
+
+int	optimal_partitioning(int size)
+{
+	if (size < 101)
+		return (5);
+	else
+		return (11);
+}
+
+int	find_chunk(int size, int pivot)
+{
+	static int	i;
+
+	if (pivot == size)
+		i = optimal_partitioning(size);
+	return ((pivot * --i) / optimal_partitioning(size));
+}
+
+void	sol_a(t_ctrl *c, int size)
+{
+	int	pivot;
+	
+	pivot = find_chunk(size, size);
 }
