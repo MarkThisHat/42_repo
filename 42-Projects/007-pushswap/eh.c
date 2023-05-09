@@ -14,18 +14,22 @@ int	find_chunk(int size, int pivot)
 
 	if (pivot == size)
 		i = optimal_partitioning(size);
-    i--;
+	i--;
 	return ((size * i) / optimal_partitioning(size));
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
 	int	pivot;
-    int size = 500;
+    int size = 100;
 	
-	pivot = size; //find_chunk(size, size);
-    while (pivot)
-        printf("%i\n", pivot = find_chunk(size, pivot));
+	printf("ARGC: %i\n",argc);
+	(void)argv;
+	pivot = find_chunk(size, size);
+    printf("pivot: %i\n", pivot);
+	/*
+	while (pivot)
+        printf("%i\n", pivot = find_chunk(size, pivot));*/
 }
 
 /*
@@ -40,5 +44,33 @@ int	main(void)
     while (--i)
 	    printf("%i\n", (n * i) / 5);
 }
+
+*/
+
+
+/*
+
+io.vertx.core.VertxException: Thread blocked
+    at io.vertx.core.net.impl.TCPServerBase.listen(TCPServerBase.java:125)
+    at io.vertx.core.net.impl.TCPServerBase.bind(TCPServerBase.java:100)
+    at io.vertx.core.http.impl.HttpServerImpl.listen(HttpServerImpl.java:217)
+    at io.vertx.core.http.impl.HttpServerImpl.listen(HttpServerImpl.java:149)
+    at io.vertx.core.http.impl.HttpServerImpl.listen(HttpServerImpl.java:154)
+    at io.quarkus.vertx.http.runtime.VertxHttpRecorder$WebDeploymentVerticle.setupTcpHttpServer(VertxHttpRecorder.java:1242)
+    at io.quarkus.vertx.http.runtime.VertxHttpRecorder$WebDeploymentVerticle.start(VertxHttpRecorder.java:1171)
+    at io.vertx.core.impl.DeploymentManager.lambda$doDeploy$5(DeploymentManager.java:196)
+    at io.vertx.core.impl.DeploymentManager$$Lambda$766/0x00000008407a4040.handle(Unknown Source)
+    at io.vertx.core.impl.ContextInternal.dispatch(ContextInternal.java:264)
+    at io.vertx.core.impl.ContextInternal.dispatch(ContextInternal.java:246)
+    at io.vertx.core.impl.EventLoopContext.lambda$runOnContext$0(EventLoopContext.java:43)
+    at io.vertx.core.impl.EventLoopContext$$Lambda$767/0x00000008407a3c40.run(Unknown Source)
+    at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:174)
+    at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:167)
+    at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:470)
+    at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:503)
+    at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+    at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+    at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+    at java.base@11.0.11/java.lang.Thread.run(Thread.java:829)
 
 */
