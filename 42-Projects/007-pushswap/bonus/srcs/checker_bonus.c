@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 17:12:40 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/08 17:13:56 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/09 10:27:05 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,33 +46,47 @@ static t_item	*stack_up(int argc, char **argv)
 	return (a);
 }
 
+static void	publish_result(t_ctrl *c)
+{
+	if (is_sorted_bonus(c))
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
+}
+
+static void	treat_args(t_ctrl *c, int argc, char **argv)
+{
+	if (argc < 2)
+		exit (1);
+	check_args(argc, argv);
+	c->head_a = stack_up(argc, argv);
+	set_control(c, c->head_a, argc - 1);
+	check_duplicates(c);
+}
+
 int	main(int argc, char **argv)
 {
 	t_ctrl	c;
 	char	*line;
-	int		fd;
 	int		good;
+	int		read_flag;
 
-	fd = 0;
 	good = 1;
-	if (argc < 2)
-		return (1);
-	check_args(argc, argv);
-	c.head_a = stack_up(argc, argv);
-	set_control(&c, c.head_a, argc - 1);
-	check_duplicates(&c);
-	while ((line = get_next_line(fd)))
+	read_flag = 1;
+	treat_args(&c, argc, argv);
+	line = get_next_line(0);
+	while (line || read_flag)
 	{
 		if (good)
 			good = mover_bonus(&c, line);
 		else
 			write (1, "Error\n", 6);
 		free(line);
+		line = get_next_line(0);
+		if (!line)
+			read_flag = 0;
 	}
 	free(line);
-	if (is_sorted_bonus(&c))
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	publish_result(&c);
 	free_and_leave(&c, 0);
 }
