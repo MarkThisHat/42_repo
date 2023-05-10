@@ -12,21 +12,30 @@ int	find_climb_chunk(int size)//, int pivot)
 //	(void)pivot;
 }
 
+void	set_bigger_b(t_item *item, int *smaller, int *bigger)
+{
+	*smaller = item->i;
+	while (item)
+	{
+		if (item->i > *bigger)
+			*bigger = item->i;
+		if (item->i < *smaller)
+			*smaller = item->i;
+		item = item->next;
+	}
+}
+
 int	take_in_b(t_ctrl *c, int aim)
 {
 	static int	bigger;
 	static int	smaller;
-ft_printf("Aim: %i\nBigger: %i\nSmaller: %i\n", aim, bigger, smaller);
+//ft_printf("Aim: %i\nBigger: %i\nSmaller: %i\n", aim, bigger, smaller);
 	if (c->size_b < 3)
 		return (0);
 	if (!bigger && !smaller)
-	{
-		bigger = c->head_b->i;
-		smaller = c->head_b->i;
-	}
+		set_bigger_b(c->head_b, &smaller, &bigger);
 	if (c->size_b == 3)
 		sort_three(c, c->head_b, 1);
-
 	if (aim > bigger)
 		bigger = aim;
 	if (aim < smaller)
@@ -58,7 +67,7 @@ void	pogo_sol(t_ctrl *c, int size)
 	else
 		c->answer = first_move_big(c, RA);
 	c->stream = get_stream(c->answer);
-	print_full_stacks(c);
+//	print_full_stacks(c);
 //	ft_printf("First pivot and max are %i and %i\n", pivot, max);
 	while (c->size_a)// > 3 && max)
 	{
@@ -78,10 +87,11 @@ void	pogo_sol(t_ctrl *c, int size)
 		{
 			pivot = max + 1;
 			max = find_climb_chunk(size);
-			ft_printf("Pivot and max are %i and %i\n", pivot, max);
+//			ft_printf("Pivot and max are %i and %i\n", pivot, max);
 		}
+//		print_full_stacks(c);
 	}
 	while (c->size_b)
 		c->stream = log_move(push_a(c), c->stream, c);
-	print_full_stacks(c);
+//	print_full_stacks(c);
 }
