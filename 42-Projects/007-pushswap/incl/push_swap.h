@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/04/24 20:47:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:31:32 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ t_sol	*apply_sol(t_sol *s, t_ctrl *c);
 //unconsolidated
 int		sort_stack(t_ctrl *c, int quadrant, int size);
 void	pogo_sol(t_ctrl *c, int size);
+void	sol_c(t_ctrl *c, int size);
 //not project
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);

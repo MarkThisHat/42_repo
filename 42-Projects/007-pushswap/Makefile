@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/05/09 10:12:59 by maalexan         ###   ########.fr        #
+#    Updated: 2023/05/10 19:30:44 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CFLAGS := -Wall -Wextra -Werror -I $(HDR_DIR)
 BCFLAGS := -Wall -Wextra -Werror -I ./bonus/incl
 
 # Source files
-FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c solb_swap.c small_swap.c push_big.c print_swap.c push_reset.c opt_swap.c zwap_pivot.c zwap_print.c
+FUN := a_moves.c b_moves.c multi_swap.c merge_swap.c move_swap.c node_swap.c ps_utils.c push_check.c push_index.c push_swap.c push_sol.c solve_swap.c solb_swap.c solc_swap.c small_swap.c push_big.c print_swap.c push_reset.c opt_swap.c zwap_pivot.c zwap_print.c
 BFUN := checker_bonus.c ps_utils.c push_check.c push_check_bonus.c node_swap.c a_moves.c b_moves.c multi_swap.c    print_swap.c zwap_print.c
 
 # Object files

@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 17:04:51 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/09 10:59:21 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/10 19:30:17 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	sol_a(t_ctrl *c, int size)
 void	big_sol(t_ctrl *c, int size)
 {
 	//sol_a(c, size);
-	pogo_sol(c, size);
+	//pogo_sol(c, size);
+	sol_c(c, size);
 }
