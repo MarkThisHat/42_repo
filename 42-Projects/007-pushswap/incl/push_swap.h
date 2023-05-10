@@ -99,8 +99,10 @@ int		rotate_both(t_ctrl *c);
 int		rev_rotate_both(t_ctrl *c);
 //		move_swap.c
 int		do_move(t_ctrl *c, int move);
+int		optimal_partitioning(int size);
 int		dive_target(t_item *stack, int target);
 int		climb_target(t_item *stack, int target);
+int		has_amidst(t_item *stack, int start, int end);
 //		print_swap.c (2)
 void	print_sol(t_sol *s);
 //		solve_swap.c(4)
@@ -113,6 +115,7 @@ t_sol	*log_move(int move, t_sol *stack, t_ctrl *c);
 //		small_swap.c
 void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
+void	sort_three(t_ctrl *c, t_item *head, int is_b);
 //		big_swap.c
 void	big_sol(t_ctrl *c, int size);
 //		opt_swap.c(4)
@@ -133,6 +136,7 @@ t_sol	*apply_sol(t_sol *s, t_ctrl *c);
 
 //unconsolidated
 int		sort_stack(t_ctrl *c, int quadrant, int size);
+void	pogo_sol(t_ctrl *c, int size);
 //not project
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);

@@ -7,7 +7,7 @@ int	optimal_partitioning(int size)
 	else
 		return (11);
 }
-
+/*
 int	find_chunk(int size, int pivot)
 {
 	static int	i;
@@ -17,19 +17,30 @@ int	find_chunk(int size, int pivot)
 	i--;
 	return ((size * i) / optimal_partitioning(size));
 }
+*/
+
+int	find_chunk(int size, int pivot)
+{
+	static int	i;
+
+	i++;
+	if (i < optimal_partitioning(size))
+		return ((size * i) / optimal_partitioning(size));
+	else
+		return (0);
+}
 
 int main(int argc, char **argv)
 {
 	int	pivot;
-    int size = 100;
+    int size = 500;
 	
-	printf("ARGC: %i\n",argc);
+//	printf("ARGC: %i\n",argc);
 	(void)argv;
-	pivot = find_chunk(size, size);
-    printf("pivot: %i\n", pivot);
-	/*
+	pivot = size;
 	while (pivot)
-        printf("%i\n", pivot = find_chunk(size, pivot));*/
+		if (pivot)
+        	printf("%i\n", pivot = find_chunk(size, pivot));
 }
 
 /*

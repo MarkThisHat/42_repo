@@ -68,3 +68,22 @@ int	climb_target(t_item *stack, int target)
 	}
 	return (0);
 }
+
+int	has_amidst(t_item *stack, int start, int end)
+{
+	while (stack)
+	{
+		if (stack->i >= start && stack->i <= end)
+			return (stack->i);
+		stack = stack->next;
+	}
+	return (-1);
+}
+
+int	optimal_partitioning(int size)
+{
+	if (size < 101)
+		return (5);
+	else
+		return (11);
+}

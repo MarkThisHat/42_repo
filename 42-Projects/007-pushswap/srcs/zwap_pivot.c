@@ -55,3 +55,36 @@ int	find_pivot(int *arr, int len)
 	pivot = calc_pivot(arr, len, len / 4);
 	return (pivot);
 }
+/*
+void	sol_s(t_ctrl *c, int size)
+{
+	int	i;
+	int	pivot;
+
+	pivot = size / 2;
+	if (c->head_a->i < pivot)
+		c->answer = first_move_big(c, PB);
+	else
+		c->answer = first_move_big(c, RA);
+	c->stream = get_stream(c->answer);
+//	print_stacks(c);
+	while (c->size_b < size / 2)
+	{
+		if (c->head_a->i < pivot)
+			c->stream = log_move(push_b(c), c->stream, c);
+		else
+			c->stream = log_move(rotate_a(c), c->stream, c);
+	}
+//	print_stacks(c);
+	i = pivot;
+	while (i)
+		smart_repile_a(c, --i);
+//	print_stacks(c);
+	while (c->size_a)
+		c->stream = log_move(push_b(c), c->stream, c);
+//	print_stacks(c);
+	i = size;
+	while (i)
+		smart_repile_a(c, --i);
+//	print_stacks(c);
+}*/
