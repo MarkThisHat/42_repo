@@ -306,24 +306,37 @@ int		cal_cost(t_item *package, t_item *oppo_head)
 	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n", dive - 1, climb);
 	ft_printf("I should be comparing rotates %i and %i and reverses %i and %i\n", rot, dive -1, rev, climb);
 	ft_printf("This move's cost: %i\n\n", compute_cost(rot, rev, dive - 1, climb));
-	return (oppo_head->i);
+	return (compute_cost(rot, rev, dive - 1, climb));
 }
+
+//void	make_move(int )
 
 void	sol_c(t_ctrl *c, int size)
 {
 	t_item	*temp;
+	int		next_move;
+	int		current;
+	int		quickest;
 
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
-	temp = c->head_a;
+	quickest = cal_cost(c->head_a, c->head_b);
+	temp = c->head_a->next;
+	next_move = c->head_a->i;
 	while (temp)
 	{
-		cal_cost(temp, c->head_b);
+		current = cal_cost(temp, c->head_b);
+		if (current < quickest)
+		{
+			quickest = current;
+			next_move = temp->i;
+		}
 		temp = temp->next;
 	}
+	ft_printf("\nThe quickest move should be index: %i\n\n", next_move);
 	print_full_stacks(c);
 	(void)size;
 }
