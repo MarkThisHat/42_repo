@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 19:17:38 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/10 20:01:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/11 14:44:52 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,8 @@ void	pogo_sol(t_ctrl *c, int size)
 	while (c->size_b)
 		c->stream = log_move(push_a(c), c->stream, c);
 //	print_full_stacks(c);
-}*/
-
-//pog
-
-int		count_tails_or_head(t_item *item, int tails)
-{
-	int	i;
-
-	i = 0;
-	while (item)
-	{
-		if (tails)
-			item = item->prev;
-		else
-			item = item->next;
-		if (item)
-			i++;
-	}
-	return (i);
 }
+
 
 int	find_small_or_big(t_item *item, int big)
 {
@@ -149,16 +131,131 @@ int	find_cushy_spot(int item, t_item *oppo_head)
 {
 	int	bigger;
 	int	smaller;
+	int	closer;
 
 	bigger = find_small_or_big(oppo_head, 1);
 	smaller = find_small_or_big(oppo_head, 0);
 	if (item > bigger)
 		return (bigger);
 	if (item < smaller)
-		return (smaller);
-	while (item < oppo_head->i)
+		return (item);
+	while (oppo_head->next)
+	{
+		if (oppo_head->i < item)
+			closer = oppo_head->i;
 		oppo_head = oppo_head->next;
-	return (oppo_head->i);
+	}
+	while (oppo_head)
+	{
+		if (oppo_head->i > closer && oppo_head->i < item)
+			closer = oppo_head->i;
+		oppo_head = oppo_head->prev;
+	}
+	return (closer);
+}
+
+int find_cushy_spot(int item, t_item *oppo_head)
+{
+	int closer = -1;
+	int second_biggest = -1;
+
+	while (oppo_head)
+	{
+		if (oppo_head->i < item && (closer == -1 || item - oppo_head->i < item - closer))
+		{
+			closer = oppo_head->i;
+		}
+
+		// Update the second biggest value
+		if (oppo_head->i > second_biggest && (closer == -1 || oppo_head->i != closer))
+		{
+			second_biggest = oppo_head->i;
+		}
+
+		oppo_head = oppo_head->next;
+	}
+
+	// If the item is greater than all the values in the list,
+	// return the second biggest value.
+	if (closer == -1)
+	{
+		return second_biggest;
+	}
+
+	return closer;
+}
+
+
+*/
+
+//pog
+
+int		count_tails_or_head(t_item *item, int tails)
+{
+	int	i;
+
+	i = 0;
+	while (item)
+	{
+		if (tails)
+			item = item->prev;
+		else
+			item = item->next;
+		if (item)
+			i++;
+	}
+	return (i);
+}
+/*
+int	find_cushy_spot(int item, t_item *oppo_head)
+{
+	int	bigger;
+	int	smaller;
+	int	closer;
+
+	bigger = oppo_head->i;
+	smaller = oppo_head->i;
+	while (oppo_head->next)
+	{
+		if (oppo_head->i < item)
+			closer = oppo_head->i;
+		if (oppo_head->i > bigger)
+			bigger = oppo_head->i;
+		if (oppo_head->i < smaller)
+			smaller = oppo_head->i;
+		oppo_head = oppo_head->next;
+	}
+	while (oppo_head)
+	{
+		if (oppo_head->i > closer && oppo_head->i < item)
+			closer = oppo_head->i;
+		oppo_head = oppo_head->prev;
+	}
+	if (item > bigger)
+		return (bigger);
+	if (item < smaller)
+		return (item);
+	return (closer);
+}*/
+
+int find_cushy_spot(int item, t_item *op)
+{
+	int closer;
+	int biggest;
+
+	closer = -1;
+	biggest = -1;
+	while (op)
+	{
+		if (op->i < item && (closer == -1 || item - op->i < item - closer))
+			closer = op->i;
+		if (op->i > biggest && (closer == -1 || op->i != closer))
+			biggest = op->i;
+		op = op->next;
+	}
+	if (closer == -1)
+		return (biggest);
+	return (closer);
 }
 
 int		cal_cost(t_item *package, t_item *oppo_head)
@@ -166,20 +263,23 @@ int		cal_cost(t_item *package, t_item *oppo_head)
 	int	rot;
 	int	rev;
 	int	target;
-	int	climb = 3;
+	int	climb;
 	int	dive;
 
 	rot = count_tails_or_head(package, 1);
-	rev = count_tails_or_head(package, 0);
+	rev = count_tails_or_head(package, 0) + 1;
+	climb = 0;
 	ft_printf("Item: %i index %i\n", package->n, package->i);
-	ft_printf("To head: %i\nTo tails: %i\n", rot, rev);
+	ft_printf("Rotate A: %i\nReverse Rotate A: %i\n", rot, rev);
 	target = (find_cushy_spot(package->i, oppo_head));
-	ft_printf("Should be above %i\n", target);
 	dive = dive_target(oppo_head, target);
 	while (oppo_head->next)
 		oppo_head = oppo_head->next;
-	climb = climb_target(oppo_head, target);
-	ft_printf("Rotatin: %i, Reverse: %i\n\n", dive - 1, climb);
+	if (package->i != target)
+		climb = climb_target(oppo_head, target);
+	if (climb)
+		ft_printf("Should be right above %i\n", target);
+	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n\n", dive - 1, climb);
 	return (oppo_head->i);
 }
 
@@ -191,7 +291,6 @@ void	sol_c(t_ctrl *c, int size)
 	c->stream = get_stream(c->answer);
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
-	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
 	temp = c->head_a;
 	while (temp)
@@ -199,8 +298,6 @@ void	sol_c(t_ctrl *c, int size)
 		cal_cost(temp, c->head_b);
 		temp = temp->next;
 	}
-	print_full_stacks(c);
-	c->stream = log_move(rotate_a(c), c->stream, c);
 	print_full_stacks(c);
 	(void)size;
 }
