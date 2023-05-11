@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 19:17:38 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/11 14:44:52 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:21:19 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,33 @@ int	find_cushy_spot(int item, t_item *oppo_head)
 	if (item < smaller)
 		return (item);
 	return (closer);
+
+	 ./push_swap 13 9 15 8 17 7 6 10 5 4 14 3 2 1 0 16 11 12
 }*/
+
+int	compute_cost(int ra, int rra, int rb, int rrb)
+{
+	int	i;
+	int	cheap;
+	int	cost[4];
+
+	if (ra > rb)
+		cost[0] = ra;
+	else
+		cost[0] = rb;
+	if (rra > rrb)
+		cost[1] = rra;
+	else
+		cost[1] = rrb;
+	cost[2] = rra + rb;
+	cost[3] = ra + rrb;
+	i = 0;
+	cheap = cost[0];
+	while (i++ < 3)
+		if (cost[i] < cheap)
+			cheap = cost[i];
+	return (cheap);
+}
 
 int find_cushy_spot(int item, t_item *op)
 {
@@ -275,11 +301,11 @@ int		cal_cost(t_item *package, t_item *oppo_head)
 	dive = dive_target(oppo_head, target);
 	while (oppo_head->next)
 		oppo_head = oppo_head->next;
-	if (package->i != target)
-		climb = climb_target(oppo_head, target);
-	if (climb)
-		ft_printf("Should be right above %i\n", target);
-	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n\n", dive - 1, climb);
+	climb = climb_target(oppo_head, target);
+	ft_printf("Should be right above %i\n", target);
+	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n", dive - 1, climb);
+	ft_printf("I should be comparing rotates %i and %i and reverses %i and %i\n", rot, dive -1, rev, climb);
+	ft_printf("This move's cost: %i\n\n", compute_cost(rot, rev, dive - 1, climb));
 	return (oppo_head->i);
 }
 
