@@ -110,67 +110,97 @@ void	pogo_sol(t_ctrl *c, int size)
 
 //pog
 
-int		count_to_head(t_item *item)
+int		count_tails_or_head(t_item *item, int tails)
 {
 	int	i;
 
 	i = 0;
 	while (item)
 	{
-		item = item->prev;
+		if (tails)
+			item = item->prev;
+		else
+			item = item->next;
 		if (item)
 			i++;
 	}
 	return (i);
 }
 
-int		count_to_tails(t_item *item)
+int	find_small_or_big(t_item *item, int big)
 {
-	int	i;
+	int	n;
+	int	sign;
 
-	i = 0;
+	n = item->i;
+	sign = 1;
+	if (big)
+		sign = -1;
 	while (item)
 	{
+		if (item->i * sign < n * sign)
+			n = item->i;
 		item = item->next;
-		if (item)
-			i++;
 	}
-	return (i);
+	return (n);
 }
 
 int	find_cushy_spot(int item, t_item *oppo_head)
 {
-	int	add;
-	int	sub;
+	int	bigger;
+	int	smaller;
 
-	add = 0;
-	sub = 0;
+	bigger = find_small_or_big(oppo_head, 1);
+	smaller = find_small_or_big(oppo_head, 0);
+	if (item > bigger)
+		return (bigger);
+	if (item < smaller)
+		return (smaller);
+	while (item < oppo_head->i)
+		oppo_head = oppo_head->next;
+	return (oppo_head->i);
 }
-
 
 int		cal_cost(t_item *package, t_item *oppo_head)
 {
 	int	rot;
 	int	rev;
+	int	target;
+	int	climb = 3;
+	int	dive;
 
-	rot = count_to_head(package);
-	rev = count_to_tails(package);
+	rot = count_tails_or_head(package, 1);
+	rev = count_tails_or_head(package, 0);
 	ft_printf("Item: %i index %i\n", package->n, package->i);
 	ft_printf("To head: %i\nTo tails: %i\n", rot, rev);
+	target = (find_cushy_spot(package->i, oppo_head));
+	ft_printf("Should be above %i\n", target);
+	dive = dive_target(oppo_head, target);
+	while (oppo_head->next)
+		oppo_head = oppo_head->next;
+	climb = climb_target(oppo_head, target);
+	ft_printf("Rotatin: %i, Reverse: %i\n\n", dive - 1, climb);
 	return (oppo_head->i);
 }
 
 void	sol_c(t_ctrl *c, int size)
 {
+	t_item	*temp;
+
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
+	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
-	cal_cost(c->head_a, c->head_b);
-	cal_cost(c->head_a->next, c->head_b);
-	cal_cost(c->head_a->next->next, c->head_b);
-	cal_cost(c->head_a->next->next->next, c->head_b);
+	temp = c->head_a;
+	while (temp)
+	{
+		cal_cost(temp, c->head_b);
+		temp = temp->next;
+	}
+	print_full_stacks(c);
+	c->stream = log_move(rotate_a(c), c->stream, c);
 	print_full_stacks(c);
 	(void)size;
 }
