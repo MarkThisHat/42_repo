@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 19:17:38 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/11 16:21:19 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/12 11:12:01 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,11 +352,17 @@ int		cal_cost(t_item *package, t_item *oppo_head, int *moves)
 	return (compute_cost(rot, rev, dive - 1, climb));
 }
 
+void	get_move_motion(t_ctrl *c, int next_move)
+{
+	int	movements[2];
+	
+	movements = make_move(next_move, c->head_a, c->head_b);
+}
+
 void	make_move(int next_move, t_item *curr, t_item *op)
 {
 	int	moves[4];
 	int	cost;
-//	int	best[2];
 
 	while (curr->i != next_move)
 		curr = curr->next;
