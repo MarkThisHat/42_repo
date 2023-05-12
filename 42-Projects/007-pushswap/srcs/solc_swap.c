@@ -240,6 +240,15 @@ int	find_cushy_spot(int item, t_item *oppo_head)
 	 ./push_swap 13 9 15 8 17 7 6 10 5 4 14 3 2 1 0 16 11 12
 }*/
 
+/*
+int	cheapest_two(int ra, int rra, int rb, int rrb)
+{
+	ra + rb
+	rra + rrb
+	ra + rrb
+	rra + rb
+}*/
+
 int	compute_cost(int ra, int rra, int rb, int rrb)
 {
 	int	i;
@@ -284,7 +293,31 @@ int find_cushy_spot(int item, t_item *op)
 	return (closer);
 }
 
-int		cal_cost(t_item *package, t_item *oppo_head)
+int	*put_cost(int *moves)
+{
+	int	ra;
+	int	rra;
+	int	rb;
+	int	rrb;
+
+	ra = moves[0];
+	rra = moves[1];
+	rb = moves[2];
+	rrb = moves[3];
+	if (ra > rb)
+		moves[0] = ra;
+	else
+		moves[0] = rb;
+	if (rra > rrb)
+		moves[1] = rra;
+	else
+		moves[1] = rrb;
+	moves[2] = rra + rb;
+	moves[3] = ra + rrb;
+	return (moves);
+}
+
+int		cal_cost(t_item *package, t_item *oppo_head, int *moves)
 {
 	int	rot;
 	int	rev;
@@ -294,22 +327,49 @@ int		cal_cost(t_item *package, t_item *oppo_head)
 
 	rot = count_tails_or_head(package, 1);
 	rev = count_tails_or_head(package, 0) + 1;
-	climb = 0;
-	ft_printf("Item: %i index %i\n", package->n, package->i);
-	ft_printf("Rotate A: %i\nReverse Rotate A: %i\n", rot, rev);
 	target = (find_cushy_spot(package->i, oppo_head));
 	dive = dive_target(oppo_head, target);
 	while (oppo_head->next)
 		oppo_head = oppo_head->next;
 	climb = climb_target(oppo_head, target);
+	if (!moves)
+	{
+	ft_printf("Item: %i index %i\n", package->n, package->i);
+	ft_printf("Rotate A: %i\nReverse Rotate A: %i\n", rot, rev);
 	ft_printf("Should be right above %i\n", target);
 	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n", dive - 1, climb);
 	ft_printf("I should be comparing rotates %i and %i and reverses %i and %i\n", rot, dive -1, rev, climb);
-	ft_printf("This move's cost: %i\n\n", compute_cost(rot, rev, dive - 1, climb));
+	ft_printf("This move's cost: %i\n", compute_cost(rot, rev, dive - 1, climb));
+	}
+	if (moves)
+	{
+		moves[0] = rot;
+		moves[1] = rev;
+		moves[2] = dive - 1;
+		moves[3] = climb;
+		moves = put_cost(moves);
+	}
 	return (compute_cost(rot, rev, dive - 1, climb));
 }
 
-//void	make_move(int )
+void	make_move(int next_move, t_item *curr, t_item *op)
+{
+	int	moves[4];
+	int	cost;
+//	int	best[2];
+
+	while (curr->i != next_move)
+		curr = curr->next;
+	cost = cal_cost(curr, op, moves);
+	if (cost == moves[0])
+		ft_printf("RA and RB\n");
+	if (cost == moves[1])
+		ft_printf("RRA and RRB\n");
+	if (cost == moves[2])
+		ft_printf("RRA and RB\n");
+	if (cost == moves[3])
+		ft_printf("RA and RRB\n");
+}
 
 void	sol_c(t_ctrl *c, int size)
 {
@@ -323,20 +383,23 @@ void	sol_c(t_ctrl *c, int size)
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
-	quickest = cal_cost(c->head_a, c->head_b);
+	quickest = cal_cost(c->head_a, c->head_b, NULL);
 	temp = c->head_a->next;
 	next_move = c->head_a->i;
 	while (temp)
 	{
-		current = cal_cost(temp, c->head_b);
+		current = cal_cost(temp, c->head_b, NULL);
 		if (current < quickest)
 		{
 			quickest = current;
 			next_move = temp->i;
 		}
+		make_move(temp->i, c->head_a, c->head_b);
+		write(1, "\n\n", 2);
 		temp = temp->next;
 	}
 	ft_printf("\nThe quickest move should be index: %i\n\n", next_move);
+	make_move(next_move, c->head_a, c->head_b);
 	print_full_stacks(c);
 	(void)size;
 }
