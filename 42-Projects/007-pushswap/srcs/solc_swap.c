@@ -339,7 +339,7 @@ int		cal_cost(t_item *package, t_item *oppo_head, int *moves)
 	ft_printf("Should be right above %i\n", target);
 	ft_printf("Rotate B: %i\nReverse Rotate B: %i\n", dive - 1, climb);
 	ft_printf("I should be comparing rotates %i and %i and reverses %i and %i\n", rot, dive -1, rev, climb);
-	ft_printf("This move's cost: %i\n", compute_cost(rot, rev, dive - 1, climb));
+	ft_printf("This move's cost: %i\n\n", compute_cost(rot, rev, dive - 1, climb));
 	}
 	if (moves)
 	{
@@ -352,14 +352,7 @@ int		cal_cost(t_item *package, t_item *oppo_head, int *moves)
 	return (compute_cost(rot, rev, dive - 1, climb));
 }
 
-void	get_move_motion(t_ctrl *c, int next_move)
-{
-	int	movements[2];
-	
-	movements = make_move(next_move, c->head_a, c->head_b);
-}
-
-void	make_move(int next_move, t_item *curr, t_item *op)
+void	move_stack(int next_move, t_item *curr, t_item *op, int *actions)
 {
 	int	moves[4];
 	int	cost;
@@ -368,27 +361,53 @@ void	make_move(int next_move, t_item *curr, t_item *op)
 		curr = curr->next;
 	cost = cal_cost(curr, op, moves);
 	if (cost == moves[0])
+	{
 		ft_printf("RA and RB\n");
-	if (cost == moves[1])
+		actions[0] = RA;
+		actions[1] = RB;
+	}
+	else if (cost == moves[1])
+	{
 		ft_printf("RRA and RRB\n");
-	if (cost == moves[2])
+		actions[0] = RRA;
+		actions[1] = RRB;
+	}
+	else if (cost == moves[2])
+	{
 		ft_printf("RRA and RB\n");
-	if (cost == moves[3])
+		actions[0] = RRA;
+		actions[1] = RB;
+	}
+	else if (cost == moves[3])
+	{
 		ft_printf("RA and RRB\n");
+		actions[0] = RA;
+		actions[1] = RRB;
+	}
 }
 
-void	sol_c(t_ctrl *c, int size)
+void	motion_a_to_b(t_ctrl *c, int next_move)
+{
+	int	actions[2];
+	int	b_item;
+	
+	move_stack(next_move, c->head_a, c->head_b, actions);
+	ft_printf("%i and %i", actions[0], actions[1]);
+	while (c->head_a->i != next_move)
+		c->stream = log_move(do_move(c, actions[0]), c->stream, c);
+	b_item = (find_cushy_spot(c->head_a->i, c->head_b));
+	while (c->head_b->i != b_item)
+		c->stream = log_move(do_move(c, actions[1]), c->stream, c);
+	c->stream = log_move(push_b(c), c->stream, c);
+}
+
+void	greedy_swap(t_ctrl *c)
 {
 	t_item	*temp;
 	int		next_move;
 	int		current;
 	int		quickest;
 
-	c->answer = first_move_big(c, PB);
-	c->stream = get_stream(c->answer);
-	c->stream = log_move(push_b(c), c->stream, c);
-	c->stream = log_move(push_b(c), c->stream, c);
-	sort_three(c, c->head_b, 1);
 	quickest = cal_cost(c->head_a, c->head_b, NULL);
 	temp = c->head_a->next;
 	next_move = c->head_a->i;
@@ -400,12 +419,42 @@ void	sol_c(t_ctrl *c, int size)
 			quickest = current;
 			next_move = temp->i;
 		}
-		make_move(temp->i, c->head_a, c->head_b);
-		write(1, "\n\n", 2);
 		temp = temp->next;
 	}
-	ft_printf("\nThe quickest move should be index: %i\n\n", next_move);
-	make_move(next_move, c->head_a, c->head_b);
+	motion_a_to_b(c, next_move);
 	print_full_stacks(c);
+}
+
+void	sol_c(t_ctrl *c, int size)
+{
+/*	t_item	*temp;
+	int		next_move;
+	int		current;
+	int		quickest;
+*/
+	c->answer = first_move_big(c, PB);
+	c->stream = get_stream(c->answer);
+	c->stream = log_move(push_b(c), c->stream, c);
+	c->stream = log_move(push_b(c), c->stream, c);
+	sort_three(c, c->head_b, 1);
+	while (c->size_a > 3)
+		greedy_swap(c);
+/*	quickest = cal_cost(c->head_a, c->head_b, NULL);
+	temp = c->head_a->next;
+	next_move = c->head_a->i;
+	while (temp)
+	{
+		current = cal_cost(temp, c->head_b, NULL);
+		if (current < quickest)
+		{
+			quickest = current;
+			next_move = temp->i;
+		}
+		temp = temp->next;
+	}
+	motion_a_to_b(c, next_move);
+	print_full_stacks(c);*/
+	sort_three(c, c->head_a, 0);
+	print_stacks(c);
 	(void)size;
 }
