@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static int		count_tails_or_head(t_item *item, int tails)
+static int	count_tails_or_head(t_item *item, int tails)
 {
 	int	i;
 
@@ -53,10 +53,10 @@ static int	compute_cost(int ra, int rra, int rb, int rrb)
 	return (cheap);
 }
 
-int find_cushy_spot(int item, t_item *op)
+int	find_cushy_spot(int item, t_item *op)
 {
-	int closer;
-	int biggest;
+	int	closer;
+	int	biggest;
 
 	closer = -1;
 	biggest = -1;
@@ -97,7 +97,7 @@ static int	*put_cost(int *moves)
 	return (moves);
 }
 
-int		cal_cost(t_item *package, t_item *oppo_head, int *moves)
+int	cal_cost(t_item *package, t_item *oppo_head, int *moves)
 {
 	int	rot;
 	int	rev;

@@ -40,7 +40,7 @@ static void	motion_a_to_b(t_ctrl *c, int next_move)
 {
 	int	actions[2];
 	int	b_item;
-	
+
 	move_stack(next_move, c->head_a, c->head_b, actions);
 	while (c->head_a->i != next_move)
 		c->stream = log_move(do_move(c, actions[0]), c->stream, c);
