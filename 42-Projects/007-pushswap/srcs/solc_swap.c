@@ -192,8 +192,6 @@ void	greedy_swap(t_ctrl *c)
 
 void	sol_c(t_ctrl *c, int size)
 {
-	int	target;
-
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
 	c->stream = log_move(push_b(c), c->stream, c);
@@ -202,22 +200,19 @@ void	sol_c(t_ctrl *c, int size)
 	while (c->size_a > 3)
 		greedy_swap(c);
 	sort_three(c, c->head_a, 0);
-	greedy_swap(c);
-	greedy_swap(c);
-	target = find_cushy_spot(c->head_a->i, c->head_b);
-	if (climb_target(c->tail_b, target) > dive_target(c->head_b, target))
-		while (c->head_b->i != target)
-			c->stream = log_move(rotate_b(c), c->stream, c);
-	else
-		while (c->head_b->i != target)
-			c->stream = log_move(rev_rotate_b(c), c->stream, c);
+	if (c->tail_a->i == size - 1)
+		c->stream = log_move(rev_rotate_a(c), c->stream, c);
 	while (c->size_b)
+	{
+		if (c->tail_a->i == c->head_a->i - 1)
+			c->stream = log_move(rev_rotate_a(c), c->stream, c);
+		else
 			c->stream = log_move(push_a(c), c->stream, c);
+	}
 	if (climb_target(c->tail_a, 0) > dive_target(c->head_a, 0))
 		while (c->head_a->i)
 			c->stream = log_move(rotate_a(c), c->stream, c);
 	else
 		while (c->head_a->i)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
-	(void)size;
 }
