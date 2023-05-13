@@ -74,26 +74,19 @@ static int	*pile_on(t_item *item, int size, int *invers)
 	return (stack);
 }
 
-int	assess_pile(t_item *head, int size)
+void	assess_pile(t_item *head, int size)
 {
 	int	*stack;
 	int	*invers;
-	int	pivot;
 
 	invers = ft_calloc(size, sizeof(int));
 	if (!invers)
 		empty_stack(head, 4);
 	stack = pile_on(head, size, invers);
-	merge_sort(stack, invers, 0, size - 1);//put failsafe here
+	merge_sort(stack, invers, 0, size - 1);
 	if (!check_unique(stack, head, size, invers))
 		leave_program("Error\n", 2);
 	set_index(head, stack, size);
-/*	ft_printf("Inversions array: \n");
-	for (int i = 0; i < size; i++)
-		ft_printf("%d ", invers[i]);
-	ft_printf("\n");*/
-	pivot = find_pivot(invers, size);
 	free(invers);
 	free(stack);
-	return (pivot);
 }

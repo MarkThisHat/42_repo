@@ -82,7 +82,7 @@ void	remove_node(t_sol *head, t_sol *node);
 t_item	*sever_node(t_item *item);
 t_item	*place_node(t_item *item, t_item *edge);
 //		push_index(5)
-int		assess_pile(t_item *head, int size);
+void	assess_pile(t_item *head, int size);
 //		a_moves.c
 int		swap_a(t_ctrl *c);
 int		rotate_a(t_ctrl *c);
