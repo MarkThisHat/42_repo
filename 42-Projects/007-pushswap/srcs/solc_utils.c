@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   solc_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/13 10:33:08 by maalexan          #+#    #+#             */
+/*   Updated: 2023/05/13 10:33:10 by maalexan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-int		count_tails_or_head(t_item *item, int tails)
+static int		count_tails_or_head(t_item *item, int tails)
 {
 	int	i;
 
@@ -17,7 +29,7 @@ int		count_tails_or_head(t_item *item, int tails)
 	return (i);
 }
 
-int	compute_cost(int ra, int rra, int rb, int rrb)
+static int	compute_cost(int ra, int rra, int rb, int rrb)
 {
 	int	i;
 	int	cheap;
@@ -61,7 +73,7 @@ int find_cushy_spot(int item, t_item *op)
 	return (closer);
 }
 
-int	*put_cost(int *moves)
+static int	*put_cost(int *moves)
 {
 	int	ra;
 	int	rra;
