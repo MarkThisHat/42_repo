@@ -120,6 +120,9 @@ void	sort_three(t_ctrl *c, t_item *head, int is_b);
 void	big_sol(t_ctrl *c, int size);
 //		opt_swap.c(4)
 void	optimize_solution(t_sol *navi, t_sol *head);
+//		solc(4)
+int		cal_cost(t_item *package, t_item *oppo_head, int *moves);
+int		find_cushy_spot(int item, t_item *op);
 //		push_reset.c(2)
 void	reset_stacks(t_ctrl *c, t_sol *solution);
 //		zwap_pivot.c (4)
@@ -138,6 +141,7 @@ t_sol	*apply_sol(t_sol *s, t_ctrl *c);
 int		sort_stack(t_ctrl *c, int quadrant, int size);
 void	pogo_sol(t_ctrl *c, int size);
 void	sol_c(t_ctrl *c, int size);
+void	cheap_sol(t_ctrl *c, int size);
 //not project
 void	print_stacks(t_ctrl *c);
 void	print_full_stacks(t_ctrl *c);

@@ -112,5 +112,7 @@ void	big_sol(t_ctrl *c, int size)
 {
 	//sol_a(c, size);
 	//pogo_sol(c, size);
-	sol_c(c, size);
+	(void)c;
+	(void)size;
+//	sol_c(c, size);
 }
