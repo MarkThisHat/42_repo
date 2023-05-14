@@ -6,7 +6,7 @@
 #    By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/22 11:13:39 by maalexan          #+#    #+#              #
-#    Updated: 2023/05/10 19:30:44 by maalexan         ###   ########.fr        #
+#    Updated: 2023/05/14 12:07:55 by maalexan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ BOBJ := $(BFUN:%.c=$(OBJ_DIR)/%.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(FTLIB)
-	cc $(OBJ) $(FTLIB) -g -o $@
+	cc $(OBJ) $(FTLIB) -o $@
 
 $(FTLIB):
 	@$(MAKE) -C $(FTLIB_DIR) --silent

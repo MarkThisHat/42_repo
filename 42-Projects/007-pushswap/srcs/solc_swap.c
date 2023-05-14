@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 19:17:38 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/12 11:12:01 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/14 12:07:08 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,24 +73,20 @@ static void	greedy_swap(t_ctrl *c)
 	motion_a_to_b(c, next_move);
 }
 
-void	cheap_sol(t_ctrl *c, int size)
+void	cheap_sol(t_ctrl *c)
 {
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
-	while (c->size_a > 3)
+	while (c->size_a > 1)
 		greedy_swap(c);
-	sort_three(c, c->head_a, 0);
-	if (c->tail_a->i == size - 1)
-		c->stream = log_move(rev_rotate_a(c), c->stream, c);
 	while (c->size_b)
 	{
+		c->stream = log_move(push_a(c), c->stream, c);
 		if (c->tail_a->i == c->head_a->i - 1)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
-		else
-			c->stream = log_move(push_a(c), c->stream, c);
 	}
 	if (climb_target(c->tail_a, 0) > dive_target(c->head_a, 0))
 		while (c->head_a->i)
