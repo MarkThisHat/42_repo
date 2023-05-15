@@ -75,8 +75,12 @@ static void	greedy_swap(t_ctrl *c)
 
 void	cheap_sol(t_ctrl *c)
 {
+
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
+	c->stream = log_move(push_a(c), c->stream, c);
+	print_full_stacks(c);
+	fix_unsorted_element(c);
 	c->stream = log_move(push_b(c), c->stream, c);
 	c->stream = log_move(push_b(c), c->stream, c);
 	sort_three(c, c->head_b, 1);
@@ -94,4 +98,8 @@ void	cheap_sol(t_ctrl *c)
 	else
 		while (c->head_a->i)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
+	if (is_sorted(c))
+		return ;
+	fix_unsorted_element(c);
+	print_full_stacks(c);
 }

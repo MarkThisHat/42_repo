@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/08 17:12:40 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/09 10:27:05 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/15 10:00:29 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,25 @@ int	main(int argc, char **argv)
 {
 	t_ctrl	c;
 	char	*line;
-	int		good;
 	int		read_flag;
 
-	good = 1;
 	read_flag = 1;
 	treat_args(&c, argc, argv);
 	line = get_next_line(0);
-	while (line || read_flag)
+	while (read_flag)
 	{
-		if (good)
-			good = mover_bonus(&c, line);
-		else
-			write (1, "Error\n", 6);
-		free(line);
-		line = get_next_line(0);
+		if (line)
+		{
+			if (!mover_bonus(&c, line))
+				write (1, "Error\n", 6);
+			free(line);
+			line = get_next_line(0);
+		}
 		if (!line)
 			read_flag = 0;
 	}
-	free(line);
+	if (line)
+		free(line);
 	publish_result(&c);
 	free_and_leave(&c, 0);
 }
