@@ -117,7 +117,7 @@ void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
 void	sort_three(t_ctrl *c, t_item *head, int is_b);
 //		solc_swap.c
-void	cheap_sol(t_ctrl *c, int size);
+void	cheap_sol(t_ctrl *c);
 //		solc_utils.c
 int		cal_cost(t_item *package, t_item *oppo_head, int *moves);
 int		find_cushy_spot(int item, t_item *op);

@@ -73,7 +73,7 @@ static void	greedy_swap(t_ctrl *c)
 	motion_a_to_b(c, next_move);
 }
 
-void	cheap_sol(t_ctrl *c, int size)
+void	cheap_sol(t_ctrl *c)
 {
 	c->answer = first_move_big(c, PB);
 	c->stream = get_stream(c->answer);
@@ -82,22 +82,15 @@ void	cheap_sol(t_ctrl *c, int size)
 	sort_three(c, c->head_b, 1);
 	while (c->size_a > 1)
 		greedy_swap(c);
+	motion_a_to_b(c, c->head_a->i);
 	while (c->size_b)
-	{
 		c->stream = log_move(push_a(c), c->stream, c);
-		if (c->tail_a->i == c->head_a->i - 1)
-			c->stream = log_move(rev_rotate_a(c), c->stream, c);
-		if (c->head_a->i == size - 1)
-			c->stream = log_move(rotate_a(c), c->stream, c);
-	}
 	if (climb_target(c->tail_a, 0) > dive_target(c->head_a, 0))
 		while (c->head_a->i)
 			c->stream = log_move(rotate_a(c), c->stream, c);
 	else
 		while (c->head_a->i)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
-	if (is_sorted(c))
-		return ;
 }
 
 /*
@@ -107,5 +100,7 @@ void	cheap_sol(t_ctrl *c, int size)
 -29 36 49 -11 39 33 -28 -30 20 41 -41 -42 -21 -20 -27 29 -26 -7 -14 43 -5 -32 27 31 40 -33 -34 -10 -39 5 44 37 2 -25 -4 21 48 12 23 -22 -35 -24 30 42 -48 0 38 10 13 -8 32 9 45 -49 -15 7 22 -47 -46 -44 26 11 14 -12 17 -3 24 50 -23 18 -38 -45 46 1 -37 -1 34 -2 4 -36 8 -6 6 -31 47 15 28 35 25 -40 -17 16 3 -43 -18 -16 19 -13 -9 -19 
 
 -3 -1 18 -49 30 -35 -12 -47 -34 40 43 -22 33 1 -38 -16 -37 39 27 24 49 45 -23 0 -42 11 35 17 22 12 -14 29 -11 -30 50 26 20 8 -17 -33 -2 9 -48 -29 23 -15 -27 42 -44 -18 21 -36 4 34 -21 15 -46 25 28 -6 -40 -41 -24 -10 -19 38 6 47 7 48 -20 14 -32 -39 44 -5 36 -26 10 13 16 32 -45 19 -9 -25 -43 2 46 37 -13 5 3 -28 -8 41 -4 31 -7 -31 
+
+-35 39 35 37 -8 -20 -49 11 -33 46 18 -10 47 -2 19 23 4 -23 -25 -30 -18 17 -37 -46 -34 41 -43 7 20 16 -5 32 -41 36 50 -14 34 -24 -16 -31 31 -42 26 -17 30 38 21 25 -1 43 40 -27 10 29 -9 22 45 -15 -47 -13 15 -6 1 27 3 -12 -36 5 -45 -29 49 -28 -48 -3 8 12 6 14 -21 42 -38 -39 33 -19 44 9 24 48 28 -44 2 0 -4 -11 -26 -40 -32 -7 -22 13 
 
 */

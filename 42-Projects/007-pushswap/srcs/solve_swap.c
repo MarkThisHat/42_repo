@@ -39,7 +39,7 @@ void	find_sol(t_ctrl *c)
 	if (c->size_a < 5 && c->size_b)
 		small_sol(c, c->size_a + c->size_b);
 	else if (c->size_a > 5)
-		cheap_sol(c, c->size_a + c->size_b);
+		cheap_sol(c);
 	optimize_solution(c->answer->next, c->answer);
 	print_sol(c->answer);
 }
