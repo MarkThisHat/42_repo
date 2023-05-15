@@ -82,7 +82,6 @@ void	cheap_sol(t_ctrl *c, int size)
 	sort_three(c, c->head_b, 1);
 	while (c->size_a > 1)
 		greedy_swap(c);
-	print_full_stacks(c);
 	while (c->size_b)
 	{
 		c->stream = log_move(push_a(c), c->stream, c);
@@ -90,12 +89,6 @@ void	cheap_sol(t_ctrl *c, int size)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
 		if (c->head_a->i == size - 1)
 			c->stream = log_move(rotate_a(c), c->stream, c);
-
-		if (c->tail_a->i != 99)
-		{
-		print_full_stacks(c);
-		exit(3);	
-		}
 	}
 	if (climb_target(c->tail_a, 0) > dive_target(c->head_a, 0))
 		while (c->head_a->i)
@@ -105,8 +98,6 @@ void	cheap_sol(t_ctrl *c, int size)
 			c->stream = log_move(rev_rotate_a(c), c->stream, c);
 	if (is_sorted(c))
 		return ;
-	print_full_stacks(c);
-	exit(3);
 }
 
 /*
