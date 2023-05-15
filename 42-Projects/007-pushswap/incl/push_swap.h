@@ -123,8 +123,5 @@ int		cal_cost(t_item *package, t_item *oppo_head, int *moves);
 int		find_cushy_spot(int item, t_item *op);
 //		solve_swap.c
 void	find_sol(t_ctrl *c);
-void	print_stacks(t_ctrl *c);
-void	print_full_stacks(t_ctrl *c);
-void	fix_unsorted_element(t_ctrl *c);
 
 #endif
