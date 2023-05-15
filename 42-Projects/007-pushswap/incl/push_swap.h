@@ -6,7 +6,7 @@
 /*   By: maalexan <maalexan@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 16:23:27 by maalexan          #+#    #+#             */
-/*   Updated: 2023/05/14 12:07:36 by maalexan         ###   ########.fr       */
+/*   Updated: 2023/05/15 11:21:08 by maalexan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	a_is_three(t_ctrl *c, t_sol *sol);
 void	small_sol(t_ctrl *c, int size);
 void	sort_three(t_ctrl *c, t_item *head, int is_b);
 //		solc_swap.c
-void	cheap_sol(t_ctrl *c);
+void	cheap_sol(t_ctrl *c, int size);
 //		solc_utils.c
 int		cal_cost(t_item *package, t_item *oppo_head, int *moves);
 int		find_cushy_spot(int item, t_item *op);
